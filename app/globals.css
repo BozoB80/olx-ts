@@ -1,0 +1,36 @@
+@import url('https://fonts.cdnfonts.com/css/geomanist');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* html {
+  font-family: 'Geomanist';
+} */
+
+@layer components {
+  .gridStyle {
+    @apply w-full p-3 sm:p-5 grid gap-3 sm:gap-5 grid-cols-2 xl:grid-cols-7
+  }
+
+  .listStyle {
+    @apply w-full p-3 space-y-2 
+  }
+}
+
+html::-webkit-scrollbar{
+  display: none;
+}
+
+html{
+  scrollbar-width: none;
+}
+
+.mask1 {
+  -webkit-mask-image: -webkit-gradient(linear,left top,right bottom,color-stop(60%,#2d46ed),color-stop(100%,rgba(45,70,237,0)));
+}
+
+.mask2 {
+  -webkit-mask-image: -webkit-gradient(linear,left top,right bottom,color-stop(60%,#2d46ed),color-stop(100%,rgba(45,70,237,0)));
+  transition: -webkit-mask-position-x 0.5s ease-in-out;
+}
