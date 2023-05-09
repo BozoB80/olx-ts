@@ -33,8 +33,8 @@ const ProductCardSmall = ({ data }: { data: ProductCardSmallData }) => {
       const furnished = add.furnished === true ? 'Furnished' : 'Not furnished'
 
       return (
-      <motion.div {...slideAnimation({ direction: 'up'})}>
-        <Link href={`/add/${add.id}`} key={add.id} className="flex flex-col h-[270px] rounded-md bg-white cursor-pointer">
+      <motion.div key={add.id} {...slideAnimation({ direction: 'up'})}>
+        <Link href={`/add/${add.id}`} className="flex flex-col h-[270px] rounded-md bg-white cursor-pointer">
           <div className='overflow-hidden rounded-t-md'>
             <Image 
               src={add.imageURL}
