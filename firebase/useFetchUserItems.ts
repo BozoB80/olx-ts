@@ -22,9 +22,9 @@ const useFetchUserAdds = ( id: string ) => {
           ...doc.data(),
         }));
 
-        setUserItems(allAdds as any);
-        
-      });
+        setUserItems(allAdds as any);      
+      })
+
     } catch (error: any) {
       console.log("No adds displayed");
       const errorCode = error.code;
