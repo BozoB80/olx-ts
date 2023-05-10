@@ -1,18 +1,16 @@
 'use client'
 
-import { auth } from '@/firebase/firebase';
 import useFetchUserAdds from '@/firebase/useFetchUserItems';
 import OtherUserAddsCard from '../adds/OtherUserAddsCard';
-
-import ProductCardSmall from '../adds/ProductCardSmall';
+import { DocumentData } from 'firebase/firestore';
 
 type OtherAddsProps = {
   id: string
+  details: DocumentData
 }
 
-const OtherUserAdds = ({ id }: OtherAddsProps) => {
-
-  const { userItems } = useFetchUserAdds(auth?.currentUser?.uid)
+const OtherUserAdds = ({ id, details }: OtherAddsProps) => {
+   const { userItems } = useFetchUserAdds(details?.userRef)
 
   const filteredItems = userItems.filter((item: any) => item.id !== id)
   

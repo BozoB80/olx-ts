@@ -7,7 +7,6 @@ export const carsDetails = [
   { label: 'Mileage', value: "mileage" },
   { label: 'Cubic', value: "cubic" },
   { label: 'Kilowatts', value: "kilowatts" },
-  { label: 'Kilowatts', value: "kilowatts" },
   { label: 'Drive', value: "drive" },
   { label: 'Emission', value: "emission" },
   { label: 'Transmission', value: "transmission" },

@@ -41,7 +41,8 @@ const LoginModal = () => {
         
         router.push('/')
         loginModal.onClose()
-        toast.success(`Welcome ${user.displayName}`)      
+        toast.success(`Welcome ${user.displayName}`) 
+        setIsLoading(false)     
       })
       .catch((error) => {
         const errorCode = error.code;

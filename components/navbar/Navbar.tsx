@@ -26,12 +26,16 @@ import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
 import SearchBar from "./SearchBar";
 
+import { useAuthState } from 'react-firebase-hooks/auth'
+
 const Navbar = () => {
   const registerModal = useRegisterModal()
   const loginModal = useLoginModal()
   const [toggleMenu, setToggleMenu] = useState(false);
   const [userName, setUserName] = useState("");
   const router = useRouter();
+
+  const [ user ] = useAuthState(auth)
 
   const logoutUser = () => {
     signOut(auth)
@@ -47,17 +51,17 @@ const Navbar = () => {
       });
   };
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        setUserName(user.displayName || '');
-      } else {
-        // User is signed out
-        setUserName("");
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       const uid = user.uid;
+  //       setUserName(user.displayName || '');
+  //     } else {
+  //       // User is signed out
+  //       setUserName("");
+  //     }
+  //   });
+  // }, []);
 
   return (
     <Container>
@@ -79,10 +83,10 @@ const Navbar = () => {
                 </Link>
               </div>
 
-              {!userName ? (
+              {!user ? (
                 <div className="flex justify-center items-center">
                   <div className="flex font-medium">
-                    <MenuItem label={userName ? userName : "Sign In"} onClick={loginModal.onOpen} />
+                    <MenuItem label="Sign In" onClick={loginModal.onOpen} />
                     <div className="border border-gray-300 mx-2 my-full " />
                     <MenuItem label="Registration" onClick={registerModal.onOpen} />
                   </div>
@@ -106,7 +110,7 @@ const Navbar = () => {
                         className="flex gap-3"
                       >
                         <UserCircleIcon className="h-10 w-10" />
-                        <button type="button">{userName}</button>
+                        <button type="button">{user?.displayName}</button>
                       </Link>
                       <button type="button" onClick={() => setToggleMenu(true)}>
                         <Bars3Icon className="h-6 w-6" />

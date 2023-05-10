@@ -54,7 +54,7 @@ const MainDetails: React.FC<MainDetailsProps> = ({ title, price, category, id, u
               alt={title}
               width={500}
               height={500}
-              className='w-full h-[550px] object-contain'
+              className='w-full h-[550px] object-cover'
             />
           </div>       
         </div>
@@ -85,10 +85,7 @@ const MainDetails: React.FC<MainDetailsProps> = ({ title, price, category, id, u
             </div>
             <h1 className='text-2xl'>Characteristics:</h1>
             
-            <MainTable 
-              details={details}
-              table={table}
-            />
+            <MainTable details={details} table={table} />
             
             <div>
               <h1 className='text-2xl'>Detailed description:</h1>
@@ -104,12 +101,9 @@ const MainDetails: React.FC<MainDetailsProps> = ({ title, price, category, id, u
             placeholder='Ask a question to the user'
             className="p-3 w-full mt-2 bg-[#f1f4f5] border-2 rounded-md"
           />
-          <Button 
-            label='Ask a question'
-            small
-          />
+          <Button label='Ask a question' small />
         </div>
-        <OtherUserAdds id={id} />
+        <OtherUserAdds id={id} details={details} />
       </div>
       <UserDetails id={id} details={details} />
     </div>

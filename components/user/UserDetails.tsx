@@ -21,9 +21,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
   const [message, setMessage] = useState("")
   const [lastSignedIn, setLastSignedIn] = useState('')
   const userRef = details.userRef
-  const router = useRouter()
-
-  console.log(details);
+  const router = useRouter()  
    
   useEffect(() => {
     async function getContact() {

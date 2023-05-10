@@ -31,7 +31,7 @@ const SearchBar = () => {
   const router = useRouter()
 
   const publishAdd = () => {
-    auth.currentUser ? setPublish(true) : loginModal.isOpen
+    auth.currentUser ? setPublish(true) : loginModal.onOpen()
   }
 
   const handleSearchChange = (e: any) => {
