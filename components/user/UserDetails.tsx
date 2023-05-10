@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import olxMale from '../assets/olx-male.svg'
-import medal1 from '../assets/medal1.png'
-import medal2 from '../assets/medal2.png'
+import olxMale from '@/assets/olx-male.svg'
+import medal1 from '@/assets/medal1.png'
+import medal2 from '@/assets/medal2.png'
 import Image from "next/image";
 import { ChartBarSquareIcon, ChatBubbleLeftIcon, InformationCircleIcon, PencilSquareIcon, PhoneIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { DocumentData, doc, getDoc } from "firebase/firestore";
@@ -16,7 +16,7 @@ interface UserDetailsProps {
 }
 
 const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
-  const [contact, setContact] = useState(null)
+  const [contact, setContact] = useState<DocumentData | null>(null)
   const [toggleMessage, settoggleMessage] = useState(false)
   const [message, setMessage] = useState("")
   const [lastSignedIn, setLastSignedIn] = useState('')
@@ -24,8 +24,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
   const router = useRouter()
 
   console.log(details);
-  
- 
+   
   useEffect(() => {
     async function getContact() {
       const docRef = doc(db, "users", userRef);
@@ -39,7 +38,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
     getContact();
   }, [userRef]);
 
-  const handleMessage = (e) => {
+  const handleMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value)
   }
   
@@ -103,13 +102,13 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
                 name="description"
                 required
                 value={message}
-                onChange={handleMessage}
-                cols="30"
-                rows="10"
+                onChange={(e) => handleMessage(e)}
+                cols={30}
+                rows={10}
                 className="p-2 border-none focus:outline-none rounded-md mt-4 bg-[#f2f4f5]"
             />
             <Link 
-              href={`mailto:${contact.email}?Subject=${details.title}&body=${message}`}              
+              href={`mailto:${contact?.email}?Subject=${details.title}&body=${message}`}              
               className="flex justify-center items-center gap-2 mt-4 w-full bg-black text-white py-2.5 rounded-md"
             >
               <button type="button" onClick={() => {}}>Send Message</button>
@@ -121,4 +120,4 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
   );
 };
 
-export default UserDetails;
+export default UserDetails

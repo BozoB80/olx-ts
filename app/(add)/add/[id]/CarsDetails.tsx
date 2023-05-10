@@ -3,6 +3,8 @@
 import Container from "@/components/adds/details/ContainerDetails"
 import MainDetails from "@/components/adds/details/MainDetails"
 import { DocumentData } from "firebase/firestore"
+import { carsDetails } from "@/utils/tableDetails"
+import OtherUserAdds from "@/components/user/OtherUserAdds"
 
 type CarsProps = {
   id: string
@@ -25,7 +27,9 @@ const CarsDetails = ({ id, details }: CarsProps) => {
         top3={details?.createdAt}
         description={details?.description}
         details={details}
+        table={carsDetails}
       />
+      
     </Container>
   );
 }

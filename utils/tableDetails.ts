@@ -1,5 +1,16 @@
-export const tableDetails = [
+export const carsDetails = [
   { label: 'Manufacturer', value: "manufacturer" },
   { label: 'Model', value: "model" },
   { label: 'Doors', value: "doors" },
+  { label: 'Fuel', value: "fuel" },
+  { label: 'Year', value: "year" },
+  { label: 'Mileage', value: "mileage" },
+  { label: 'Cubic', value: "cubic" },
+  { label: 'Kilowatts', value: "kilowatts" },
+  { label: 'Kilowatts', value: "kilowatts" },
+  { label: 'Drive', value: "drive" },
+  { label: 'Emission', value: "emission" },
+  { label: 'Transmission', value: "transmission" },
+  { label: 'Color', value: "color" },
+  { label: 'Type', value: "type" }, 
 ]

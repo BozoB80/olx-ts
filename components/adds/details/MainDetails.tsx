@@ -1,11 +1,19 @@
 'use client'
 
-import { CheckIcon, ClockIcon, EyeIcon, InformationCircleIcon, MapPinIcon, ShareIcon, TagIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { ClockIcon, EyeIcon, InformationCircleIcon, MapPinIcon, ShareIcon, TagIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import HeartButton from '@/components/HeartButton';
 import { getTimeAgo } from '@/utils/dateUtils';
 import { DocumentData, Timestamp } from 'firebase/firestore';
 import MainTable from './MainTable';
+import OtherUserAdds from '@/components/user/OtherUserAdds';
+import UserDetails from '@/components/user/UserDetails';
+import Button from '@/components/Button';
+
+type TableDetailsProps = {
+  label: string
+  value: string
+}
 
 interface MainDetailsProps {
   id: string
@@ -19,9 +27,10 @@ interface MainDetailsProps {
   top3: Timestamp
   description: string
   details: DocumentData
+  table: TableDetailsProps[]
 }
 
-const MainDetails: React.FC<MainDetailsProps> = ({ title, price, category, id, userRef, imageURL, top1, top2, top3, description, details }) => {
+const MainDetails: React.FC<MainDetailsProps> = ({ title, price, category, id, userRef, imageURL, top1, top2, top3, description, details, table }) => {
 
   const createdAt = top3.toDate();
   const timeAgo = getTimeAgo(createdAt);
@@ -75,32 +84,12 @@ const MainDetails: React.FC<MainDetailsProps> = ({ title, price, category, id, u
               </h1>            
             </div>
             <h1 className='text-2xl'>Characteristics:</h1>
+            
             <MainTable 
               details={details}
+              table={table}
             />
-            {/* <table className='flex w-full'>
-              <tbody className='grid grid-cols-2 w-full text-sm capitalize gap-x-16'>
-                <tr className='flex justify-between py-2'>
-                  <td>Address:</td>
-                  <td className='text-black/80'>{details?.address}</td>
-                </tr>                
-                <tr className='flex justify-between py-2'>
-                  <td>Furnished:</td>
-                  <td className='text-black/80'>
-                    {details?.furnished === true ? <CheckIcon className='w-5 h-5' /> : <XMarkIcon className='w-5 h-5' /> }
-                  </td>
-                </tr>                
-                <tr className='flex justify-between py-2'>
-                  <td>Region:</td>
-                  <td className='text-black/80'>{details?.region}</td>
-                </tr>                
-                <tr className='flex justify-between py-2'>
-                  <td>Type:</td>
-                  <td className='text-black/80'>{details?.type}</td>
-                </tr>
-              </tbody>
-            </table> */}
-
+            
             <div>
               <h1 className='text-2xl'>Detailed description:</h1>
               <h1 className='py-2'>{description}</h1>
@@ -115,11 +104,14 @@ const MainDetails: React.FC<MainDetailsProps> = ({ title, price, category, id, u
             placeholder='Ask a question to the user'
             className="p-3 w-full mt-2 bg-[#f1f4f5] border-2 rounded-md"
           />
-          <button className='px-3 py-2 border-2 w-40 border-black rounded-[4px]'>
-            Ask a question
-          </button>
+          <Button 
+            label='Ask a question'
+            small
+          />
         </div>
+        <OtherUserAdds id={id} />
       </div>
+      <UserDetails id={id} details={details} />
     </div>
   )
 }

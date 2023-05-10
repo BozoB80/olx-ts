@@ -1,11 +1,11 @@
 'use client'
 
 import { db } from "@/firebase/firebase";
-import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { DocumentData, collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-const useFetchUserAdds = ( id: string ) => {
-  const [userItems, setUserItems] = useState([])
+const useFetchUserAdds = ( id: string | undefined ) => {
+  const [userItems, setUserItems] = useState<DocumentData>([])
 
   const getUserAdds = () => {
     try {
@@ -22,7 +22,7 @@ const useFetchUserAdds = ( id: string ) => {
           ...doc.data(),
         }));
 
-        setUserItems(allAdds as any);      
+        setUserItems(allAdds);      
       })
 
     } catch (error: any) {
