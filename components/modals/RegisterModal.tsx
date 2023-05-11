@@ -15,10 +15,12 @@ import { regions } from "@/utils/selectData";
 import { genders } from "@/utils/selectData";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from '../../hooks/useLoginModal';
+import { useToast } from '@chakra-ui/react';
 
 
 const RegisterModal = () => {
   const router = useRouter()
+  const toast = useToast()
   const registerModal = useRegisterModal()
   const loginModal = useLoginModal()
   const [isLoading, setIsLoading] = useState(false)
@@ -53,7 +55,7 @@ const RegisterModal = () => {
 
         console.log(user)
         router.push('/greetings')
-        toast.success('Registration complete')
+        toast({ position: 'top', status: 'success', title: 'Registration complete'})
         registerModal.onClose()
         setIsLoading(false)
       })

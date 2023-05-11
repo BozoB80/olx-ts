@@ -12,10 +12,12 @@ import Input from "../inputs/Input";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
 import useResetModal from "@/hooks/useResetModal";
+import { useToast } from "@chakra-ui/react";
 
 
 const LoginModal = () => {
   const router = useRouter()
+  const toast = useToast()
   const registerModal = useRegisterModal()
   const loginModal = useLoginModal()
   const resetModal = useResetModal()
@@ -41,7 +43,7 @@ const LoginModal = () => {
         
         router.push('/')
         loginModal.onClose()
-        toast.success(`Welcome ${user.displayName}`) 
+        toast({ position: 'top', status: 'success', title: `Welcome ${user.displayName}`})
         setIsLoading(false)     
       })
       .catch((error) => {
