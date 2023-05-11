@@ -5,6 +5,8 @@ import Navbar from '@/components/navbar/Navbar'
 import RegisterModal from '@/components/modals/RegisterModal'
 import LoginModal from '@/components/modals/LoginModal'
 import Footer from '@/components/Footer'
+import PublishModal from '@/components/modals/PublishModal'
+import ResetPasswordModal from '@/components/modals/ResetPasswordModal'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,6 +26,8 @@ export default function RootLayout({
         <ToasterProvider />
         <LoginModal />
         <RegisterModal />
+        <ResetPasswordModal />
+        <PublishModal />
         <Navbar />
         {children}
         <Footer />

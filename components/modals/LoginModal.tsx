@@ -11,15 +11,15 @@ import Heading from "../Heading";
 import Input from "../inputs/Input";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
+import useResetModal from "@/hooks/useResetModal";
 
 
 const LoginModal = () => {
   const router = useRouter()
   const registerModal = useRegisterModal()
   const loginModal = useLoginModal()
+  const resetModal = useResetModal()
   const [isLoading, setIsLoading] = useState(false)
-
-  const currentUser = auth.currentUser  
 
   const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({
     defaultValues: {
@@ -78,7 +78,14 @@ const LoginModal = () => {
         register={register}
         errors={errors}
         required
-      />    
+      />
+      <div>
+        <p 
+          onClick={() => {loginModal.onClose(), resetModal.onOpen()}}
+          className="text-neutral-800 text-right font-medium cursor-pointer hover:underline">
+            Forgot password?
+        </p>
+      </div>
     </div>
   )
 
@@ -104,7 +111,7 @@ const LoginModal = () => {
       disabled={isLoading}    
       isOpen={loginModal.isOpen}
       title="Login"
-      actionLabel="Continue"
+      actionLabel="Login"
       onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}

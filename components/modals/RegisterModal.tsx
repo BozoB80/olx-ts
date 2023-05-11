@@ -23,8 +23,6 @@ const RegisterModal = () => {
   const loginModal = useLoginModal()
   const [isLoading, setIsLoading] = useState(false)
 
-  const currentUser = auth.currentUser  
-
   const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({
     defaultValues: {
       displayName: '',
@@ -42,8 +40,8 @@ const RegisterModal = () => {
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        if (currentUser) {
-          updateProfile(currentUser, {
+        if (user) {
+          updateProfile(user, {
             displayName: data.displayName,
           })
         }
@@ -54,7 +52,7 @@ const RegisterModal = () => {
         setDoc(doc(db, "users", user.uid), formDataCopy)
 
         console.log(user)
-        // router.push('/greetings')
+        router.push('/greetings')
         toast.success('Registration complete')
         registerModal.onClose()
         setIsLoading(false)

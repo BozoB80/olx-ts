@@ -3,15 +3,14 @@
 import { useState } from "react"
 import { ArrowRightIcon, FolderPlusIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline"
 import { useRouter } from "next/navigation"
-// import PublishAdd from "./PublishAdd"
-import { useCollection, useCollectionData } from "react-firebase-hooks/firestore"
+import { useCollection } from "react-firebase-hooks/firestore"
 import { collection } from "firebase/firestore"
 import { auth, db } from "@/firebase/firebase"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { slideIn } from "@/utils/motion"
 import useLoginModal from "@/hooks/useLoginModal"
-import PublishNewAdd from "../adds/PublishNewAdd"
+import usePublishModal from "@/hooks/usePublishModal"
 
 type SearchProps = {
   id: string
@@ -23,15 +22,15 @@ type SearchProps = {
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchData, setSearchData] = useState<SearchProps[]>([])
-  const [publish, setPublish] = useState(false)
   const [allAdds] = useCollection(collection(db, "/products"),
   {snapshotListenOptions: { includeMetadataChanges: true }})
   const loginModal = useLoginModal()
+  const publishModal = usePublishModal()
 
   const router = useRouter()
 
   const publishAdd = () => {
-    auth.currentUser ? setPublish(true) : loginModal.onOpen()
+    auth.currentUser ? publishModal.onOpen() : loginModal.onOpen()
   }
 
   const handleSearchChange = (e: any) => {
@@ -98,10 +97,8 @@ const SearchBar = () => {
         className="hidden sm:flex justify-center items-center gap-2 h-14 w-60 bg-black text-white py-2.5 px-8 rounded-md"
       >
         <FolderPlusIcon className="h-6 w-6" />
-        <h1>Publish Add</h1>
+        <h1>Create Listing</h1>
       </button>
-
-      {publish && <PublishNewAdd setPublish={setPublish} />}
 
     </div>
   )

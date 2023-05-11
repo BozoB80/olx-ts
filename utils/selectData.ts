@@ -1,5 +1,5 @@
 export const regions = [
-  { value: 'West-Herzegovina', label: 'West Herzegovina' },
+  { value: 'Zapadno-hercegovačka', label: 'Zapadno-hercegovačka' },
   { value: 'Hercegovačko-neretvanska', label: 'Hercegovačko-neretvanska' },
   { value: 'Unsko-sanska', label: 'Unsko-sanska' },
   { value: 'Posavska', label: 'Posavska' },

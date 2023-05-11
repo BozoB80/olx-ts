@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import logo from "../../assets/logo.svg";
 import Link from "next/link";
@@ -9,7 +9,6 @@ import {
   UserCircleIcon,
   ChatBubbleBottomCenterTextIcon,
   CircleStackIcon,
-  XMarkIcon,
   Bars3Icon,
 } from "@heroicons/react/24/outline";
 import { auth } from "@/firebase/firebase";
@@ -17,24 +16,22 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { slideAnimation } from "@/utils/motion";
+import { signOut } from "firebase/auth";
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 import Container from "../Container";
-import { onAuthStateChanged, signOut } from "firebase/auth";
 import MenuItemList from "./MenuItemList";
 import MenuItem from "./MenuItem";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
 import SearchBar from "./SearchBar";
 
-import { useAuthState } from 'react-firebase-hooks/auth'
 
 const Navbar = () => {
   const registerModal = useRegisterModal()
   const loginModal = useLoginModal()
   const [toggleMenu, setToggleMenu] = useState(false);
-  const [userName, setUserName] = useState("");
   const router = useRouter();
-
   const [ user ] = useAuthState(auth)
 
   const logoutUser = () => {
@@ -51,18 +48,6 @@ const Navbar = () => {
       });
   };
 
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       const uid = user.uid;
-  //       setUserName(user.displayName || '');
-  //     } else {
-  //       // User is signed out
-  //       setUserName("");
-  //     }
-  //   });
-  // }, []);
-
   return (
     <Container>
       <nav className="hidden sm:flex flex-col w-full z-10">
@@ -76,7 +61,7 @@ const Navbar = () => {
                 <Link href="/">Shops</Link>
                 <Link href="/">Marketing</Link>
                 <Link href="/">Blog</Link>
-                <Link href="/">Create Add</Link>
+                <Link href="/">Create Listing</Link>
                 <Link href="/" className="flex items-center">
                   Other
                   <ChevronDownIcon className="h-5 w-5" />
@@ -110,7 +95,7 @@ const Navbar = () => {
                         className="flex gap-3"
                       >
                         <UserCircleIcon className="h-10 w-10" />
-                        <button type="button">{user?.displayName}</button>
+                        <button type="button">{user && user?.displayName}</button>
                       </Link>
                       <button type="button" onClick={() => setToggleMenu(true)}>
                         <Bars3Icon className="h-6 w-6" />
