@@ -11,7 +11,7 @@ type AddProps = {
   }
 }
 
-const addPage = ({ params: { id }}: AddProps) => {
+const AddPage = ({ params: { id }}: AddProps) => {
   const { document } = useFetchDocument('products', id) 
   
   return (
@@ -24,4 +24,4 @@ const addPage = ({ params: { id }}: AddProps) => {
   );
 }
 
-export default addPage;
+export default AddPage;

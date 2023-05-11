@@ -4,7 +4,7 @@ type CategoryProps = {
   }
 }
 
-const categoryPage = ({ params: {category}}: CategoryProps) => {  
+const CategoryPage = ({ params: {category}}: CategoryProps) => {  
   return (
     <div>
       {category}
@@ -12,4 +12,4 @@ const categoryPage = ({ params: {category}}: CategoryProps) => {
   );
 }
 
-export default categoryPage;
+export default CategoryPage;
