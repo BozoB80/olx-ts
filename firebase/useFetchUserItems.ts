@@ -1,11 +1,14 @@
 'use client'
 
 import { db } from "@/firebase/firebase";
-import { DocumentData, collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { ProductCardSmallProps } from "@/types";
+import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-const useFetchUserAdds = ( id: string | undefined ) => {
-  const [userItems, setUserItems] = useState<DocumentData>([])
+
+
+const useFetchUserAdds = ( id: string ) => {
+  const [userItems, setUserItems] = useState<ProductCardSmallProps[]>([])
 
   const getUserAdds = () => {
     try {
@@ -22,7 +25,7 @@ const useFetchUserAdds = ( id: string | undefined ) => {
           ...doc.data(),
         }));
 
-        setUserItems(allAdds);      
+        setUserItems(allAdds as any);      
       })
 
     } catch (error: any) {

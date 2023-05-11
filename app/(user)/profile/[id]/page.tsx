@@ -1,8 +1,14 @@
-const ProfilePage = () => {
+import Profile from "./Profile"
+
+type ProfileParams = {
+  params: {
+    id: string
+  }
+}
+
+const ProfilePage = ({ params: { id } }: ProfileParams) => {
   return (
-    <div>
-      Enter
-    </div>
+    <Profile id={id} />
   );
 }
 

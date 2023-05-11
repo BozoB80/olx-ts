@@ -1,36 +1,22 @@
 'use client'
 
+import { ProductCardSmallProps } from '@/types';
 import { getTimeAgo } from '@/utils/dateUtils';
 import { slideAnimation } from '@/utils/motion';
-import { Timestamp } from 'firebase/firestore';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 
-type ProductCardSmallProps = {
-  id: string
-  title: string
-  fuel?: string
-  type?: string
-  state?: string
-  mileage?: string
-  ram?: string
-  price: number
-  imageURL: string
-  furnished?: boolean
-  createdAt: Timestamp
-}
-
 type ProductCardSmallData = ProductCardSmallProps[];
 
-const ProductCardSmall = ({ data }: { data: ProductCardSmallData }) => {
+const ProductCardSmall = ({ data, bground }: { data: ProductCardSmallData, bground?: boolean }) => {
   return (
-    <div className="bg-[#f1f4f5] w-full p-2 sm:p-5 grid gap-2 sm:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
+    <div className={`${bground ? 'bg-[#f1f4f5]' : 'bg-white'} w-full p-2 sm:p-5 grid gap-2 sm:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7`}>
       {data?.map((add: ProductCardSmallProps) => {
       
-      const createdAt = add.createdAt.toDate();
-      const timeAgo = getTimeAgo(createdAt);
-      const furnished = add.furnished === true ? 'Furnished' : 'Not furnished'
+        const createdAt = add.createdAt.toDate();
+        const timeAgo = getTimeAgo(createdAt);
+        const furnished = add.furnished === true ? 'Furnished' : 'Not furnished'
 
       return (
       <motion.div key={add.id} {...slideAnimation({ direction: 'up'})}>

@@ -7,10 +7,12 @@ import LoginModal from '@/components/modals/LoginModal'
 import Footer from '@/components/Footer'
 import PublishModal from '@/components/modals/PublishModal'
 import ResetPasswordModal from '@/components/modals/ResetPasswordModal'
+import Providers from '@/components/providers/Providers'
+import { Metadata } from 'next'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'OLX',
   description: 'Welcome to OLX',
 }
@@ -23,14 +25,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ToasterProvider />
-        <LoginModal />
-        <RegisterModal />
-        <ResetPasswordModal />
-        <PublishModal />
-        <Navbar />
-        {children}
-        <Footer />
+        <Providers>
+          <ToasterProvider />
+          <LoginModal />
+          <RegisterModal />
+          <ResetPasswordModal />
+          <PublishModal />
+          <Navbar />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   )

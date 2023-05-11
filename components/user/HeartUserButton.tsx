@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 interface HeartUserButtonProps {
   id: string
-  small: boolean
+  small?: boolean
 }
 
 const HeartUserButton: React.FC<HeartUserButtonProps> = ({ id, small }) => {

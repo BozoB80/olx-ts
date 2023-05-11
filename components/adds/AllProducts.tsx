@@ -9,6 +9,7 @@ const AllProducts = () => {
   return (
     <ProductCardSmall 
       data={data}
+      bground
     />
   );
 }
