@@ -40,10 +40,9 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
     setMessage(e.target.value)
   }
   
-
   return (
     <>
-    <div className="flex flex-col space-y-4 sticky top-4">
+    <div className="flex xl:flex-col items-center justify-start sm:justify-center xl:justify-start w-full lg:w-[332px] rounded-md bg-white xl:bg-[#f1f4f5] space-y-4 top-4">
       <div className="sm:w-[332px] bg-white p-4 rounded-[4px]">
         <div className="flex flex-col w-full">
           <h1 className="hidden sm:block text-sm font-semibold mb-3">USER</h1>
