@@ -10,6 +10,7 @@ import OtherUserAdds from '@/components/user/OtherUserAdds';
 import UserDetails from '@/components/user/UserDetails';
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 type TableDetailsProps = {
   label: string
@@ -33,9 +34,20 @@ interface MainDetailsProps {
 
 const MainDetails: React.FC<MainDetailsProps> = ({ title, price, category, id, userRef, imageURL, top1, top2, top3, description, details, table }) => {
 
+  const [scrolledBelowImage, setScrolledBelowImage] = useState(false)
   const router = useRouter()
   const createdAt = top3.toDate();
   const timeAgo = getTimeAgo(createdAt);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const imageHeight = document?.querySelector('.product-image')?.clientHeight;
+      setScrolledBelowImage(scrollPosition > imageHeight!);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
@@ -113,23 +125,24 @@ const MainDetails: React.FC<MainDetailsProps> = ({ title, price, category, id, u
       </div>
 
       {/* Small screen */}
-      <div className='absolute top-0 w-full z-50 bg-white sm:hidden'>
-        <div className='relative'>
+      <div className='absolute -top-8 w-full z-30 bg-white sm:hidden'>
+          <div className='sticky w-full px-3 flex justify-between top-5 z-40'>
+            <ArrowLeftIcon onClick={() => router.back()} className={`w-6 h-6 ${scrolledBelowImage ? 'text-black' : 'text-white'}`} />
+            <div className='flex justify-center items-center gap-3'>
+              <HeartButton id={id} userRef={userRef} scroll={scrolledBelowImage} />
+              <ShareIcon className={`w-6 h-6 ${scrolledBelowImage ? 'text-black' : 'text-white'}`} />
+              <EllipsisVerticalIcon className={`w-6 h-6 ${scrolledBelowImage ? 'text-black' : 'text-white'}`} />
+            </div>
+          </div>
+        <div>
           <Image 
             src={imageURL}
             alt={title}
             width={500}
             height={500}
-            className='w-full h-[300px] object-cover'
+            className='w-full h-[300px] object-cover product-image'
           />
-          <div className='absolute w-full px-3 flex justify-between top-5'>
-            <ArrowLeftIcon onClick={() => router.back()} className='w-6 h-6 text-white' />
-            <div className='flex justify-center items-center gap-3'>
-              <HeartButton id={id} small userRef={userRef} />
-              <ShareIcon className='w-6 h-6 text-white' />
-              <EllipsisVerticalIcon className='w-6 h-6 text-white' />
-            </div>
-          </div>
+          
           <div className='flex flex-col p-2'>
             <div className='mb-3'>
               <h1 className='text-2xl capitalize'>{title}</h1>
