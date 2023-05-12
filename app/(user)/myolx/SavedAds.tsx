@@ -17,9 +17,7 @@ const SavedAds = () => {
     return null
   }
   const [products] = useCollection(collection(db, "products"));
-  const [allLikedAdds] = useCollectionData(
-    auth?.currentUser ? collection(db, "users", userId , "savedAdds") : null
-  );
+  const [allLikedAdds] = useCollectionData(collection(db, "users", userId , "savedAdds"))
 
   return (
       <div className="w-full">
