@@ -14,7 +14,7 @@ const SavedAds = () => {
   const toast = useToast()
   const userId: string | undefined = auth?.currentUser?.uid
   if (!userId) {
-    return null
+    return
   }
   const [products] = useCollection(collection(db, "products"));
   const [allLikedAdds] = useCollectionData(collection(db, "users", userId , "savedAdds"))
