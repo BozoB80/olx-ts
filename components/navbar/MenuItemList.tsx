@@ -31,9 +31,9 @@ const MenuItemList: React.FC<MenuItemListProps> = ({ logoutUser, setToggleMenu }
       <MenuItem label="Promotions" onClick={() => {}} hover icon={<TrophyIcon className="w-6 h-6" />} />
       <MenuItem label="Orders" onClick={() => {}} hover icon={<TruckIcon className="w-6 h-6" />} />
       <h1 className="bg-gray-100 p-3 my-1 text-xs">SAVED</h1>
-      <MenuItem label="Saved Ads" onClick={() => {router.push('/myolx/saved/adds?tab=adds'), setToggleMenu(false)}} hover icon={<NewspaperIcon className="w-6 h-6" />} />
-      <MenuItem label="Saved Users" onClick={() => {router.push('/myolx/saved/users?tab=users'), setToggleMenu(false)}} hover icon={<UserIcon className="w-6 h-6" />} />
-      <MenuItem label="Saved Searches" onClick={() => {router.push('/myolx/saved/searches?tab=searches'), setToggleMenu(false)}} hover icon={<MagnifyingGlassIcon className="w-6 h-6" />} />
+      <MenuItem label="Saved Ads" onClick={() => {router.push('/myolx/saved/ads'), setToggleMenu(false)}} hover icon={<NewspaperIcon className="w-6 h-6" />} />
+      <MenuItem label="Saved Users" onClick={() => {router.push('/myolx/saved/users'), setToggleMenu(false)}} hover icon={<UserIcon className="w-6 h-6" />} />
+      <MenuItem label="Saved Searches" onClick={() => {router.push('/myolx/saved/searches'), setToggleMenu(false)}} hover icon={<MagnifyingGlassIcon className="w-6 h-6" />} />
       <h1 className="bg-gray-100 p-3 my-1 text-xs">OTHER LINKS</h1>
       <MenuItem label="OLX shops" onClick={() => {}} hover icon={<BuildingStorefrontIcon className=" bg-red-600 rounded-md text-white p-1 w-6 h-6"/>} />
       <MenuItem label="User Support" onClick={() => {}} hover icon={<LifebuoyIcon className="w-6 h-6" />} />

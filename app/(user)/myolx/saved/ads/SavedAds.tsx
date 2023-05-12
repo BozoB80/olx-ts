@@ -1,5 +1,6 @@
 'use client'
 
+import Container from "@/components/Container";
 import { auth, db } from "@/firebase/firebase";
 import { getTimeAgo } from "@/utils/dateUtils";
 import { useToast } from "@chakra-ui/react";
@@ -17,6 +18,8 @@ const SavedAds = () => {
   const [allLikedAdds] = useCollectionData(userId ? collection(db, "users", userId , "savedAdds") : null)
 
   return (
+    <Container>
+
       <div className="w-full">
       <div className="flex flex-col justify-center items-start">
         <h1 className="text-2xl mb-3">Saved adds [{allLikedAdds?.length}]</h1>
@@ -27,15 +30,13 @@ const SavedAds = () => {
             )
             .map((product) => {
               const idRef = product.id
-              const handleDelete = () => {
-                
+              const handleDelete = () => {             
                 try {
                   deleteDoc(doc(db, "users", userId, "savedAdds", idRef))
-                  toast({ status: 'success', title: 'You removed product from favorites'})
+                  toast({ position: 'top', status: 'success', title: 'You removed ad from favorites'})
                 } catch (error) {
-                  toast({ status: 'error', title: ''})
-                }
-            
+                  toast({ position: 'top', status: 'error', title: 'Ad has not been deleted'})
+                }            
               }
 
               const add = product.data();
@@ -85,6 +86,7 @@ const SavedAds = () => {
         </div>
       </div>
     </div>
+    </Container>
   );
 }
 

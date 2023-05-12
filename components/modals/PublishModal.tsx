@@ -4,12 +4,10 @@ import Image, { StaticImageData } from "next/image";
 import ostalo from "@/assets/ostalo.svg";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { slideAnimation } from "@/utils/motion";
 import useFetchCollection from "@/firebase/useFetchCollection";
 import usePublishModal from "@/hooks/usePublishModal";
 import Modal from "./Modal";
-import { ArrowLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 type CategoryProps = {
   id: string;
@@ -21,7 +19,6 @@ type CategoryProps = {
 const PublishModal = () => {
   const { data } = useFetchCollection("categories", "asc");
   const publishModal = usePublishModal();
-  const [isLoading, setIsLoading] = useState(false);
   const [toggle, setToggle] = useState(false);
   const router = useRouter();
 
@@ -119,7 +116,6 @@ const PublishModal = () => {
 
   return (
     <Modal
-      disabled={isLoading}
       isOpen={publishModal.isOpen}
       title="List an item"
       actionLabel="Become OLX pro"

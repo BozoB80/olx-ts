@@ -7,7 +7,8 @@ import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { auth } from "@/firebase/firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { toast } from "react-hot-toast";
+import { useToast } from "@chakra-ui/react";
+
 import useResetModal from "@/hooks/useResetModal";
 import useLoginModal from "@/hooks/useLoginModal";
 import Modal from "./Modal";
@@ -15,6 +16,7 @@ import Heading from "../Heading";
 import Input from "../inputs/Input";
 
 const ResetPasswordModal = () => {
+  const toast = useToast()
   const resetModal = useResetModal();
   const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +32,7 @@ const ResetPasswordModal = () => {
 
     sendPasswordResetEmail(auth, data.email)
       .then(() => {
-        toast.success('Email has been sent')
+        toast({ position: 'top', status: 'success', title: 'Email has been sent'})
         setIsLoading(false)
         resetModal.onClose()
       })

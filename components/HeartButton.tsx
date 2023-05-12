@@ -8,6 +8,7 @@ import { auth, db } from "@/firebase/firebase";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useToast } from "@chakra-ui/react";
 
 interface HeartButtonProps {
   id: string
@@ -17,6 +18,7 @@ interface HeartButtonProps {
 
 const HeartButton: React.FC<HeartButtonProps> = ({ id, userRef, small }) => {
   const [clicked, setClicked] = useState(false)
+  const toast = useToast()
   const router = useRouter()
   const userId = auth?.currentUser?.uid
 
@@ -32,13 +34,13 @@ const HeartButton: React.FC<HeartButtonProps> = ({ id, userRef, small }) => {
     if (savedAddsDoc.exists()) {
       // Remove like if product is already liked
       await deleteDoc(savedAddsRef);
-      toast.success("Add removed from favorites");
+      toast({ position: 'top', status: 'success', title: 'Add removed from favorites'})
       setClicked(false);
     } else {
       // Add like if product is not already liked
       const newLike = { likedRef: id };
       await setDoc(doc(db, "users", userId, "savedAdds", id), newLike);
-      toast.success("Added to favorites");
+      toast({ position: 'top', status: 'success', title: 'Added to favorites'})
       setClicked(true);
     }
   }
