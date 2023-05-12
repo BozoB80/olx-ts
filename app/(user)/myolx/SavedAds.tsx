@@ -1,6 +1,5 @@
 'use client'
 
-import Container from "@/components/Container";
 import { auth, db } from "@/firebase/firebase";
 import { getTimeAgo } from "@/utils/dateUtils";
 import { useToast } from "@chakra-ui/react";
@@ -12,12 +11,10 @@ import { useCollection, useCollectionData } from "react-firebase-hooks/firestore
 
 const SavedAds = () => {
   const toast = useToast()
-  const userId: string | undefined = auth?.currentUser?.uid
-  if (!userId) {
-    return
-  }
+  const userId: string = auth?.currentUser?.uid!
+  
   const [products] = useCollection(collection(db, "products"));
-  const [allLikedAdds] = useCollectionData(collection(db, "users", userId , "savedAdds"))
+  const [allLikedAdds] = useCollectionData(userId ? collection(db, "users", userId , "savedAdds") : null)
 
   return (
       <div className="w-full">
