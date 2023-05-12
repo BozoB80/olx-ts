@@ -12,10 +12,14 @@ import { slideIn } from "@/utils/motion"
 import MenuItemList from "./navbar/MenuItemList"
 import { signOut } from "firebase/auth"
 import { auth } from "@/firebase/firebase"
-import { toast } from "react-hot-toast"
+import usePublishModal from '../hooks/usePublishModal';
+import useLoginModal from '../hooks/useLoginModal';
+import { useToast } from '@chakra-ui/react';
 
 const FooterNav = () => {
-  const [publish, setPublish] = useState(false)
+  const publishModal = usePublishModal()
+  const loginModal = useLoginModal()
+  const toast = useToast()
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true)
   const [toggleMenu, setToggleMenu] = useState(false)
@@ -24,15 +28,15 @@ const FooterNav = () => {
   const currentUser = auth.currentUser
 
   const publishAdd = () => {
-    currentUser ? setPublish(true) : router.push('/auth/login')
+    currentUser ? publishModal.onOpen() : loginModal.onOpen()
   }
   
   const isLoggedIn = () => {
-    currentUser ? setToggleMenu(true) : router.push('/auth/login')
+    currentUser ? setToggleMenu(true) : loginModal.onOpen()
   }
 
   const profileLink = () => {
-    currentUser ? router.push(`/profile/${currentUser.uid}`) : router.push('/auth/login')
+    currentUser ? router.push(`/profile/${currentUser.uid}`) : loginModal.onOpen()
   }
   
 
@@ -57,7 +61,7 @@ const FooterNav = () => {
 
   const logoutUser = () => {
     signOut(auth).then(() => {
-        toast.success("You are signed out")
+        toast({ position: 'top', status: 'success', title: 'You are signed out'})
         router.push('/')
         localStorage.clear()
         setToggleMenu(false)
@@ -106,9 +110,6 @@ const FooterNav = () => {
            <MenuItemList logoutUser={logoutUser} setToggleMenu={setToggleMenu} />                  
          </motion.div>
        )}
-
-
-      {publish && <PublishNewAdd setPublish={setPublish} />}
     </section>
   )
 }

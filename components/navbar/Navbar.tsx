@@ -13,11 +13,11 @@ import {
 } from "@heroicons/react/24/outline";
 import { auth } from "@/firebase/firebase";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { slideAnimation } from "@/utils/motion";
 import { signOut } from "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { useToast } from '@chakra-ui/react';
 
 import Container from "../Container";
 import MenuItemList from "./MenuItemList";
@@ -30,6 +30,7 @@ import SearchBar from "./SearchBar";
 const Navbar = () => {
   const registerModal = useRegisterModal()
   const loginModal = useLoginModal()
+  const toast = useToast()
   const [toggleMenu, setToggleMenu] = useState(false);
   const router = useRouter();
   const [ user ] = useAuthState(auth)
@@ -37,7 +38,7 @@ const Navbar = () => {
   const logoutUser = () => {
     signOut(auth)
       .then(() => {
-        toast.success("You are signed out");
+        toast({ position: 'top', status: 'success', title: 'You are signed out'})
         router.push("/");
         router.refresh()
         localStorage.clear();
