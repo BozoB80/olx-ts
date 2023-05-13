@@ -5,14 +5,13 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/firebase";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
+import { useToast } from "@chakra-ui/react";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
 import useResetModal from "@/hooks/useResetModal";
-import { useToast } from "@chakra-ui/react";
 
 
 const LoginModal = () => {

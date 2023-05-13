@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "@/firebase/firebase";
 import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
+import { useToast } from '@chakra-ui/react';
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
@@ -15,7 +15,6 @@ import { regions } from "@/utils/selectData";
 import { genders } from "@/utils/selectData";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from '../../hooks/useLoginModal';
-import { useToast } from '@chakra-ui/react';
 
 
 const RegisterModal = () => {
