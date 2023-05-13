@@ -48,7 +48,7 @@ const PublishModal = () => {
                   className="object-contain bg-transparent hover:scale-110 transition-all cursor-pointer"
                 />
               </div>
-              <h1 className="pl-5">{category.name}</h1>
+              <h1 className="pl-1 sm:pl-5">{category.name}</h1>
             </div>
           );
         })}
