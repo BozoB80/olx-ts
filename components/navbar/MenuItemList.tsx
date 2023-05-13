@@ -16,7 +16,7 @@ const MenuItemList: React.FC<MenuItemListProps> = ({ logoutUser, setToggleMenu }
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h1 className=" text-xl font-bold">My OLX</h1>
+        <h1 className="text-xl font-bold">My OLX</h1>
         <button type="button" onClick={() => setToggleMenu(false)}><XMarkIcon className="w-8 h-8" /></button>
       </div>
       <MenuItem label="OLX CREDIT" onClick={() => {}} hover icon={<CircleStackIcon className="w-6 h-6"/>} />

@@ -73,7 +73,7 @@ const FooterNav = () => {
   return (
     <section className="flex sm:hidden">
       <motion.div 
-        variants={slideIn({ direction: 'down', type: 'tween', delay: 0.2, duration: 0.5 })}
+        variants={slideIn({ direction: 'up', type: 'tween', delay: 0.1, duration: 0.3 })}
         initial="hidden"
         whileInView="show"
         className={`flex fixed ${visible ? 'bottom-0 z-50' : '-bottom-96 -z-50'} bg-white shadow-black shadow-2xl w-full justify-around items-center py-2`}
@@ -102,10 +102,10 @@ const FooterNav = () => {
 
       {toggleMenu && (
         <motion.div 
-           variants={slideIn({ direction: 'down', type: 'tween', delay: 0.2, duration: 0.5 })}
+           variants={slideIn({ direction: 'right', type: 'tween', delay: 0.2, duration: 0.5 })}
            initial="hidden"
            whileInView="show"
-           className="absolute right-0 top-0 max-h-fit border-l bg-white p-3 z-50 w-full"
+           className="absolute top-0 w-full h-auto bg-white p-3 z-50 overflow-y-hidden"
          >
            <MenuItemList logoutUser={logoutUser} setToggleMenu={setToggleMenu} />                  
          </motion.div>
