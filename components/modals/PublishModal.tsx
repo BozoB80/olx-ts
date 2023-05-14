@@ -70,10 +70,13 @@ const PublishModal = () => {
 
         {toggle && (
           <div className="absolute inset-5 p-2 bg-[#f1f4f5] z-10">
-            <XMarkIcon onClick={() => setToggle(!toggle)} className="w-5 h-5 cursor-pointer" />          
+            <div className="flex justify-end">
+              <XMarkIcon className="w-5 h-5 cursor-pointer" onClick={() => setToggle(false)} />
+            </div>
             <ul>
               {data.slice(1, 13).map((category: CategoryProps) => {
                 const handlePublish = () => {
+                  setToggle(false)
                   publishModal.onClose();
                   router.push(`/publish/${category.name}`);
                 };

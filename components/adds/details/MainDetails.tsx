@@ -165,14 +165,18 @@ const MainDetails: React.FC<MainDetailsProps> = ({ title, price, category, id, u
                   <InformationCircleIcon className='w-5 h-5' />
                   ID: {id.slice(0, 8)}
                 </h1>
-                <h1 className='flex items-center text-xs gap-1 border border-black p-1 rounded-[4px]'>
-                  <BuildingOfficeIcon className='w-5 h-5' />
-                  {details?.manufacturer}
-                </h1>
-                <h1 className='flex items-center text-xs gap-1 border border-black p-1 rounded-[4px]'>
-                  <RectangleStackIcon className='w-5 h-5' />
-                  {details?.model}
-                </h1>
+                {details?.manufacturer || details?.address ? (
+                  <h1 className='flex items-center text-xs gap-1 border border-black p-1 rounded-[4px]'>
+                    <BuildingOfficeIcon className='w-5 h-5' />
+                    {details?.manufacturer || details?.address}
+                  </h1>
+                ) : ''}
+                {details?.model && (
+                  <h1 className='flex items-center text-xs gap-1 border border-black p-1 rounded-[4px]'>
+                    <RectangleStackIcon className='w-5 h-5' />
+                    {details?.model}
+                  </h1>
+                )}
             </div> 
           </div>
 

@@ -13,3 +13,20 @@ export const carsDetails = [
   { label: 'Color', value: "color" },
   { label: 'Type', value: "type" }, 
 ]
+
+export const mobileDetails = [
+  { label: 'Manufacturer', value: "manufacturer" },
+  { label: 'Memory', value: "memory" },
+  { label: 'RAM', value: "ram" },
+  { label: 'Flash', value: "flash" },
+  { label: 'Color', value: "color" },
+  { label: 'Operating system', value: "system" },
+  { label: 'Screen size', value: "screen" },
+]
+
+export const estateDetails = [
+  { label: 'Address', value: "address" },
+  { label: 'Furnished', value: "furnished" },
+  { label: 'Region', value: "region" },
+  { label: 'Type', value: "type" },
+]
