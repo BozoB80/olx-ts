@@ -10,6 +10,7 @@ import ResetPasswordModal from '@/components/modals/ResetPasswordModal'
 import Providers from '@/components/providers/Providers'
 import { Metadata } from 'next'
 import FooterNav from '@/components/FooterNav'
+import MessageModal from '@/components/modals/MessageModal'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,6 +32,7 @@ export default function RootLayout({
           <RegisterModal />
           <ResetPasswordModal />
           <PublishModal />
+          <MessageModal />
           <Navbar />
           {children}
           <FooterNav />

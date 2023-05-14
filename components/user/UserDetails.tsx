@@ -9,6 +9,7 @@ import { auth, db } from "@/firebase/firebase";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Button from "../Button";
+import useMessageModal from '../../hooks/useMessageModal';
 
 interface UserDetailsProps {
   id: string
@@ -19,6 +20,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
   const [contact, setContact] = useState<DocumentData | null>(null)
   const [toggleMessage, settoggleMessage] = useState(false)
   const [message, setMessage] = useState("")
+  const messageModal = useMessageModal()
   const [lastSignedIn, setLastSignedIn] = useState('')
   const userRef = details.userRef
   const router = useRouter()  
@@ -78,13 +80,13 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
         ) : (
           <>
             <Button label="Phone" icon={<PhoneIcon className="w-5 h-5" />} />
-            <Button label="Message" icon={<ChatBubbleLeftIcon className="w-5 h-5" />} onClick={() => settoggleMessage(true)} />        
+            <Button label="Message" icon={<ChatBubbleLeftIcon className="w-5 h-5" />} onClick={messageModal.onOpen} />        
           </>
         )}
       </div>
     </div>
 
-    {toggleMessage && (
+    {/* {toggleMessage && (
         <div className="absolute top-0 left-0 right-0 bottom-0 flex bg-gray-300/30 justify-center items-center">
           <div className="flex flex-col bg-white w-1/2 shadow-xl rounded-md p-5">
             <div className="flex justify-between items-center">
@@ -112,7 +114,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
             </Link>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };
