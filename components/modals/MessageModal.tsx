@@ -55,13 +55,15 @@ const MessageModal = () => {
     }
     setIsLoading(true)
 
+    setConversationNumber(conversationNumber + 1);
+
     const senderListingData = collection(db, 'users', senderRef, 'conversation', `conversation${conversationNumber}`, 'sentMessages')
     const receiverListingData = collection(db, 'users', receiverRef, 'conversation', `conversation${conversationNumber}`, 'receivedMessages')
 
     // const senderConversationRef = collection(senderListingData, 'sentMessages');
     // const receiverConversationRef = collection(receiverListingData, 'receivedMessages');
 
-    setConversationNumber(conversationNumber + 1);
+    
 
     const listingData = {
       ...data,
