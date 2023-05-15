@@ -27,7 +27,11 @@ const MainTable = ({ details, table }: TableProps) => {
       </table>
 
       <table className='flex flex-col sm:hidden w-full bg-white shadow-md rounded-[4px] p-2'>
-        <thead className='uppercase text-sm'>Characteristics</thead>
+        <thead className='uppercase text-sm'>
+          <tr>
+            <td>Characteristics</td>
+          </tr>
+          </thead>
         <tbody className='grid grid-cols-1 w-full text-sm capitalize'>
           {table.map((item) => (
             <tr key={item.label} className='flex justify-between px-1 py-0.5 even:bg-[#f1f4f5]'>

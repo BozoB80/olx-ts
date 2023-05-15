@@ -4,9 +4,20 @@ import Container from "@/components/Container";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react'
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "@/firebase/firebase";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { collection } from "firebase/firestore";
+import avatar from '@/assets/noavatar.png'
+import Image from "next/image";
 
 const MyTabs = () => {
   const [searchTerm, setSearchTerm] = useState('')
+  const [ user ] = useAuthState(auth)
+  const userId = user?.uid
+  
+  const [ conversationData ] = useCollectionData(userId ? collection(db, 'users', userId, 'conversation') : null)    
+  
   return (
     <Container bground>
       <div className="w-full flex bg-white">
@@ -30,7 +41,21 @@ const MyTabs = () => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <p>one!</p>
+                <div>
+                  {conversationData?.map((conv) => (
+                    <div key={conv.title} className="flex items-center w-full border-b py-2">
+                      <Image
+                        src={avatar}
+                        alt="avatar"
+                        className="w-10"
+                      />
+                      <div className="pl-3">
+                        <p className="text-[#7f9799] text-sm">{conv.receiverName}</p>
+                        <p className="text-sm">{conv.title}</p>
+                      </div>                      
+                    </div>
+                  ))}
+                </div>
               </TabPanel>
               <TabPanel>
                 <p>two!</p>

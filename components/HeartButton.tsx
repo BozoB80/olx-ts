@@ -33,7 +33,7 @@ const HeartButton: React.FC<HeartButtonProps> = ({ id, userRef, scroll }) => {
     if (savedAddsDoc.exists()) {
       // Remove like if product is already liked
       await deleteDoc(savedAddsRef);
-      toast({ position: 'top', status: 'success', title: 'Ad removed from favorites'})
+      toast({ position: 'top', status: 'success', title: 'Removed from favorites'})
       setClicked(false);
     } else {
       // Add like if product is not already liked
@@ -65,7 +65,7 @@ const HeartButton: React.FC<HeartButtonProps> = ({ id, userRef, scroll }) => {
       {clicked ? (
         <HeartIcon className="w-8 h-8 mx-1 cursor-pointer transition hover:scale-110 text-red-600" />
       ) : (
-        <Outline className={`w-8 h-8 mx-1 cursor-pointer transition hover:scale-110 ${scroll ? 'text-black' : 'text-white'}`} />
+        <Outline className={`w-8 h-8 mx-1 cursor-pointer transition sm:text-black hover:scale-110 ${scroll ? 'text-black' : 'text-white'}`} />
       )}
     </div>
   )

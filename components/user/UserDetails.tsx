@@ -17,30 +17,10 @@ interface UserDetailsProps {
 }
 
 const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
-  const [contact, setContact] = useState<DocumentData | null>(null)
-  const [toggleMessage, settoggleMessage] = useState(false)
-  const [message, setMessage] = useState("")
   const messageModal = useMessageModal()
   const [lastSignedIn, setLastSignedIn] = useState('')
   const userRef = details.userRef
-  const router = useRouter()  
-   
-  useEffect(() => {
-    async function getContact() {
-      const docRef = doc(db, "users", userRef);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setContact(docSnap.data());
-      } else {
-        console.error("Could not get contact data");
-      }
-    }
-    getContact();
-  }, [userRef]);
-
-  const handleMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value)
-  }
+  const router = useRouter()     
   
   return (
     <>
@@ -58,7 +38,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
             />
             <div className="flex flex-col ml-5">
               <Link href={`/profile/${userRef}`} className="font-semibold">{details?.createdBy}</Link>
-              <h1 className="text-gray-400">Last signed in {lastSignedIn}</h1>
+              <h1 className="text-gray-400">Last signed in </h1>
               <div className="flex gap-3">
                 <Image src={medal1} alt="medal1" width={25} height={25} />
                 <Image src={medal2} alt="medal2" width={25} height={25} />
@@ -80,41 +60,11 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
         ) : (
           <>
             <Button label="Phone" icon={<PhoneIcon className="w-5 h-5" />} />
-            <Button label="Message" icon={<ChatBubbleLeftIcon className="w-5 h-5" />} onClick={messageModal.onOpen} />        
+            <Button label="Message" icon={<ChatBubbleLeftIcon className="w-5 h-5" />} onClick={() => messageModal.onOpen(id, details)} />        
           </>
         )}
       </div>
     </div>
-
-    {/* {toggleMessage && (
-        <div className="absolute top-0 left-0 right-0 bottom-0 flex bg-gray-300/30 justify-center items-center">
-          <div className="flex flex-col bg-white w-1/2 shadow-xl rounded-md p-5">
-            <div className="flex justify-between items-center">
-              <h1 className="text-xl">Message for {contact?.displayName}</h1>
-              <XMarkIcon onClick={() => settoggleMessage(false)} className="w-6 h-6 cursor-pointer" />
-            </div>
-            <div className="bg-[#eef6ff] p-2 flex items-center mt-4 gap-3 rounded-md">
-              <InformationCircleIcon className="w-6 h-6" />
-              <p className="text-sm">Add: {details?.title}</p>
-            </div>
-            <textarea
-                name="description"
-                required
-                value={message}
-                onChange={(e) => handleMessage(e)}
-                cols={30}
-                rows={10}
-                className="p-2 border-none focus:outline-none rounded-md mt-4 bg-[#f2f4f5]"
-            />
-            <Link 
-              href={`mailto:${contact?.email}?Subject=${details.title}&body=${message}`}              
-              className="flex justify-center items-center gap-2 mt-4 w-full bg-black text-white py-2.5 rounded-md"
-            >
-              <button type="button" onClick={() => {}}>Send Message</button>
-            </Link>
-          </div>
-        </div>
-      )} */}
     </>
   );
 };
