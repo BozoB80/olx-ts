@@ -10,11 +10,16 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
 import avatar from '@/assets/noavatar.png'
 import Image from "next/image";
+import useFetchCollection from '../../../firebase/useFetchCollection';
 
 const MyTabs = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [ user ] = useAuthState(auth)
   const userId = user?.uid
+
+  const { data } = useFetchCollection(`users/${userId}/conversation/conversation1/sentMessages`, 'asc')
+  console.log(data);
+  
   
   const [ conversationData ] = useCollectionData(userId ? collection(db, 'users', userId, 'conversation') : null)    
   

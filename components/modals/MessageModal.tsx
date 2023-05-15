@@ -41,6 +41,7 @@ const MessageModal = () => {
     getContact();
   }, [receiverRef])
 
+
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<FieldValues>({
     defaultValues: {
       text: '',
@@ -54,37 +55,40 @@ const MessageModal = () => {
     }
     setIsLoading(true)
 
-    const senderListingData = doc(db, 'users', senderRef, 'conversation', `conversation${conversationNumber}`)
-    const receiverListingData = doc(db, 'users', receiverRef, 'conversation', `conversation${conversationNumber}`)
+    const senderListingData = collection(db, 'users', senderRef, 'conversation', `conversation${conversationNumber}`, 'sentMessages')
+    const receiverListingData = collection(db, 'users', receiverRef, 'conversation', `conversation${conversationNumber}`, 'receivedMessages')
 
-
-    const senderConversationRef = collection(senderListingData, 'sentMessages');
-    const receiverConversationRef = collection(receiverListingData, 'receivedMessages');
+    // const senderConversationRef = collection(senderListingData, 'sentMessages');
+    // const receiverConversationRef = collection(receiverListingData, 'receivedMessages');
 
     setConversationNumber(conversationNumber + 1);
 
     const listingData = {
+      ...data,
+      senderRef,
+      receiverRef,
+      createdAt: Timestamp.now(),
       receiverName,
       title,
       price,
       imageURL
     }
 
-    const messageData = {
-      ...data,
-      senderRef,
-      receiverRef,
-      createdAt: Timestamp.now()
-    };
+    // const messageData = {
+    //   ...data,
+    //   senderRef,
+    //   receiverRef,
+    //   createdAt: Timestamp.now()
+    // };
 
     try {
       // Store the message in the sender's conversation
-      await setDoc(senderListingData, listingData);
-      await addDoc(senderConversationRef, messageData);
+      await addDoc(senderListingData, listingData);
+      // await addDoc(senderConversationRef, messageData);
   
       // Store the message in the receiver's conversation
-      await setDoc(receiverListingData, listingData);
-      await addDoc(receiverConversationRef, messageData);
+      await addDoc(receiverListingData, listingData);
+      // await addDoc(receiverConversationRef, messageData);
   
       setIsLoading(false);
       toast({ position: 'top', status: 'success', title: 'Message sent' });
