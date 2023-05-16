@@ -7,12 +7,14 @@ import { DocumentData, Timestamp, addDoc, collection, doc, getDoc, setDoc } from
 import { useState, useEffect } from 'react';
 import useLoginModal from '../../hooks/useLoginModal';
 import { useToast } from '@chakra-ui/react';
-import Heading from '../Heading';
-import { InformationCircleIcon } from '@heroicons/react/24/outline';
-import Modal from './Modal';
+import { CameraIcon, FaceSmileIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
 import Textarea from '../inputs/Textarea';
+import logo from '@/assets/logo.svg'
+import Image from 'next/image';
+import Button from '../Button';
 
-const MessageModal = () => {
+const MessageFooter = () => {
+
   const [isLoading, setIsLoading] = useState(false)
   const [receiver, setReceiver] = useState<DocumentData | null>(null)
   const [conversationNumber, setConversationNumber] = useState(1)
@@ -41,7 +43,6 @@ const MessageModal = () => {
     }
     getContact();
   }, [receiverRef])
-
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<FieldValues>({
     defaultValues: {
@@ -102,34 +103,28 @@ const MessageModal = () => {
       toast({ position: 'top', status: 'error', title: 'Failed to send message' });
     }
   }
-
-  const bodyContent = (
-    <div className="flex flex-col gap-2">
-      <Heading title={`Message for ${receiver?.displayName}`} />
-      <div className="bg-[#eef6ff] p-2 flex items-center gap-3 rounded-md">
-        <InformationCircleIcon className="w-6 h-6" />
-        <p className="text-sm">Add: {messageModal.details?.title} </p>   
-      </div>
+  return (
+    <div className='flex flex-col w-full p-4'>
+      <form>
+        
+      </form>
       <Textarea
         id='text'
-        placeholder='Type your message'
+        placeholder='Write a message...'
         register={register}
         required
       />
+      <div className='w-full flex justify-between items-center bg-white py-4'>
+        <div className='flex gap-4'>
+          <FaceSmileIcon className='w-6 h-6 cursor-pointer' />
+          <Image src={logo} alt='logo' width={40} height={40} className='cursor-pointer' />
+          <CameraIcon className='w-6 h-6 cursor-pointer' />
+          <InformationCircleIcon className='w-6 h-6 cursor-pointer' />
+        </div>
+        <Button small dark label='Send message' />
+      </div>
     </div>
-  )
-
-  return (
-    <Modal 
-      disabled={isLoading}
-      isOpen={messageModal.isOpen}
-      title='Message this user'
-      actionLabel='Send Message'
-      onClose={messageModal.onClose}
-      onSubmit={handleSubmit(onSubmit)}
-      body={bodyContent}    
-    />
   );
 }
 
-export default MessageModal;
+export default MessageFooter;

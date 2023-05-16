@@ -6,22 +6,19 @@ import { useState } from "react";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react'
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "@/firebase/firebase";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useCollection, useCollectionData } from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
 import avatar from '@/assets/noavatar.png'
 import Image from "next/image";
-import useFetchCollection from '../../../firebase/useFetchCollection';
+import MessageTab from "@/components/messages/MessageTab";
 
 const MyTabs = () => {
   const [searchTerm, setSearchTerm] = useState('')
+  const [selectedConversationId, setSelectedConversationId] = useState('');
   const [ user ] = useAuthState(auth)
-  const userId = user?.uid
-
-  const { data } = useFetchCollection(`users/${userId}/conversation/conversation1/sentMessages`, 'asc')
-  console.log(data);
+  const userId = user?.uid 
   
-  
-  const [ conversationData ] = useCollectionData(userId ? collection(db, 'users', userId, 'conversation') : null)    
+  const [ conversationData ] = useCollection(userId ? collection(db, 'users', userId, 'conversations') : null)      
   
   return (
     <Container bground>
@@ -47,19 +44,27 @@ const MyTabs = () => {
             <TabPanels>
               <TabPanel>
                 <div>
-                  {conversationData?.map((conv) => (
-                    <div key={conv.title} className="flex items-center w-full border-b py-2">
-                      <Image
-                        src={avatar}
-                        alt="avatar"
-                        className="w-10"
-                      />
-                      <div className="pl-3">
-                        <p className="text-[#7f9799] text-sm">{conv.receiverName}</p>
-                        <p className="text-sm">{conv.title}</p>
-                      </div>                      
-                    </div>
-                  ))}
+                  {conversationData?.docs?.map((conv) => {
+                    const { title, createdAt, receiverName, senderName } = conv.data()
+                    const date = createdAt.toDate().toLocaleDateString('en-GB')
+                    return (
+                      <div onClick={() => setSelectedConversationId(conv.id)} key={conv.id} className="flex items-center w-full border-b py-2 text-sm cursor-pointer">
+                        <Image
+                          src={avatar}
+                          alt="avatar"
+                          className="w-10"
+                        />
+                        <div className="w-full flex justify-between items-center">
+                          <div className="pl-3">
+                            <p className="text-[#7f9799]">{user?.displayName === senderName ? receiverName : senderName}</p>
+                            <p>{title}</p>
+                          </div>
+                          <div>
+                            <p>{date}</p>  
+                          </div>
+                        </div>
+                      </div>
+                  )})}
                 </div>
               </TabPanel>
               <TabPanel>
@@ -70,10 +75,14 @@ const MyTabs = () => {
               </TabPanel>
             </TabPanels>
           </Tabs>
-
         </div>
-        <div>
-          Messages
+
+        <div className="w-full bg-[#f1f4f5]">
+          {selectedConversationId ? (
+            <MessageTab id={selectedConversationId} />
+          ) : (
+            <p className="h-full flex justify-center items-center text-2xl font-light">Select a conversation to view messages.</p>
+          )}
         </div>
       </div>
     </Container>

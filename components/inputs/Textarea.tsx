@@ -20,7 +20,7 @@ const Textarea: React.FC<TextareaProps> = ({ id, placeholder, register, required
         required
         cols={30}
         rows={10}
-        className="p-2 w-full border-none focus:outline-none rounded-md mt-4 bg-[#f2f4f5] disabled:opacity-70 disabled:cursor-not-allowed"
+        className="p-2 w-full border-none focus:outline-none rounded-md bg-[#f2f4f5] disabled:opacity-70 disabled:cursor-not-allowed"
       />
     </div>
   );

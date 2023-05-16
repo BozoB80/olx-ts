@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import olxMale from '@/assets/olx-male.svg'
 import medal1 from '@/assets/medal1.png'
 import medal2 from '@/assets/medal2.png'
 import Image from "next/image";
-import { ChartBarSquareIcon, ChatBubbleLeftIcon, InformationCircleIcon, PencilSquareIcon, PhoneIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { DocumentData, doc, getDoc } from "firebase/firestore";
-import { auth, db } from "@/firebase/firebase";
+import { ChartBarSquareIcon, ChatBubbleLeftIcon, PencilSquareIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import { DocumentData } from "firebase/firestore";
+import { auth } from "@/firebase/firebase";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Button from "../Button";
