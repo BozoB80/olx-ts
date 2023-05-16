@@ -1,4 +1,5 @@
-import CarsForm from "@/components/adds/publishForms/StepperForm";
+import CarsForm from '../../../components/adds/publishForms/CarsForm';
+
 
 type PublishProps = {
   params: {

@@ -14,15 +14,28 @@ import {
   Stepper,
 } from "@chakra-ui/react";
 import Button from "@/components/Button";
+import Heading from "@/components/Heading";
 
-const steps = [
-  { title: "GENERAL", description: "General Info", content: <div>Step 1 Content</div> },
-  { title: "MANDATORY", description: "And optional info", content: <div>Step 2 Content</div> },
-  { title: "IMAGE", description: "Insert image", content: <div>Step 3 Content</div> },
-];
 
-const StepperForm = () => {
+
+interface StepperProps {
+  onSubmit: () => void
+  title1: string
+  title2: string
+  title3: string
+  body1: React.ReactElement
+  body2: React.ReactElement
+  body3: React.ReactElement
+}
+
+const StepperForm: React.FC<StepperProps> = ({ onSubmit, title1, title2, title3, body1, body2, body3 }) => {
   const [activeStep, setActiveStep] = useState(0);
+
+  const steps = [
+    { title: "GENERAL", description: "General Info", content: <Step1 title1={title1} body1={body1} /> },
+    { title: "MANDATORY", description: "And optional info", content: <div>Step 2 Content</div> },
+    { title: "IMAGE", description: "Insert image", content: <div>Step 3 Content</div> },
+  ];
 
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
@@ -61,7 +74,7 @@ const StepperForm = () => {
         ))}
       </Stepper>
 
-      <Box height={"container.sm"} mt={4}>{steps[activeStep].content}</Box>
+      <Box height={"container.sm"} bgColor={"gray.100"} py={4} mt={4}>{steps[activeStep].content}</Box>
 
       <Box mt={4} display="flex" justifyContent="space-between">
         <Button small label="Back" onClick={handleBack} isDisabled={activeStep === 0} />          
@@ -72,3 +85,20 @@ const StepperForm = () => {
 };
 
 export default StepperForm;
+
+type Step1Props = {
+  title1: string
+  body1: React.ReactElement
+}
+
+const Step1: React.FC<Step1Props> = ({ title1, body1 }) => {
+  return (
+    <div className="max-w-4xl mx-auto bg-white py-2 rounded-md">
+      <Heading title={title1} center nobold />
+      <div className="relative flex-auto">
+        {body1}
+      </div>
+
+    </div>
+  );
+}
