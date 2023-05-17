@@ -21,6 +21,8 @@ import FormRadio from "./inputs/FormRadio";
 import FormPrice from "./inputs/FormPrice";
 import FormInput from "./inputs/FormInput";
 import years from "@/utils/yearsArray";
+import FormSelect from "./inputs/FormSelect";
+import { cubics } from "@/utils/selectData";
 
 interface Model {
   id: string;
@@ -38,7 +40,13 @@ const CarsForm = () => {
   );
   const [user] = useAuthState(auth);
 
-  {years.map((year) => year.label)}
+  {years.map((year) => {
+    console.log(years);
+    
+    return (
+      year.label
+    )
+  })}
   
 
   const {
@@ -178,13 +186,20 @@ const CarsForm = () => {
         />
       </div>
       <div className="w-full flex gap-10">
-        <Select 
+        <FormSelect 
           id="year"
           placeholder="Choose year"
+          label="year"
           options={years}
           register={register}
           required
-          form
+        />
+        <FormSelect 
+          id="cubic"
+          placeholder="Choose engine cubic"
+          label="Cubics"
+          options={cubics}
+          register={register}
         />
       </div>
       

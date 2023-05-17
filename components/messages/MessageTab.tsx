@@ -27,7 +27,7 @@ const MessageTab = ({ id }: IProps) => {
         
         
         return (
-          <div className="flex flex-col justify-center items-center">
+          <div key={title} className="flex flex-col justify-center items-center">
             <MessageHeader senderName={senderName} receiverName={receiverName} imageURL={imageURL} title={title} price={price} />
             <MessageTable sentMessage={text} createdAt={createdAt} />
             <MessageFooter  />

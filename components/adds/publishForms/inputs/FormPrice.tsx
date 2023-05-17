@@ -24,13 +24,14 @@ const FormPrice: React.FC<FormPriceProps> = ({ register, required }) => {
       <div className="flex gap-5">
         <InputGroup>
           <Input type="number" {...register('price', { required })} />
-          <InputRightAddon children='EUR' />
+          <InputRightAddon>
+            EUR
+          </InputRightAddon>
         </InputGroup>
 
         <h1 className="uppercase bg-gray-100 p-3 rounded-full text-xs font-semibold">OR</h1>
 
         <FormButton label="Price on request" onClick={handlePriceRequest} isDisabled />
-
       </div>
     </div>
   );
