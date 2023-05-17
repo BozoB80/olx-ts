@@ -16,7 +16,7 @@ interface SelectProps {
   options: SelectOption[]
   register: UseFormRegister<FieldValues>
   required?: boolean
-  errors: FieldErrors
+  errors?: FieldErrors
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   form?: boolean
 }
@@ -26,7 +26,7 @@ const Select: React.FC<SelectProps> = ({ id, placeholder, options, register, req
 
   useEffect(() => {
     if (onChange) {
-      register(id); // Register the select input without validation
+      register(id)
     }
   }, [id, register, onChange]);
 
@@ -39,7 +39,7 @@ const Select: React.FC<SelectProps> = ({ id, placeholder, options, register, req
        >
         <option value="" disabled>{placeholder}</option>
         {options.map((option) => (
-          <option key={option.value || option.id} value={option.value || option.id} className="hover:bg-black">
+          <option key={option.value || option.id || option.name} value={option.value || option.id} className="hover:bg-black">
             {option.label || option.name}
           </option>
         ))}

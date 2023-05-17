@@ -12,9 +12,11 @@ import {
   StepStatus,
   StepTitle,
   Stepper,
+  useToast,
 } from "@chakra-ui/react";
 import Button from "@/components/Button";
 import Heading from "@/components/Heading";
+import { useRouter } from "next/navigation";
 
 
 
@@ -30,18 +32,21 @@ interface StepperProps {
 
 const StepperForm: React.FC<StepperProps> = ({ onSubmit, title1, title2, title3, body1, body2, body3 }) => {
   const [activeStep, setActiveStep] = useState(0);
+  const toast = useToast()
+  const router = useRouter()
 
   const steps = [
     { title: "GENERAL", description: "General Info", content: <Step1 title1={title1} body1={body1} /> },
-    { title: "MANDATORY", description: "And optional info", content: <div>Step 2 Content</div> },
-    { title: "IMAGE", description: "Insert image", content: <div>Step 3 Content</div> },
+    { title: "MANDATORY", description: "And optional info", content: <Step2 title2={title2} body2={body2} /> },
+    { title: "IMAGE", description: "Insert image", content: <Step3 title3={title3} body3={body3} /> },
   ];
 
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
-      // Finish button was clicked
-      // Perform any necessary actions or submit the form
+      onSubmit();
+      toast({ position: 'top', status: 'success', title: 'You successfully published an ad'})
       console.log("Form submitted!");
+      router.push('/')
     } else {
       setActiveStep((prevStep) => prevStep + 1);
     }
@@ -86,6 +91,7 @@ const StepperForm: React.FC<StepperProps> = ({ onSubmit, title1, title2, title3,
 
 export default StepperForm;
 
+// Step 1
 type Step1Props = {
   title1: string
   body1: React.ReactElement
@@ -93,12 +99,45 @@ type Step1Props = {
 
 const Step1: React.FC<Step1Props> = ({ title1, body1 }) => {
   return (
-    <div className="max-w-4xl mx-auto bg-white px-8 py-4 rounded-md">
+    <div className="max-w-4xl mx-auto h-full bg-white px-8 py-4 rounded-md">
       <Heading title={title1} center nobold />
       <div className="relative flex-auto">
         {body1}
       </div>
+    </div>
+  );
+}
 
+// Step 2
+type Step2Props = {
+  title2: string
+  body2: React.ReactElement
+}
+
+const Step2: React.FC<Step2Props> = ({ title2, body2 }) => {
+  return (
+    <div className="max-w-4xl mx-auto h-full bg-white px-8 py-4 rounded-md">
+      <Heading title={title2} center nobold />
+      <div className="relative flex-auto">
+        {body2}
+      </div>
+    </div>
+  );
+}
+
+// Step 3
+type Step3Props = {
+  title3: string
+  body3: React.ReactElement
+}
+
+const Step3: React.FC<Step3Props> = ({ title3, body3 }) => {
+  return (
+    <div className="max-w-4xl mx-auto h-full bg-white px-8 py-4 rounded-md">
+      <Heading title={title3} center nobold />
+      <div className="relative flex-auto">
+        {body3}
+      </div>
     </div>
   );
 }
