@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form"
 
 interface SelectOption {
-  value?: string;
+  value?: string | number;
   label?: string;
   id?: string;
   name?: string;

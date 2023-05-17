@@ -20,6 +20,7 @@ import FormLocation from "./inputs/FormLocation";
 import FormRadio from "./inputs/FormRadio";
 import FormPrice from "./inputs/FormPrice";
 import FormInput from "./inputs/FormInput";
+import years from "@/utils/yearsArray";
 
 interface Model {
   id: string;
@@ -37,6 +38,9 @@ const CarsForm = () => {
   );
   const [user] = useAuthState(auth);
 
+  {years.map((year) => year.label)}
+  
+
   const {
     register,
     handleSubmit,
@@ -52,6 +56,9 @@ const CarsForm = () => {
       state: "",
       price: 1,
       title: "",
+      mileage: "",
+      year: 0,
+
     },
   });
 
@@ -154,13 +161,30 @@ const CarsForm = () => {
         />
       </div>
       <FormPrice register={register} required />
-      <div>
+      <div className="w-full flex gap-10">
         <FormInput 
           id="title" 
           label="title" 
           register={register}
           errors={errors}
           required        
+        />
+        <FormInput 
+          id="mileage"
+          label="mileage"
+          register={register}
+          errors={errors}
+          required
+        />
+      </div>
+      <div className="w-full flex gap-10">
+        <Select 
+          id="year"
+          placeholder="Choose year"
+          options={years}
+          register={register}
+          required
+          form
         />
       </div>
       
