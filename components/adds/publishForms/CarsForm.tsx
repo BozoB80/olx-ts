@@ -19,6 +19,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import FormLocation from "./inputs/FormLocation";
 import FormRadio from "./inputs/FormRadio";
 import FormPrice from "./inputs/FormPrice";
+import FormInput from "./inputs/FormInput";
 
 interface Model {
   id: string;
@@ -50,8 +51,10 @@ const CarsForm = () => {
       availability: "",
       state: "",
       price: 1,
+      title: "",
     },
   });
+
   const selectedManufacturer = watch("manufacturer");
   const [modelData, setModelData] = useState<Model[]>([]);
 
@@ -80,7 +83,7 @@ const CarsForm = () => {
   }, [selectedManufacturer]);
 
   const handleManufacturerChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setValue("manufacturer", e.target.value); // Update the form value
+    setValue("manufacturer", e.target.value);
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -151,6 +154,16 @@ const CarsForm = () => {
         />
       </div>
       <FormPrice register={register} required />
+      <div>
+        <FormInput 
+          id="title" 
+          label="title" 
+          register={register}
+          errors={errors}
+          required        
+        />
+      </div>
+      
     </div>
   );
 

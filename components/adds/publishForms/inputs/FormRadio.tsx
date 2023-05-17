@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Flex, HStack, UseRadioProps, useRadio, useRadioGroup } from "@chakra-ui/react"
+import { Box, Flex, UseRadioProps, useRadio, useRadioGroup } from "@chakra-ui/react"
 import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import FormHeading from "./FormHeading";
 
@@ -30,7 +30,7 @@ function RadioCard(props: RadioCardProps) {
         }}
         px={5}
         py={2}
-        width="100%" // Make the box use full width
+        width="100%"
       >
         {props.children}
       </Flex>
@@ -41,11 +41,6 @@ function RadioCard(props: RadioCardProps) {
 interface FormRadioProps {
   label: string
   options: string[]
-  // option1: string
-  // option2: string
-  // option3?: string
-  // option4?: string
-  // option5?: string
   id: string
   register: UseFormRegister<FieldValues>
   setValue: UseFormSetValue<FieldValues>
@@ -56,8 +51,8 @@ interface FormRadioProps {
 const FormRadio: React.FC<FormRadioProps> = ({ label, options, id, register, setValue, required, fullWidth }) => {
 
   const { getRootProps, getRadioProps } = useRadioGroup({
-    name: id,
-    defaultValue: '',
+    name: label,
+    defaultValue: options[0],
     onChange: (value) => {setValue(id, value)}
   })
 
@@ -70,7 +65,7 @@ const FormRadio: React.FC<FormRadioProps> = ({ label, options, id, register, set
         {options.map((value) => {
           const radio = getRadioProps({ value });
           return (
-            <RadioCard key={value} {...radio}>
+            <RadioCard key={value} {...radio} >
               {value}
             </RadioCard>
           );
