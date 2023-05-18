@@ -22,20 +22,23 @@ const ProductCardSmall = ({ data, bground }: { data: ProductCardSmallData, bgrou
       <motion.div key={add.id} {...slideAnimation({ direction: 'up'})}>
         <Link href={`/add/${add.id}`} className="flex flex-col h-[270px] rounded-md bg-white cursor-pointer shadow-2xl">
           <div className='overflow-hidden rounded-t-md'>
-            {/* {add?.imageURL?.map((image: any) => {
-              console.log(image);
-              
-              return (
-                <div></div>
-              )
-            })} */}
-            <Image 
-              src={add.imageURL}
-              alt={add.title}
-              width={300}
-              height={300}
-              className="object-cover w-[274px] h-[160px] rounded-t-md transition hover:scale-110"
-            />
+            {Array.isArray(add?.imageURL) && add.imageURL.length > 0 ? (
+              <Image 
+                src={add.imageURL[0]}
+                alt={add.title}
+                width={300}
+                height={300}
+                className="object-cover w-[274px] h-[160px] rounded-t-md transition hover:scale-110"
+              />
+            ) : (
+              <Image 
+                src={add?.imageURL}
+                alt={add.title}
+                width={300}
+                height={300}
+                className="object-cover w-[274px] h-[160px] rounded-t-md transition hover:scale-110"
+              />
+            )}            
           </div>
           <div className="flex flex-col gap-2 p-2 overflow-hidden">
             <h1 className="pb-2 truncate">{add.title}</h1>
