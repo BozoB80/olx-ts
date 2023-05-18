@@ -61,7 +61,7 @@ const FormRadio: React.FC<FormRadioProps> = ({ label, options, id, register, set
   return (
     <Flex direction="column" id={id} {...group} {...register(id, { required })} flex={fullWidth ? "1" : undefined}>
       <FormHeading label={label} />
-      <Flex gap={3} flexWrap="nowrap">
+      <Flex gap={3} flexWrap="wrap">
         {options.map((value) => {
           const radio = getRadioProps({ value });
           return (

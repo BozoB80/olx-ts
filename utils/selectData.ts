@@ -65,3 +65,34 @@ export const cubics = [
   { value: 4.9, label: '4.9L' },
   { value: 5.0, label: '5.0L' },
 ];
+
+export const colors = [
+  {value: "beige", label: "Beige"},
+  {value: "black", label: "Black"},
+  {value: "blue", label: "Blue"},
+  {value: "brown", label: "Brown"},
+  {value: "gold", label: "Gold"},
+  {value: "gray", label: "Gray"},
+  {value: "green", label: "Green"},
+  {value: "orange", label: "Orange"},
+  {value: "purple", label: "Purple"},
+  {value: "red", label: "Red"},
+  {value: "silver", label: "Silver"},
+  {value: "white", label: "White"},
+  {value: "yellow", label: "Yellow"}
+]
+
+export const carTypes = [
+  { label: 'Limousine', value: 'Limousine' },
+  { label: 'Small Car', value: 'Small Car' },
+  { label: 'Caravan', value: 'Caravan' },
+  { label: 'Van', value: 'Van' },
+  { label: 'SUV', value: 'SUV' },
+  { label: 'Convertible', value: 'Convertible' },
+  { label: 'Sports Car', value: 'Sports-car' },
+  { label: 'Off Road', value: 'Off-Road' },
+  { label: 'Caddy', value: 'Caddy' },
+  { label: 'Pick-up', value: 'Pickup' },
+  { label: 'Oldtimer', value: 'Oldtimer' },
+  { label: 'Other', value: 'Other' }
+];

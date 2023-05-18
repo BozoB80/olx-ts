@@ -116,7 +116,7 @@ type Step2Props = {
 
 const Step2: React.FC<Step2Props> = ({ title2, body2 }) => {
   return (
-    <div className="max-w-4xl mx-auto h-full bg-white px-8 py-4 rounded-md">
+    <div className="max-w-4xl mx-auto h-full bg-white px-8 py-4 rounded-md overflow-y-auto">
       <Heading title={title2} center nobold />
       <div className="relative flex-auto">
         {body2}
