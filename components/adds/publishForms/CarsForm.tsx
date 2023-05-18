@@ -25,6 +25,7 @@ import FormSelect from "./inputs/FormSelect";
 import { carTypes, colors, cubics } from "@/utils/selectData";
 import FormTextarea from "./inputs/FormTextarea";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import FormImage from './inputs/FormImage';
 
 interface Model {
   id: string;
@@ -296,7 +297,12 @@ const CarsForm = () => {
 
   const bodyContent3 = (
     <div className="flex flex-col justify-center items-center">
-      <FormInput 
+      <FormImage 
+        id="imageURL"
+        register={register}
+        handleImageUpload={handleImageUpload}
+      />
+      {/* <FormInput 
         id="imageURL"
         label="Images"
         accept="image/*"
@@ -305,7 +311,7 @@ const CarsForm = () => {
         type="file"        
         errors={errors}
         handleImageUpload={handleImageUpload}
-      />
+      /> */}
     </div>
   );
 
