@@ -23,7 +23,7 @@ const FormPrice: React.FC<FormPriceProps> = ({ register, required }) => {
       <FormHeading label="price" />
       <div className="flex gap-5">
         <InputGroup>
-          <Input type="number" {...register('price', { required })} />
+          <Input  focusBorderColor="black" type="number" {...register('price', { required })} />
           <InputRightAddon>
             EUR
           </InputRightAddon>

@@ -12,6 +12,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { regions } from "@/utils/selectData";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import Select from "@/components/inputs/Select";
+import FormSelect from "./FormSelect";
 
 
 interface UserDetails {
@@ -55,15 +56,14 @@ const FormLocation: React.FC<FormLocationProps> = ({ register }) => {
   return (
     <div className="w-full flex flex-col">
       <FormHeading label="location" />
-      <div className="flex justify-between items-center gap-5">
+      <div className="flex justify-center items-center gap-5">
         {switchLocation ? (
           <>
-            <Select
+            <FormSelect
               id="location"
               options={regions}
               placeholder="Choose location"
               register={register}
-              form
             />
             <FormButton
               label="Back to the registered location"

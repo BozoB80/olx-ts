@@ -6,7 +6,7 @@ interface FormHeadingProps {
 
 const FormHeading: React.FC<FormHeadingProps> = ({ label }) => {
   return (
-    <h1 className="text-xs uppercase w-full text-left py-2">{label}</h1>
+    <h1 className="text-xs uppercase w-full text-left pt-4 pb-1">{label}</h1>
   );
 }
 

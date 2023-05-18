@@ -11,7 +11,7 @@ import {
   addDoc,
   Timestamp,
 } from "firebase/firestore";
-import { auth, db } from "@/firebase/firebase";
+import { auth, db, storage } from "@/firebase/firebase";
 import Select from "@/components/inputs/Select";
 import FormHeading from "./inputs/FormHeading";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -23,6 +23,8 @@ import FormInput from "./inputs/FormInput";
 import years from "@/utils/yearsArray";
 import FormSelect from "./inputs/FormSelect";
 import { carTypes, colors, cubics } from "@/utils/selectData";
+import FormTextarea from "./inputs/FormTextarea";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 interface Model {
   id: string;
@@ -48,12 +50,12 @@ const CarsForm = () => {
       location: "",
       availability: "",
       state: "",
-      price: 1,
+      price: Number(1),
       title: "",
-      mileage: "",
-      year: 0,
+      mileage: Number(0),
+      year: Number(0),
       fuel: '',
-      kilowatts: '',
+      kilowatts: Number(0),
       doors: '',
       transmission: '',
       color: '',
@@ -61,13 +63,13 @@ const CarsForm = () => {
       drive: '',
       emission: '',
       description: '',
-
-
+      imageURL: []
     },
   });
 
   const selectedManufacturer = watch("manufacturer");
   const [modelData, setModelData] = useState<Model[]>([]);
+  const [imageURLs, setImageURLs] = useState<string[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,14 +99,34 @@ const CarsForm = () => {
     setValue("manufacturer", e.target.value);
   };
 
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files; // Retrieve selected files from the file input
+    if (files) {
+      const imageURLList = Array.from(files).map((file) => URL.createObjectURL(file)); // Convert selected files to image URLs
+      setImageURLs(imageURLList); // Set the image URLs in the state
+    }
+  };
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
+      const imageURL = data.imageURL as File[];
+      const imageUrls = [];
+
+      for (const image of imageURL) {
+        // Upload each image and get the URL
+        const storageRef = ref(storage, `images/${image.name}`);
+        const snapshot = await uploadBytes(storageRef, image);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        imageUrls.push(downloadURL);
+      }
+
       await addDoc(collection(db, "products"), {
         ...data,
         createdAt: Timestamp.now().toDate(),
         category: "Cars",
         createdBy: user?.displayName,
         userRef: user?.uid,
+        imageURL: imageUrls
       });
     } catch (error) {
       console.log(error);
@@ -114,6 +136,13 @@ const CarsForm = () => {
   const bodyContent = (
     <div className="flex flex-col justify-center items-center gap-5">
       <div className="w-full flex flex-col">
+        <FormInput 
+          id="title" 
+          label="title" 
+          register={register}
+          errors={errors}
+          required        
+        />
         {manufacturer && (
           <FormSelect
             id="manufacturer"
@@ -124,59 +153,50 @@ const CarsForm = () => {
             onChange={handleManufacturerChange}
           />
         )}
-      </div>
-      {selectedManufacturer && (
-        <div className="w-full flex flex-col">
-          <FormSelect
-            id="model"
-            label="model"
-            placeholder="Choose model"
-            options={modelData}
+        {selectedManufacturer && (      
+            <FormSelect
+              id="model"
+              label="model"
+              placeholder="Choose model"
+              options={modelData}
+              register={register}
+            />
+        )}
+        <div>
+          <FormLocation register={register} />
+          <div className="w-full flex gap-5">
+            <FormRadio
+              id="availability"
+              label="Availability"
+              options={["Available", "Not yet available"]}
+              register={register}
+              setValue={setValue}
+              fullWidth
+            />
+            <FormRadio
+              id="state"
+              label="State"
+              options={["New", "Used"]}
+              register={register}
+              setValue={setValue}
+              fullWidth
+            />
+          </div>
+          <FormPrice register={register} required />
+          <FormTextarea 
+            id="description"
+            label="description"
+            placeholder="Describe your product"
             register={register}
+            errors={errors}
           />
         </div>
-      )}
+      </div>
     </div>
   );
 
   const bodyContent2 = (
-    <div className="flex flex-col justify-center items-center gap-5">
-      <FormLocation register={register} />
-      <div className="w-full flex gap-5">
-        <FormRadio
-          id="availability"
-          label="Availability"
-          options={["Available", "Not yet available"]}
-          register={register}
-          setValue={setValue}
-          fullWidth
-        />
-        <FormRadio
-          id="state"
-          label="State"
-          options={["New", "Used"]}
-          register={register}
-          setValue={setValue}
-          fullWidth
-        />
-      </div>
-      <FormPrice register={register} required />
-      <div className="w-full flex gap-10">
-        <FormInput 
-          id="title" 
-          label="title" 
-          register={register}
-          errors={errors}
-          required        
-        />
-        <FormInput 
-          id="mileage"
-          label="mileage"
-          register={register}
-          errors={errors}
-          required
-        />
-      </div>
+    <div className="flex flex-col justify-center items-center">
       <div className="w-full flex gap-10">
         <FormSelect 
           id="year"
@@ -188,7 +208,7 @@ const CarsForm = () => {
         />
         <FormSelect 
           id="cubic"
-          label="Cubics"
+          label="cubics"
           placeholder="Choose engine cubic"
           options={cubics}
           register={register}
@@ -198,7 +218,7 @@ const CarsForm = () => {
         <div className="w-1/2 flex flex-col">
           <FormRadio 
             id="fuel"
-            label="fuel"
+            label="Fuel"
             options={['Diesel', 'Petrol', 'Gas', 'Hybrid', 'Electric']}
             register={register}
             setValue={setValue}
@@ -209,13 +229,14 @@ const CarsForm = () => {
           <FormInput
             id="kilowatts"
             label="kilowatts [kW]"
+            type="number"
             register={register}
             errors={errors}
           />
           <FormRadio 
             id="doors"
             label="number of doors"
-            options={[ '2/3', '4/5' ]}
+            options={['2/3', '4/5']}
             register={register}
             setValue={setValue}
           />
@@ -225,21 +246,21 @@ const CarsForm = () => {
         <div className="w-1/2 flex flex-col">
           <FormRadio 
             id="transmission"
-            label="transmission"
+            label="Transmission"
             options={['Automatic', 'Semi-auto', 'Manual']}
             register={register}
             setValue={setValue}
           />
           <FormRadio 
             id="drive"
-            label="drive"
+            label="Drive"
             options={['Front', 'Rear', '4x4']}
             register={register}
             setValue={setValue}
           />
           <FormRadio 
             id="emission"
-            label="emission"
+            label="Emission"
             options={['Euro 0', 'Euro 1', 'Euro 2', 'Euro 3', 'Euro 4', 'Euro 5', 'Euro 6',]}
             register={register}
             setValue={setValue}
@@ -248,7 +269,7 @@ const CarsForm = () => {
         <div className="w-1/2 flex flex-col">
           <FormSelect 
             id="color"
-            label="color"
+            label="Color"
             placeholder="Choose color"
             options={colors}
             register={register}
@@ -260,21 +281,39 @@ const CarsForm = () => {
             options={carTypes}
             register={register}
           />
+          <FormInput 
+            id="mileage"
+            label="mileage"
+            type="number"
+            register={register}
+            errors={errors}
+            required
+          />
         </div>
-      </div>
-      
+      </div>      
     </div>
   );
 
   const bodyContent3 = (
-    <div className="flex flex-col justify-center items-center gap-5"></div>
+    <div className="flex flex-col justify-center items-center">
+      <FormInput 
+        id="imageURL"
+        label="Images"
+        accept="image/*"
+        register={register}
+        placeholder="Insert images"
+        type="file"        
+        errors={errors}
+        handleImageUpload={handleImageUpload}
+      />
+    </div>
   );
 
   return (
     <StepperForm
-      title1="Manufacturer & Model"
+      title1="General info"
       body1={bodyContent}
-      title2="General Info"
+      title2="Optional Info"
       body2={bodyContent2}
       title3="Image"
       body3={bodyContent3}

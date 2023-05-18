@@ -99,7 +99,7 @@ type Step1Props = {
 
 const Step1: React.FC<Step1Props> = ({ title1, body1 }) => {
   return (
-    <div className="max-w-4xl mx-auto h-full bg-white px-8 py-4 rounded-md">
+    <div className="max-w-4xl mx-auto h-full bg-white px-8 py-4 rounded-md overflow-y-auto">
       <Heading title={title1} center nobold />
       <div className="relative flex-auto">
         {body1}

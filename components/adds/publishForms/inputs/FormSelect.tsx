@@ -7,7 +7,7 @@ import { Select } from '@chakra-ui/react'
 
 interface SelectOption {
   value?: string | number;
-  label?: string;
+  label?: string | number
   id?: string;
   name?: string;
 }
@@ -31,7 +31,7 @@ const FormSelect: React.FC<SelectProps> = ({ id, placeholder, label, options, re
 
   return (
     <div className='w-full relative'>
-      <FormHeading label={label!} />
+      {label && <FormHeading label={label!} />}
         <Select
           id={id}
           variant={"filled"}
