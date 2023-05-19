@@ -27,8 +27,6 @@ const SearchBar = () => {
   const loginModal = useLoginModal()
   const publishModal = usePublishModal()
 
-  const router = useRouter()
-
   const publishAdd = () => {
     auth.currentUser ? publishModal.onOpen() : loginModal.onOpen()
   }
@@ -62,7 +60,7 @@ const SearchBar = () => {
           value={searchTerm}
           onChange={handleSearchChange}
           placeholder='Search'
-          className="w-full focus:outline-none bg-gray-100 sm:bg-white"
+          className="w-full outline-none focus:outline-none bg-gray-100 sm:bg-white"
         />
         {searchTerm ? <button><XMarkIcon onClick={() => setSearchTerm('')} className="h-6 w-6" /></button> : ''}
 

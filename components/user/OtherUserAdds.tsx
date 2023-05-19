@@ -16,7 +16,7 @@ const OtherUserAdds = ({ id, details }: OtherAddsProps) => {
   
   return (
     <div className="bg-white sm:w-full lg:w-[832px] rounded-[4px] flex justify-between gap-8">
-      <OtherUserAddsCard adds={filteredItems} />        
+      {filteredItems.length > 0 ? <OtherUserAddsCard adds={filteredItems} /> : ''}
     </div>
   )
 }
