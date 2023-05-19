@@ -12,8 +12,6 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { auth, db, storage } from "@/firebase/firebase";
-import Select from "@/components/inputs/Select";
-import FormHeading from "./inputs/FormHeading";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import FormLocation from "./inputs/FormLocation";
@@ -70,7 +68,6 @@ const CarsForm = () => {
 
   const selectedManufacturer = watch("manufacturer");
   const [modelData, setModelData] = useState<Model[]>([]);
-  const [imageURLs, setImageURLs] = useState<string[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,12 +97,8 @@ const CarsForm = () => {
     setValue("manufacturer", e.target.value);
   };
 
-  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files; // Retrieve selected files from the file input
-    if (files) {
-      const imageURLList = Array.from(files).map((file) => URL.createObjectURL(file)); // Convert selected files to image URLs
-      setImageURLs(imageURLList); // Set the image URLs in the state
-    }
+  const handleImageUpload = (files: ChangeEvent<HTMLInputElement>) => {
+    setValue("imageURL", files)
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -114,7 +107,6 @@ const CarsForm = () => {
       const imageUrls = [];
 
       for (const image of imageURL) {
-        // Upload each image and get the URL
         const storageRef = ref(storage, `images/${image.name}`);
         const snapshot = await uploadBytes(storageRef, image);
         const downloadURL = await getDownloadURL(snapshot.ref);
@@ -298,9 +290,8 @@ const CarsForm = () => {
   const bodyContent3 = (
     <div className="flex flex-col justify-center items-center">
       <FormImage 
-        id="imageURL"
         register={register}
-        handleImageUpload={handleImageUpload}
+        onImageUpload={handleImageUpload}
       />
       {/* <FormInput 
         id="imageURL"
