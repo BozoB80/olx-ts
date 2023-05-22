@@ -56,7 +56,7 @@ const FormLocation: React.FC<FormLocationProps> = ({ register }) => {
   return (
     <div className="w-full flex flex-col">
       <FormHeading label="location" />
-      <div className="flex justify-center items-center gap-5">
+      <div className="flex justify-center items-center gap-2 sm:gap-10">
         {switchLocation ? (
           <>
             <FormSelect
@@ -75,8 +75,10 @@ const FormLocation: React.FC<FormLocationProps> = ({ register }) => {
           <>
             <Input
               disabled
+              fontSize={{ base: 'sm', md: 'initial' }}
               value={selectedLocation}
-              {...register("location", { required: true })}
+              backgroundColor={'gray.300'}
+              {...register("region", { required: true })}
             />
             <FormButton
               label="Change location"

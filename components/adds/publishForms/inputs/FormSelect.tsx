@@ -36,12 +36,13 @@ const FormSelect: React.FC<SelectProps> = ({ id, placeholder, label, options, re
           id={id}
           variant={"filled"}
           placeholder={placeholder}
+          fontSize={{ base: 'sm', md: 'initial' }}
           border={"1px"}
           {...register(id, { required })}
           className="w-full"
         >
           {options.map((option) => (
-            <option key={option.value || option.id || option.name} value={option.value || option.id} className="hover:bg-black px-3">
+            <option key={option.value || option.id || option.name} value={option.value || option.id} className="hover:bg-black px-3 text-sm sm:text-base">
               {option.label || option.name}
             </option>
           ))}

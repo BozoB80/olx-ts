@@ -40,7 +40,7 @@ const ProductCardSmall = ({ data, bground }: { data: ProductCardSmallData, bgrou
               <h1 className="text-xs">
                 {timeAgo}
               </h1>
-              <p className="font-semibold text-sm sm:text-base">{add.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} EUR</p>
+              <p className="font-semibold text-sm sm:text-base">{typeof add.price === 'number' ? `${add.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} EUR` : add.price}</p>
             </div>
           </div>
         </Link>

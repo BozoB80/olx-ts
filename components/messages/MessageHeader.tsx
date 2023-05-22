@@ -28,14 +28,14 @@ const MessageHeader: React.FC<MessageHeaderProps> = ({senderName, receiverName, 
         />
         <p className='font-semibold'>{user?.displayName === senderName ? receiverName : senderName}</p>
         <Image 
-          src={imageURL}
+          src={imageURL[0]}
           alt={title}
           width={60}
           height={60}
         />
         <div className='flex flex-col text-sm'>
           <p>{title}</p>
-          <p className='font-bold'>{price} EUR</p>
+          <p className='font-bold'>{typeof price === 'number' ? `${price} EUR` : price}</p>
         </div>
       </div>
 

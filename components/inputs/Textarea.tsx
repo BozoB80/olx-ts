@@ -18,8 +18,8 @@ const Textarea: React.FC<TextareaProps> = ({ id, placeholder, register, required
         placeholder={placeholder}
         {...register(id, { required })}
         required
-        cols={30}
-        rows={10}
+        cols={20}
+        rows={5}
         className="p-2 w-full border-none focus:outline-none rounded-md bg-[#f2f4f5] disabled:opacity-70 disabled:cursor-not-allowed"
       />
     </div>

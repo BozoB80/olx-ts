@@ -15,7 +15,7 @@ function RadioCard(props: RadioCardProps) {
   const checkbox = getRadioProps()
 
   return (
-    <Box as="label" flex={1/2}  >
+    <Box as="label" flex={1/2}>
       <input {...input} />
       <Flex
         {...checkbox}
@@ -28,15 +28,19 @@ function RadioCard(props: RadioCardProps) {
           color: "black",
           borderColor: "black",
         }}
-        px={5}
+        px={{ base: '2', md: '5'}}
         py={2}
         width="100%"
+        fontSize={{ base: 'sm', md: 'initial'}}
       >
-        {props.children}
+        <Box width="100%" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
+          {props.children}
+        </Box>
       </Flex>
     </Box>
   )
 }
+
 
 interface FormRadioProps {
   label: string

@@ -86,7 +86,7 @@ const MainDetails: React.FC<MainDetailsProps> = ({
             <div className="flex flex-col w-full space-y-3">
               <h1 className="text-2xl uppercase">{title}</h1>
               <h1 className="text-3xl font-bold">
-                {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} EUR
+                {typeof price === 'number' ? `${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} EUR` : price}
               </h1>
               <div className="flex justify-between items-center">
                 <p>{category}</p>
@@ -195,6 +195,7 @@ const MainDetails: React.FC<MainDetailsProps> = ({
         <div>
           <Carousel
             showStatus={false}
+            showArrows={false}
           >
             {imageURL.map((url, index) => (
               <div key={index}>
@@ -213,7 +214,7 @@ const MainDetails: React.FC<MainDetailsProps> = ({
             <div className="mb-3">
               <h1 className="text-2xl capitalize">{title}</h1>
               <h1 className="text-2xl font-semibold mt-3">
-                {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} EUR
+                {typeof price === 'number' ? `${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} EUR` : price}
               </h1>
             </div>
             <div className="flex flex-wrap gap-3">

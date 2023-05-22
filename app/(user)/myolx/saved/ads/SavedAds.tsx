@@ -75,10 +75,7 @@ const SavedAds = () => {
                     <div className="flex justify-between items-center">
                       <h1 className="text-xs">{timeAgo}</h1>
                       <p className="font-semibold text-sm sm:text-base">
-                        {add.price
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
-                        EUR
+                        {typeof add.price === 'number' ? `${add.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} EUR` : add.price}
                       </p>
                     </div>
                   </div>

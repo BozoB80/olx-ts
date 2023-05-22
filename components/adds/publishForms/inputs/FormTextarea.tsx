@@ -20,10 +20,10 @@ const FormTextarea: React.FC<FormTextareaProps> = ({ id, label, placeholder, reg
       <Textarea 
         id={id}
         placeholder={placeholder}
+        fontSize={{ base: 'sm', md: 'initial' }}
         {...register(id, { required })}
         variant='filled'
-        focusBorderColor='black'
-        
+        focusBorderColor='black'   
       />
     </div>
   );

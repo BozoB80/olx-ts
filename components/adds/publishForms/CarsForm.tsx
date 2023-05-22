@@ -46,10 +46,10 @@ const CarsForm = () => {
     defaultValues: {
       manufacturer: "",
       model: "",
-      location: "",
+      region: "",
       availability: "",
       state: "",
-      price: Number(1),
+      price: Number(0) || 'Price on request',
       title: "",
       mileage: Number(0),
       year: Number(0),
@@ -157,7 +157,7 @@ const CarsForm = () => {
         )}
         <div>
           <FormLocation register={register} />
-          <div className="w-full flex gap-5">
+          <div className="w-full flex flex-col sm:flex-row gap-2 sm:gap-10">
             <FormRadio
               id="availability"
               label="Availability"
@@ -190,7 +190,7 @@ const CarsForm = () => {
 
   const bodyContent2 = (
     <div className="flex flex-col justify-center items-center">
-      <div className="w-full flex gap-10">
+      <div className="w-full flex gap-2 sm:gap-10">
         <FormSelect 
           id="year"
           label="year"
@@ -207,7 +207,7 @@ const CarsForm = () => {
           register={register}
         />
       </div>
-      <div className="w-full flex gap-10">
+      <div className="w-full flex gap-2 sm:gap-10">
         <div className="w-1/2 flex flex-col">
           <FormRadio 
             id="fuel"
@@ -235,7 +235,7 @@ const CarsForm = () => {
           />
         </div>
       </div>
-      <div className="w-full flex gap-10">
+      <div className="w-full flex gap-2 sm:gap-10">
         <div className="w-1/2 flex flex-col">
           <FormRadio 
             id="transmission"

@@ -12,26 +12,44 @@ interface FormPriceProps {
 }
 
 const FormPrice: React.FC<FormPriceProps> = ({ register, required }) => {
-  const [price, setPrice] = useState("")
+  const [priceOnRequest, setPriceOnRequest] = useState(false);
 
   const handlePriceRequest = () => {
-    setPrice("Price on request");
+    setPriceOnRequest((prevValue) => !prevValue);
+  };
+
+  const getPriceValue = () => {
+    return priceOnRequest ? "Price on request" : "";
   };
 
   return (
     <div className="w-full">
       <FormHeading label="price" />
-      <div className="flex gap-5">
+      <div className="flex gap-2 sm:gap-5">
         <InputGroup>
-          <Input  focusBorderColor="black" type="number" {...register('price', { required })} />
-          <InputRightAddon>
+          <Input
+            fontSize={{ base: "sm", md: "initial" }}
+            focusBorderColor="black"
+            type="number"
+            backgroundColor='gray.100'
+            disabled={priceOnRequest}
+            value={getPriceValue()} // Set the value based on priceOnRequest
+            {...register("price", { required: !priceOnRequest && required })}
+          />
+          <InputRightAddon fontSize={{ base: "sm", md: "initial" }} p={2}>
             EUR
           </InputRightAddon>
         </InputGroup>
 
-        <h1 className="uppercase bg-gray-100 p-3 rounded-full text-xs font-semibold">OR</h1>
+        <h1 className="uppercase bg-gray-100 p-3 rounded-full text-xs font-semibold">
+          OR
+        </h1>
 
-        <FormButton label="Price on request" onClick={handlePriceRequest} isDisabled />
+        <FormButton
+          label="Price on request"
+          onClick={handlePriceRequest}
+          isDisabled={!priceOnRequest && required}
+        />
       </div>
     </div>
   );

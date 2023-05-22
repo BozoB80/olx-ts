@@ -53,11 +53,14 @@ const StepperForm: React.FC<StepperProps> = ({ onSubmit, title1, title2, title3,
   };
 
   const handleBack = () => {
-    setActiveStep((prevStep) => prevStep - 1);
+    if (activeStep === 0) {
+      return
+    }
+    setActiveStep((prevStep) => prevStep - 1);    
   };
 
   return (
-    <Box p={4}>
+    <Box p={1}>
       <Stepper index={activeStep}>
         {steps.map((step, index) => (
           <Step key={index}>
@@ -69,7 +72,7 @@ const StepperForm: React.FC<StepperProps> = ({ onSubmit, title1, title2, title3,
               />
             </StepIndicator>
 
-            <div>
+            <div className="hidden sm:block">
               <StepTitle>{step.title}</StepTitle>
               <StepDescription>{step.description}</StepDescription>
             </div>
@@ -79,7 +82,7 @@ const StepperForm: React.FC<StepperProps> = ({ onSubmit, title1, title2, title3,
         ))}
       </Stepper>
 
-      <Box height={"container.sm"} bgColor={"gray.100"} py={4} mt={4}>{steps[activeStep].content}</Box>
+      <Box height={"container.sm"} bgColor={"gray.100"} py={{ base: '0', md: '4'}}>{steps[activeStep].content}</Box>
 
       <Box mt={4} display="flex" justifyContent="space-between">
         <Button small label="Back" onClick={handleBack} isDisabled={activeStep === 0} />          
@@ -99,7 +102,7 @@ type Step1Props = {
 
 const Step1: React.FC<Step1Props> = ({ title1, body1 }) => {
   return (
-    <div className="max-w-4xl mx-auto h-full bg-white px-8 py-4 rounded-md overflow-y-auto">
+    <div className="max-w-4xl mx-auto h-full bg-white px-1 sm:px-8 py-4 rounded-md overflow-y-auto">
       <Heading title={title1} center nobold />
       <div className="relative flex-auto">
         {body1}
@@ -116,7 +119,7 @@ type Step2Props = {
 
 const Step2: React.FC<Step2Props> = ({ title2, body2 }) => {
   return (
-    <div className="max-w-4xl mx-auto h-full bg-white px-8 py-4 rounded-md overflow-y-auto">
+    <div className="max-w-4xl mx-auto h-full bg-white px-1 sm:px-8 py-4 rounded-md overflow-y-auto">
       <Heading title={title2} center nobold />
       <div className="relative flex-auto">
         {body2}
@@ -133,7 +136,7 @@ type Step3Props = {
 
 const Step3: React.FC<Step3Props> = ({ title3, body3 }) => {
   return (
-    <div className="max-w-4xl mx-auto h-full bg-white px-8 py-4 rounded-md">
+    <div className="max-w-4xl mx-auto h-full bg-white px-1 sm:px-8 py-4 rounded-md overflow-y-auto">
       <Heading title={title3} center nobold />
       <div className="relative flex-auto">
         {body3}

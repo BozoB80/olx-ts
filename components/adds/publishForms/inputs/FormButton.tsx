@@ -13,7 +13,7 @@ const FormButton: React.FC<FormButtonProps> = ({ onClick, icon, label, dark, sma
   return (
     <button
       onClick={onClick}
-      className={`flex ${small ? 'w-36' : 'w-full'} ${isDisabled ? 'text-gray-200 cursor-not-allowed' : ''} justify-center items-center text-base font-semibold gap-2 border-2 border-black transition hover:shadow-button rounded-[4px] p-1.5 
+      className={`flex ${small ? 'w-36' : 'w-full'} ${isDisabled ? 'bg-slate-100 border-none' : ''} justify-center items-center text-sm sm:text-base font-semibold gap-2 border-2 border-black transition hover:shadow-button rounded-[4px] p-1.5 
       ${dark ? 'bg-black text-white' : ''}`}
     >
       {icon}
