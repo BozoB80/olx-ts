@@ -1,3 +1,4 @@
+import MobilesForm from '@/components/adds/publishForms/MobilesForm';
 import CarsForm from '../../../components/adds/publishForms/CarsForm';
 
 
@@ -13,7 +14,7 @@ const PublishPage = ({ params: { category }}: PublishProps) => {
     <>
       {
         category === "Cars" ? <CarsForm /> :
-        category === "Mobile%20Phones" ? 'Mobiles' :
+        category === "Mobile%20Phones" ? <MobilesForm /> :
         category === "Real%20Estate" ? 'Estates' :
         "Form not available yet"
       }

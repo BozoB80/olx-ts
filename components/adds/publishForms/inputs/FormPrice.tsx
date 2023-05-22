@@ -18,10 +18,6 @@ const FormPrice: React.FC<FormPriceProps> = ({ register, required }) => {
     setPriceOnRequest((prevValue) => !prevValue);
   };
 
-  const getPriceValue = () => {
-    return priceOnRequest ? "Price on request" : "";
-  };
-
   return (
     <div className="w-full">
       <FormHeading label="price" />
@@ -33,8 +29,8 @@ const FormPrice: React.FC<FormPriceProps> = ({ register, required }) => {
             type="number"
             backgroundColor='gray.100'
             disabled={priceOnRequest}
-            value={getPriceValue()} // Set the value based on priceOnRequest
-            {...register("price", { required: !priceOnRequest && required })}
+            inputMode="numeric"
+            {...register("price", { required: !priceOnRequest && required, valueAsNumber: !priceOnRequest })}
           />
           <InputRightAddon fontSize={{ base: "sm", md: "initial" }} p={2}>
             EUR

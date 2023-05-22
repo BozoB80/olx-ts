@@ -293,26 +293,16 @@ const CarsForm = () => {
         register={register}
         onImageUpload={handleImageUpload}
       />
-      {/* <FormInput 
-        id="imageURL"
-        label="Images"
-        accept="image/*"
-        register={register}
-        placeholder="Insert images"
-        type="file"        
-        errors={errors}
-        handleImageUpload={handleImageUpload}
-      /> */}
     </div>
   );
 
   return (
     <StepperForm
-      title1="General info"
+      title1="General Info"
       body1={bodyContent}
       title2="Optional Info"
       body2={bodyContent2}
-      title3="Image"
+      title3="Images"
       body3={bodyContent3}
       onSubmit={handleSubmit(onSubmit)}
     />

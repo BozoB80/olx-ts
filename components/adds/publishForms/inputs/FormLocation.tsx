@@ -11,7 +11,6 @@ import { auth, db } from "@/firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { regions } from "@/utils/selectData";
 import { FieldValues, UseFormRegister } from "react-hook-form";
-import Select from "@/components/inputs/Select";
 import FormSelect from "./FormSelect";
 
 
@@ -60,7 +59,7 @@ const FormLocation: React.FC<FormLocationProps> = ({ register }) => {
         {switchLocation ? (
           <>
             <FormSelect
-              id="location"
+              id="region"
               options={regions}
               placeholder="Choose location"
               register={register}
