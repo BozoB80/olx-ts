@@ -5,7 +5,7 @@ import { Bars3Icon, ChatBubbleLeftIcon, HomeIcon, UserIcon } from "@heroicons/re
 import { PlusCircleIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import PublishNewAdd from "./adds/PublishNewAdd"
+import PublishNewAdd from "./ads/PublishNewAdd"
 import { debounce } from "@/utils/debounce"
 import { motion } from "framer-motion"
 import { slideIn } from "@/utils/motion"

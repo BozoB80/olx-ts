@@ -23,7 +23,7 @@ import usePublishModal from "@/hooks/usePublishModal";
 import { useRouter } from "next/navigation";
 import HeartUserButton from "@/components/user/HeartUserButton";
 import useFetchUserAdds from "@/firebase/useFetchUserItems";
-import ProductCardSmall from "@/components/adds/ProductCardSmall";
+import ProductCardSmall from "@/components/ads/ProductCardSmall";
 
 type ProfileProps = {
   id: string
@@ -127,7 +127,7 @@ const Profile = ({ id }: ProfileProps) => {
         </div>
       </div>
 
-      {/* fetch User Adds */}
+      {/* fetch User Ads */}
 
       <div className="flex flex-col">      
         <ProductCardSmall data={userItems} />

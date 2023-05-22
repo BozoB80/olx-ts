@@ -1,16 +1,16 @@
 'use client'
 
-import Container from "@/components/adds/details/ContainerDetails"
-import MainDetails from "@/components/adds/details/MainDetails"
-import { mobileDetails } from "@/utils/tableDetails"
+import Container from "@/components/ads/details/ContainerDetails"
+import MainDetails from "@/components/ads/details/MainDetails"
+import { estateDetails } from "@/utils/tableDetails"
 import { DocumentData } from "firebase/firestore"
 
-type MobileProps = {
+type EstateProps = {
   id: string
   details: DocumentData
 }
 
-const MobileDetails = ({ id, details }: MobileProps) => {
+const RealEstateDetails = ({ id, details }: EstateProps) => {
   return (
     <Container bground>
       <MainDetails 
@@ -21,14 +21,14 @@ const MobileDetails = ({ id, details }: MobileProps) => {
         userRef={details?.userRef}
         imageURL={details?.imageURL}
         top1={details?.region}
-        top2={details?.state}
+        top2={details?.type}
         top3={details?.createdAt}
         description={details?.description}
         details={details}
-        table={mobileDetails}
+        table={estateDetails}
       />
     </Container>
   );
 }
 
-export default MobileDetails;
+export default RealEstateDetails;

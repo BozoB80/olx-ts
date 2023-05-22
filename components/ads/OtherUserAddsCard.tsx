@@ -9,13 +9,13 @@ import { auth } from "@/firebase/firebase";
 
 type ProductCardSmallData = ProductCardSmallProps[];
 
-const OtherUserAddsCard = ({ adds }: { adds: ProductCardSmallData }) => {
+const OtherUserAddsCard = ({ ads }: { ads: ProductCardSmallData }) => {
   
   return (
     <Container>
       <h1 className="w-full uppercase sm:normal-case text-sm sm:text-2xl pt-1 pb-2">Other ads of user</h1>
       <div className="w-full gap-2 sm:gap-5 grid grid-rows-1 grid-flow-col overflow-x-auto pb-2">
-        {adds?.map((add) => {
+        {ads?.map((add) => {
           const createdAt = add.createdAt.toDate();
           const timeAgo = getTimeAgo(createdAt);
           const furnished =

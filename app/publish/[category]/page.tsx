@@ -1,5 +1,5 @@
-import MobilesForm from '@/components/adds/publishForms/MobilesForm';
-import CarsForm from '../../../components/adds/publishForms/CarsForm';
+import MobilesForm from '@/components/ads/publishForms/MobilesForm';
+import CarsForm from '../../../components/ads/publishForms/CarsForm';
 
 
 type PublishProps = {

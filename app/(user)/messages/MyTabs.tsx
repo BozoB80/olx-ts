@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react'
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "@/firebase/firebase";
-import { useCollection, useCollectionData } from "react-firebase-hooks/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
 import avatar from '@/assets/noavatar.png'
 import Image from "next/image";

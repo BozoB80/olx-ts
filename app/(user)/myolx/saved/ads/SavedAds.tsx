@@ -22,7 +22,7 @@ const SavedAds = () => {
 
       <div className="w-full">
       <div className="flex flex-col justify-center items-start">
-        <h1 className="text-2xl mb-3">Saved adds [{allLikedAdds?.length}]</h1>
+        <h1 className="text-2xl mb-3">Saved ads [{allLikedAdds?.length}]</h1>
         <div className="w-full py-2 sm:py-5 gap-2 sm:gap-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
           {products?.docs
             .filter((product) =>

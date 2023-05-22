@@ -1,7 +1,7 @@
 'use client'
 
 import useFetchUserAdds from '@/firebase/useFetchUserItems';
-import OtherUserAddsCard from '../adds/OtherUserAddsCard';
+import OtherUserAddsCard from '../ads/OtherUserAddsCard';
 import { DocumentData } from 'firebase/firestore';
 
 type OtherAddsProps = {
@@ -16,7 +16,7 @@ const OtherUserAdds = ({ id, details }: OtherAddsProps) => {
   
   return (
     <div className="bg-white sm:w-full lg:w-[832px] rounded-[4px] flex justify-between gap-8">
-      {filteredItems.length > 0 ? <OtherUserAddsCard adds={filteredItems} /> : ''}
+      {filteredItems.length > 0 ? <OtherUserAddsCard ads={filteredItems} /> : ''}
     </div>
   )
 }

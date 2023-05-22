@@ -1,5 +1,5 @@
 import Categories from "@/components/Categories";
-import AllProducts from "@/components/adds/AllProducts";
+import AllProducts from "@/components/ads/AllProducts";
 
 export default function Home() {
   return (
