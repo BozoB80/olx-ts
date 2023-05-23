@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { db } from "@/firebase/firebase"; 
 
 const useFetchCollection = (collectionName: string, sort: any) => {
-  const [data, setData] = useState<DocumentData>([]);
+  const [data, setData] = useState([]);
   
   const getCollection = () => {
     
