@@ -21,22 +21,29 @@ const ProductCategoryCard = ({ data, bground }: { data: ProductCardSmallData, bg
   }, [data, setData]);
 
   const itemsToDisplay = sortedData.length > 0 ? sortedData : storeData;
-  return (
-    <div className='p-2 sm:p-5 bg-white flex flex-col'>
-      <div>
 
-      
-        <h1>Some text</h1>
+  return (
+    <div className='bg-white flex flex-col '>
+      <div className='p-2 sm:p-5'>
+        {/* <SortButton 
+          label='Filters'
+        /> */}
+      </div>
+
+      <div className='bg-[#f1f4f5] p-2 sm:p-5'>
         <div className='w-full flex justify-between items-center gap-8 bg-[#f1f4f5]'>
-          <button onClick={() => sortDataByPrice('asc')}>Sort by Price (Asc)</button>
+          <p className='font-semibold'>{itemsToDisplay.length} RESULTS</p>
           <SortButton
             label='Sort by'
+            buttons={[
+              { label: 'Lowest price', onClick: () => sortDataByPrice('asc') },
+              { label: 'Highest price', onClick: () => sortDataByPrice('desc') },
+              { label: 'Oldest', onClick: () => sortDataByDate('asc') },
+              { label: 'Newest', onClick: () => sortDataByDate('desc') }
+            ]}
           />
-          <button onClick={() => sortDataByPrice('desc')}>Sort by Price (Desc)</button>
-          <button onClick={() => sortDataByDate('asc')}>Sort by Date (Asc)</button>
-          <button onClick={() => sortDataByDate('desc')}>Sort by Date (Desc)</button>
         </div>
-        <div className='grid gap-2 sm:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 bg-[#f1f4f5]'>
+        <div className='grid gap-2 sm:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 py-2 sm:py-5'>
           {itemsToDisplay?.map((add: ProductCardSmallProps) => {
           
             const createdAt = add.createdAt.toDate();
