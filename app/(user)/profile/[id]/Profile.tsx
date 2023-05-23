@@ -74,7 +74,7 @@ const Profile = ({ id }: ProfileProps) => {
           ) : (
             <>
               <Button label="Phone" icon={<PhoneIcon className="w-5 h-5" />} />
-              <Button label="Message" icon={<ChatBubbleLeftIcon className="w-5 h-5" />} onClick={() => router.push(`/add/edit/${id}`)} />
+              <Button label="Message" icon={<ChatBubbleLeftIcon className="w-5 h-5" />} onClick={() => router.push(`/ad/edit/${id}`)} />
             </>
           )}
         </div>

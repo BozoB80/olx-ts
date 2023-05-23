@@ -37,7 +37,7 @@ const PublishNewAdd: React.FC<PublishProps> = ({ setPublish }) => {
           <motion.div {...slideAnimation({ direction: 'up'})}  className="absolute inset-1/3 w-[550px] h-[550px] bg-white rounded-md">
             <div className="flex flex-col w-full justify-center items-center p-3">
               <div className="flex w-full justify-between items-center">
-                <Heading title="Publish add" />
+                <Heading title="Publish ad" />
                 <button type="button" onClick={onClose}>
                   <XMarkIcon className="h-6 w-6" />
                 </button>

@@ -46,7 +46,7 @@ const SavedAds = () => {
               
               return (
                 <Link
-                  href={`/add/${product.id}`}
+                  href={`/ad/${product.id}`}
                   key={add.title}
                   className="relative flex flex-col h-[270px] shadow-xl rounded-md bg-white cursor-pointer"
                 >

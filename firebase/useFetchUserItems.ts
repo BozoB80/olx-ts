@@ -29,10 +29,10 @@ const useFetchUserAdds = ( id: string ) => {
       })
 
     } catch (error: any) {
-      console.log("No ads displayed");
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
+        console.log("No ads displayed");
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
     }
   }
 

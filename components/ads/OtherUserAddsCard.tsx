@@ -23,7 +23,7 @@ const OtherUserAddsCard = ({ ads }: { ads: ProductCardSmallData }) => {
 
           return (
             <Link
-              href={`/add/${add.id}`}
+              href={`/ad/${add.id}`}
               key={add.id}
               className="flex flex-col w-48 h-[270px] rounded-md bg-white cursor-pointer shadow-2xl"
             >

@@ -20,7 +20,7 @@ const ProductCardSmall = ({ data, bground }: { data: ProductCardSmallData, bgrou
 
       return (
       <motion.div key={add.id} {...slideAnimation({ direction: 'up'})}>
-        <Link href={`/add/${add.id}`} className="flex flex-col h-[270px] rounded-md bg-white cursor-pointer shadow-2xl">
+        <Link href={`/ad/${add.id}`} className="flex flex-col h-[270px] rounded-md bg-white cursor-pointer shadow-2xl">
           <div className='overflow-hidden rounded-t-md'>      
             <Image 
               src={add.imageURL[0]}
