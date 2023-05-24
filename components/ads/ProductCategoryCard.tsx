@@ -14,14 +14,14 @@ import SortButton from '../inputs/SortButton';
 type ProductCardSmallData = ProductCardSmallProps[]
 
 const ProductCategoryCard = ({ data }: { data: ProductCardSmallData }) => {
-  const { data: storeData, sortedData, setData, sortDataByPrice, sortDataByDate, filterByFuelType, resetFilters } = useProductSortingStore();
+  const { data: storeData, sortedData, filteredData, setData, sortDataByPrice, sortDataByDate, filterByFuelType, resetFilters } = useProductSortingStore();
 
   useEffect(() => {
-    setData(data)
-    resetFilters()
-  }, [data, setData, resetFilters]);  
+    setData(data);
+    resetFilters();
+  }, [data, setData, resetFilters]);
 
-  const itemsToDisplay = sortedData.length > 0 ? sortedData : storeData;
+  const itemsToDisplay = sortedData.length > 0 ? sortedData : filteredData;
 
   return (
     <div className='bg-white flex flex-col '>

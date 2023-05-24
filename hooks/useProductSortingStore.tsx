@@ -8,6 +8,7 @@ type FuelType = 'Petrol' | 'Diesel' | 'Gas' | 'Hybrid' | 'Electric';
 interface ProductSortingStore {
   data: ProductCardSmallProps[];
   sortedData: ProductCardSmallProps[];
+  filteredData: ProductCardSmallProps[];
   selectedFuelTypes: FuelType[];
 
   setData: (data: ProductCardSmallProps[]) => void;
@@ -21,14 +22,18 @@ const useProductSortingStore = create<ProductSortingStore>((set) => ({
   data: [],
   sortedData: [],
   selectedFuelTypes: [],
+  filteredData: [],
 
   setData: (data) => {
-    set({ data });
+    set((state) => ({
+      data,
+      filteredData: data,
+    }));
   },
 
   sortDataByPrice: (order) => {
     set((state) => {
-      const sortedData = [...state.data];
+      const sortedData = [...state.filteredData];
       sortedData.sort((a, b) => {
         if (order === 'asc') {
           return a.price - b.price;
@@ -42,7 +47,7 @@ const useProductSortingStore = create<ProductSortingStore>((set) => ({
 
   sortDataByDate: (order) => {
     set((state) => {
-      const sortedData = [...state.data];
+      const sortedData = [...state.filteredData];
       sortedData.sort((a, b) => {
         const dateA = (a.createdAt as Timestamp).toDate();
         const dateB = (b.createdAt as Timestamp).toDate();
@@ -58,7 +63,7 @@ const useProductSortingStore = create<ProductSortingStore>((set) => ({
 
   filterByFuelType: (fuelType?: FuelType) => {
     set((state) => {
-      const selectedFuelTypes = [...state.selectedFuelTypes];  
+      const selectedFuelTypes = [...state.selectedFuelTypes];
       if (fuelType) {
         if (selectedFuelTypes.includes(fuelType)) {
           // Remove fuelType if already selected
@@ -73,11 +78,17 @@ const useProductSortingStore = create<ProductSortingStore>((set) => ({
         selectedFuelTypes.length = 0;
       }
   
-      const sortedData = state.data.filter((item) =>
-        selectedFuelTypes.includes(item.fuel as FuelType)
-      );
+      let filteredData;
+      if (selectedFuelTypes.length === 0) {
+        // Display all items if no fuel types are selected
+        filteredData = state.data;
+      } else {
+        filteredData = state.data.filter((item) =>
+          selectedFuelTypes.includes(item.fuel as FuelType)
+        );
+      }
   
-      return { selectedFuelTypes, sortedData };
+      return { selectedFuelTypes, filteredData };
     });
   },
 
@@ -85,6 +96,7 @@ const useProductSortingStore = create<ProductSortingStore>((set) => ({
     set((state) => ({
       sortedData: [],
       selectedFuelTypes: [],
+      filteredData: state.data, 
     }));
   },
 }));

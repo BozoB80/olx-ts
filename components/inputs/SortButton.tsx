@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import { useState } from 'react';
 import {
@@ -13,8 +13,8 @@ import {
 interface SortButtonProps {
   label: string;
   buttons: { label: string; onClick?: () => void }[];
-  resetSorting: () => void
-  multiple?: boolean
+  resetSorting: () => void;
+  multiple?: boolean;
 }
 
 const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, multiple = true }) => {
@@ -22,14 +22,22 @@ const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, m
   const initialLabel = label;
 
   const handleClick = (buttonLabel: string, onClick?: () => void) => {
-    if (selectedLabels.includes(buttonLabel)) {
-      setSelectedLabels(selectedLabels.filter((label) => label !== buttonLabel));
-      
+    if (!multiple) {
+      setSelectedLabels([buttonLabel]);
+      if (onClick) onClick();
     } else {
-      setSelectedLabels(multiple ? [...selectedLabels, buttonLabel] : [buttonLabel]);
-    }
-    if (onClick) {
-      onClick();
+      if (selectedLabels.includes(buttonLabel)) {
+        // Remove the label if already selected
+        const updatedLabels = selectedLabels.filter((label) => label !== buttonLabel);
+        setSelectedLabels(updatedLabels);
+      } else {
+        // Add the label if not already selected
+        setSelectedLabels([...selectedLabels, buttonLabel]);
+      }
+      if (selectedLabels.length === 0) {
+        resetSorting();
+      }
+      if (onClick) onClick();
     }
   };
 
@@ -70,7 +78,7 @@ const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, m
                       {...(isActive && { textColor: "red.600", fontWeight: 'bold', border: '2px' })}
                       onClick={() => {
                         handleClick(button.label, button.onClick);
-                        onClose();
+                        !multiple ? onClose() : ''
                       }}
                     >
                       {button.label}

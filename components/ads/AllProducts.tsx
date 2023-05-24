@@ -23,7 +23,6 @@ const AllProducts = () => {
       ) : (
         <ProductCategoryCard 
           data={filteredData}
-          bground
         />
       )}
     
