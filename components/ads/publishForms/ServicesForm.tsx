@@ -1,26 +1,23 @@
 'use client'
 
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import StepperForm from "./StepperForm";
-import { useCollectionData } from "react-firebase-hooks/firestore";
-import {collection, addDoc, Timestamp } from "firebase/firestore";
 import { auth, db, storage } from "@/firebase/firebase";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { ChangeEvent } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import FormLocation from "./inputs/FormLocation";
-import FormRadio from "./inputs/FormRadio";
-import FormPrice from "./inputs/FormPrice";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import StepperForm from "./StepperForm";
 import FormInput from "./inputs/FormInput";
-import FormSelect from "./inputs/FormSelect";
-import { colors } from "@/utils/selectData";
-import FormTextarea from "./inputs/FormTextarea";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import FormImage from './inputs/FormImage';
+import FormLocation from "./inputs/FormLocation";
 import FormAvailability from "./inputs/FormAvailability";
+import FormPrice from "./inputs/FormPrice";
+import FormTextarea from "./inputs/FormTextarea";
+import FormRadio from "./inputs/FormRadio";
+import FormSelect from "./inputs/FormSelect";
+import FormImage from "./inputs/FormImage";
 
-const MobilesForm = () => {
+const ServicesForm = () => {
   const [user] = useAuthState(auth)
-  const [ manufacturer ] = useCollectionData(collection(db, '/categories/j2zFFZEg3vvbq91jAQZh/manufacturer'))  
 
   const {
     register,
@@ -31,17 +28,9 @@ const MobilesForm = () => {
   } = useForm<FieldValues>({
     defaultValues: {
       title: "",
-      manufacturer: "",
       region: "",
       availability: "",
-      state: "",
-      price: Number(0) || 'Price on request',
-      flash: "",
-      system: "",
-      color: "",
-      memory: "",
-      ram: "",
-      screen: "",    
+      price: Number(0) || 'Price on request',   
       description: "",
       imageURL: []
     },
@@ -66,7 +55,7 @@ const MobilesForm = () => {
       await addDoc(collection(db, "products"), {
         ...data,
         createdAt: Timestamp.now().toDate(),
-        category: "Mobile Phones",
+        category: "Services",
         createdBy: user?.displayName,
         userRef: user?.uid,
         imageURL: imageUrls
@@ -86,18 +75,15 @@ const MobilesForm = () => {
           errors={errors}
           required        
         />
-        {manufacturer && (
-          <FormSelect
-            id="manufacturer"
-            label="manufacturer"
-            placeholder="Choose manufacturer"
-            options={manufacturer}
-            register={register}
-          />
-        )}
       </div>
       <FormLocation register={register} />
-      <FormAvailability register={register} setValue={setValue} />
+      <FormAvailability register={register} setValue={setValue} noState />
+      
+    </div>
+  )
+
+  const bodyContent2 = (
+    <div className="flex flex-col justify-center items-center gap-5">
       <FormPrice register={register} required />
       <FormTextarea 
         id="description"
@@ -105,40 +91,7 @@ const MobilesForm = () => {
         placeholder="Describe your product"
         register={register}
         errors={errors}
-      />
-    </div>
-  )
-
-  const bodyContent2 = (
-    <div className="flex flex-col justify-center items-center gap-5">
-      <div className="w-full flex gap-2 sm:gap-10">
-        <div className="w-1/2 flex flex-col">
-          <FormRadio 
-            id="system"
-            label="Operating system"
-            options={['Android', 'iOS', 'Symbian', 'Other']}
-            register={register}
-            setValue={setValue}
-          />
-          <FormRadio 
-            id="flash"
-            label="Flash"
-            options={['LED', 'Dual-LED', 'Xenon', 'Yes']}
-            register={register}
-            setValue={setValue}
-          />
-        </div>
-        <div className="w-1/2 flex flex-col">
-          <FormSelect 
-            id="color"
-            label="Color"
-            placeholder="Choose Color"
-            options={colors}
-            register={register}
-          />
-        </div>
-
-      </div>
+      />  
     </div>
   )
 
@@ -164,4 +117,4 @@ const MobilesForm = () => {
   );
 }
 
-export default MobilesForm;
+export default ServicesForm;

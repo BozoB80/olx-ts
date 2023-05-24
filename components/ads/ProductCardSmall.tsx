@@ -16,7 +16,7 @@ const ProductCardSmall = ({ data, bground }: { data: ProductCardSmallData, bgrou
       
         const createdAt = add.createdAt.toDate();
         const timeAgo = getTimeAgo(createdAt);
-        const furnished = add.furnished === true ? 'Furnished' : 'Not furnished'
+        const furnished = add.furnished && add.furnished === true ? 'Furnished' : 'Not furnished'
 
       return (
       <motion.div key={add.id} {...slideAnimation({ direction: 'up'})}>
@@ -33,8 +33,8 @@ const ProductCardSmall = ({ data, bground }: { data: ProductCardSmallData, bgrou
           <div className="flex flex-col gap-2 p-2 overflow-hidden">
             <h1 className="pb-2 truncate">{add.title}</h1>
             <div className="flex gap-2">
-              <p className="text-[10px] px-0.5 font-semibold border border-black rounded-sm capitalize">{add.fuel || add.type || add.state}</p>
-              <p className="text-[10px] px-0.5 font-semibold border border-black rounded-sm">{add.mileage || add.ram || furnished}</p>
+              <p className="text-[10px] px-0.5 font-semibold border border-black rounded-sm capitalize">{add.fuel || add.type || add.state || add.availability}</p>
+              <p className="text-[10px] px-0.5 font-semibold border border-black rounded-sm">{add.mileage || add.ram || furnished || add.availability }</p>
             </div>
             <div className="flex justify-between items-center">
               <h1 className="text-xs">

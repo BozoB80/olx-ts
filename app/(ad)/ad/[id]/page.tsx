@@ -4,6 +4,7 @@ import useFetchDocument from "@/firebase/useFetchDocument"
 import CarsDetails from "./CarsDetails"
 import MobileDetails from "./MobileDetails"
 import RealEstateDetails from "./RealEstateDetails"
+import ServicesDetails from './ServicesDetails';
 
 type AddProps = {
   params: {
@@ -19,6 +20,7 @@ const AddPage = ({ params: { id }}: AddProps) => {
       {document?.category === "Cars" ? <CarsDetails id={id} details={document} />
       : document?.category === "Mobile Phones" ? <MobileDetails id={id} details={document} />
       : document?.category === "Real Estate" ? <RealEstateDetails id={id} details={document} />
+      : document?.category === "Services" ? <ServicesDetails id={id} details={document} />
       : "Not constructed yet" }      
     </div>
   );

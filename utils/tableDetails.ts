@@ -30,3 +30,10 @@ export const estateDetails = [
   { label: 'Region', value: "region" },
   { label: 'Type', value: "type" },
 ]
+
+export const generalDetails = [
+  { label: 'Category', value: "category" },
+  { label: 'Availability', value: "availability" },
+  { label: 'Region', value: "region" },
+  { label: 'State', value: "state" },
+]

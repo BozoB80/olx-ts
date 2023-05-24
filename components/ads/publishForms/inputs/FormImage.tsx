@@ -74,7 +74,7 @@ const FormImage: React.FC<FormImageProps> = ({ register, onImageUpload }) => {
       </div>
 
       <div
-        className={`w-full h-48 flex flex-col justify-center items-center border-2 border-dashed rounded-lg p-4 ${
+        className={`w-full h-80 flex flex-col justify-center items-center border-2 border-dashed rounded-lg p-4 ${
           isDragging ? "bg-gray-100" : ""
         }`}
         onDragEnter={handleDragEnter}
