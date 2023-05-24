@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from 'react';
 import {
   Popover,
   PopoverTrigger,
@@ -12,50 +13,65 @@ import {
 interface SortButtonProps {
   label: string;
   buttons: { label: string; onClick?: () => void }[];
+  resetSorting: () => void
+  multiple?: boolean
 }
 
-const SortButton: React.FC<SortButtonProps> = ({ label, buttons }) => {
+const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, multiple = true }) => {
+  const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
+  const initialLabel = label;
+
+  const handleClick = (buttonLabel: string, onClick?: () => void) => {
+    if (selectedLabels.includes(buttonLabel)) {
+      setSelectedLabels(selectedLabels.filter((label) => label !== buttonLabel));
+      
+    } else {
+      setSelectedLabels(multiple ? [...selectedLabels, buttonLabel] : [buttonLabel]);
+    }
+    if (onClick) {
+      onClick();
+    }
+  };
+
+  const isButtonActive = (buttonLabel: string) => {
+    return selectedLabels.includes(buttonLabel);
+  };
+
   return (
     <Popover>
       {({ isOpen, onClose }) => (
         <>
           <PopoverTrigger>
             <Button
-              colorScheme="gray.500"
+              colorScheme={selectedLabels.length > 0 ? "red" : "gray.500"}
               _hover={{ backgroundColor: "black", textColor: "white" }}
               variant="outline"
               size="sm"
             >
-              {label}
+              {selectedLabels.length > 0 ? selectedLabels.join(", ") : initialLabel}
             </Button>
           </PopoverTrigger>
           <PopoverContent w={{ base: "100vw", md: "initial" }}>
             <PopoverArrow />
-            <PopoverBody
-              display="grid"
-              gridTemplateColumns="repeat(2, 1fr)"
-              gridGap={2}
-            >
+            <PopoverBody display="grid" gridTemplateColumns="repeat(2, 1fr)" gridGap={2}>
               {buttons &&
                 buttons.map((button, index) => {
-                  const handleClick = (onClick?: () => void) => {
-                    if (onClick) {
-                      onClick();
-                    }
-                    onClose();
-                  };
+                  const isActive = isButtonActive(button.label);
 
                   return (
                     <Button
                       key={index}
-                      colorScheme="gray.500"
+                      colorScheme={isActive ? "red" : "gray"}
                       variant="outline"
                       w="100%"
                       fontSize="sm"
                       size="sm"
-                      _active={{ backgroundColor: "gray.700" }}
                       _hover={{ backgroundColor: "black", textColor: "white" }}
-                      onClick={() => handleClick(button.onClick)}
+                      {...(isActive && { textColor: "red.600", fontWeight: 'bold', border: '2px' })}
+                      onClick={() => {
+                        handleClick(button.label, button.onClick);
+                        onClose();
+                      }}
                     >
                       {button.label}
                     </Button>
