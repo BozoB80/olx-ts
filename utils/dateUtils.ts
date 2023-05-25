@@ -1,5 +1,5 @@
 export function getTimeAgo(date: Date): string {
-  const diffMillis: number = new Date().getTime() - date.getTime();
+  const diffMillis: number = Date.now() - date.getTime();
   const diffMinutes: number = Math.floor(diffMillis / (1000 * 60));
   const diffHours: number = Math.floor(diffMillis / (1000 * 60 * 60));
   const diffDays: number = Math.floor(diffMillis / (1000 * 60 * 60 * 24));

@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import HeartUserButton from "@/components/user/HeartUserButton";
 import useFetchUserAdds from "@/firebase/useFetchUserItems";
 import ProductCardSmall from "@/components/ads/ProductCardSmall";
+import { getTimeAgo } from "@/utils/dateUtils";
 
 type ProfileProps = {
   id: string
@@ -40,6 +41,8 @@ const Profile = ({ id }: ProfileProps) => {
 
   const date = userData && userData.createdAt.toDate().toLocaleDateString('en-GB')
 
+  const signedIn = userData && userData?.lastSignInTime?.toDate()
+  const lastSignedIn = signedIn && getTimeAgo(signedIn)  
 
   return (
     <div className="flex flex-col lg:flex-row w-full p-1 sm:p-5">
@@ -107,11 +110,11 @@ const Profile = ({ id }: ProfileProps) => {
                   </div>
                   <div className="flex justify-between items-center">
                     <p>OLX ID</p>
-                    <p>{user && user.id.slice(0, 4)}</p>
+                    <p>{user && user.id.slice(0, 6)}</p>
                   </div>
                   <div className="flex justify-between items-center">
                     <p>Online</p>
-                    <p>an hour ago</p>
+                    {lastSignedIn}
                   </div>
                 </div>
               </div>

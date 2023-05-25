@@ -28,7 +28,7 @@ const MessageHeader: React.FC<MessageHeaderProps> = ({senderName, receiverName, 
         />
         <p className='font-semibold'>{user?.displayName === senderName ? receiverName : senderName}</p>
         <Image 
-          src={imageURL[0]}
+          src={imageURL}
           alt={title}
           width={60}
           height={60}

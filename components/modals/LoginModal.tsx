@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/firebase/firebase";
+import { auth, db } from "@/firebase/firebase";
 import { useRouter } from "next/navigation";
 import { useToast } from "@chakra-ui/react";
 import Modal from "./Modal";
@@ -12,6 +12,7 @@ import Input from "../inputs/Input";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
 import useResetModal from "@/hooks/useResetModal";
+import { Timestamp, doc, setDoc } from "firebase/firestore";
 
 
 const LoginModal = () => {
@@ -39,11 +40,22 @@ const LoginModal = () => {
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
+
+        setDoc(doc(db, "users", user.uid), { 
+          lastSignInTime: Timestamp.now().toDate()
+        }, { merge: true })
         
-        router.push('/')
-        loginModal.onClose()
-        toast({ position: 'top', status: 'success', title: `Welcome ${user.displayName}`})
-        setIsLoading(false)     
+        .then (() => {
+          router.push('/')
+          loginModal.onClose()
+          toast({ position: 'top', status: 'success', title: `Welcome ${user.displayName}`})
+          setIsLoading(false)
+        })
+        .catch((error) => {
+          // Error updating Firestore document
+          console.error("Error updating Firestore document:", error);
+        });
+        
       })
       .catch((error) => {
         const errorCode = error.code;

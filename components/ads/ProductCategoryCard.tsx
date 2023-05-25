@@ -10,11 +10,14 @@ import { slideAnimation } from '@/utils/motion';
 import { useEffect } from 'react';
 import useProductSortingStore from '../../hooks/useProductSortingStore';
 import SortButton from '../inputs/SortButton';
+import { useSearchParams } from 'next/navigation';
 
 type ProductCardSmallData = ProductCardSmallProps[]
 
 const ProductCategoryCard = ({ data }: { data: ProductCardSmallData }) => {
-  const { data: storeData, sortedData, filteredData, setData, sortDataByPrice, sortDataByDate, filterByFuelType, resetFilters } = useProductSortingStore();
+  const { sortedData, filteredData, setData, sortDataByPrice, sortDataByDate, filterByFuelType, filterByStateType, resetFilters } = useProductSortingStore();
+  const searchParams = useSearchParams()
+  const category = searchParams?.get('category')  
 
   useEffect(() => {
     setData(data);
@@ -25,17 +28,28 @@ const ProductCategoryCard = ({ data }: { data: ProductCardSmallData }) => {
 
   return (
     <div className='bg-white flex flex-col '>
-      <div className='p-2 sm:p-5'>
-      <SortButton
-        label='Fuel'
+      <div className='p-2 sm:p-5 space-x-2'>
+        {category === 'Cars' && (
+          <SortButton
+            label='Fuel'
+            buttons={[
+              { label: 'Petrol', onClick: () => filterByFuelType('Petrol') },
+              { label: 'Diesel', onClick: () => filterByFuelType('Diesel') },
+              { label: 'Gas', onClick: () => filterByFuelType('Gas') },
+              { label: 'Hybrid', onClick: () => filterByFuelType('Hybrid') },
+              { label: 'Electric', onClick: () => filterByFuelType('Electric') },
+            ]}
+            resetSorting={resetFilters}
+          />
+        )}
+      <SortButton 
+        label='State'
         buttons={[
-          { label: 'Petrol', onClick: () => filterByFuelType('Petrol') },
-          { label: 'Diesel', onClick: () => filterByFuelType('Diesel') },
-          { label: 'Gas', onClick: () => filterByFuelType('Gas') },
-          { label: 'Hybrid', onClick: () => filterByFuelType('Hybrid') },
-          { label: 'Electric', onClick: () => filterByFuelType('Electric') },
+          { label: 'New', onClick: () => filterByStateType('New')},
+          { label: 'Used', onClick: () => filterByStateType('Used')}
         ]}
         resetSorting={resetFilters}
+        multiple={false}
       />
       </div>
 

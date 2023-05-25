@@ -4,17 +4,20 @@ import { Timestamp } from 'firebase/firestore';
 
 type SortOrder = 'asc' | 'desc';
 type FuelType = 'Petrol' | 'Diesel' | 'Gas' | 'Hybrid' | 'Electric';
+type StateType = 'New' | 'Used'
 
 interface ProductSortingStore {
   data: ProductCardSmallProps[];
   sortedData: ProductCardSmallProps[];
   filteredData: ProductCardSmallProps[];
   selectedFuelTypes: FuelType[];
+  selectedStateTypes: StateType[]
 
   setData: (data: ProductCardSmallProps[]) => void;
   sortDataByPrice: (order: SortOrder) => void;
   sortDataByDate: (order: SortOrder) => void;
   filterByFuelType: (fuelType: FuelType) => void;
+  filterByStateType: (stateType: StateType) => void;
   resetFilters: () => void;
 }
 
@@ -22,6 +25,7 @@ const useProductSortingStore = create<ProductSortingStore>((set) => ({
   data: [],
   sortedData: [],
   selectedFuelTypes: [],
+  selectedStateTypes: [],
   filteredData: [],
 
   setData: (data) => {
@@ -92,10 +96,36 @@ const useProductSortingStore = create<ProductSortingStore>((set) => ({
     });
   },
 
+  filterByStateType: (stateType?: StateType) => {
+    set((state) => {
+      const selectedStateTypes = [...state.selectedStateTypes];
+      let filteredData;
+      
+      if (stateType) {
+        // Remove any previously selected state types
+        selectedStateTypes.length = 0;
+        selectedStateTypes.push(stateType);
+        
+        // Filter data based on the selected state type
+        filteredData = state.data.filter((item) =>
+          item.state === stateType
+        );
+      } else {
+        // Clear all selected state types and display all items
+        if (selectedStateTypes.length = 0) {
+          filteredData = state.data;
+        }
+      }
+  
+      return { selectedStateTypes, filteredData };
+    });
+  },  
+
   resetFilters: () => {
     set((state) => ({
       sortedData: [],
       selectedFuelTypes: [],
+      selectedStateTypes: [],
       filteredData: state.data, 
     }));
   },
