@@ -23,7 +23,13 @@ const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, m
 
   const handleClick = (buttonLabel: string, onClick?: () => void) => {
     if (!multiple) {
-      setSelectedLabels([buttonLabel]);
+      if (selectedLabels.includes(buttonLabel)) {
+        // Reset the sorting if the button is already selected
+        resetSorting();
+        setSelectedLabels([]);
+      } else {
+        setSelectedLabels([buttonLabel]);
+      }
       if (onClick) onClick();
     } else {
       if (selectedLabels.includes(buttonLabel)) {

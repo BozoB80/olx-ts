@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { ProductCardSmallProps } from '@/types';
 import { getTimeAgo } from '@/utils/dateUtils';
 import { slideAnimation } from '@/utils/motion';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useProductSortingStore from '../../hooks/useProductSortingStore';
 import SortButton from '../inputs/SortButton';
 
