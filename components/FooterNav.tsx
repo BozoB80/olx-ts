@@ -1,11 +1,10 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { Bars3Icon, ChatBubbleLeftIcon, HomeIcon, UserIcon } from "@heroicons/react/24/outline"
-import { PlusCircleIcon } from "@heroicons/react/24/solid"
+import { Bars3Icon, ChatBubbleLeftIcon, HomeIcon, UserIcon, PlusCircleIcon } from "@heroicons/react/24/outline"
+import { Bars3Icon as Bars3IconS, ChatBubbleLeftIcon as ChatSolid, HomeIcon as HomeSolid, UserIcon as UserSolid, PlusCircleIcon as PlusSolid } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import PublishNewAdd from "./ads/PublishNewAdd"
 import { debounce } from "@/utils/debounce"
 import { motion } from "framer-motion"
 import { slideIn } from "@/utils/motion"
@@ -23,22 +22,31 @@ const FooterNav = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true)
   const [toggleMenu, setToggleMenu] = useState(false)
+  const [activeButton, setActiveButton] = useState('Home')
   const router = useRouter()
 
   const currentUser = auth.currentUser
 
-  const publishAdd = () => {
-    currentUser ? publishModal.onOpen() : loginModal.onOpen()
-  }
-  
-  const isLoggedIn = () => {
-    currentUser ? setToggleMenu(true) : loginModal.onOpen()
+  const messageLink = () => {
+    currentUser ? router.push('/messages') : loginModal.onOpen()
+    setActiveButton('Messages')
   }
 
-  const profileLink = () => {
-    currentUser ? router.push(`/profile/${currentUser.uid}`) : loginModal.onOpen()
+  const publishAdd = () => {
+    currentUser ? publishModal.onOpen() : loginModal.onOpen()
+    setActiveButton('Publish')
   }
   
+  const profileLink = () => {
+    currentUser ? router.push(`/profile/${currentUser.uid}`) : loginModal.onOpen()
+    setActiveButton('Profile')
+  }
+
+  const isLoggedIn = () => {
+    currentUser ? setToggleMenu(true) : loginModal.onOpen()
+    setActiveButton('MyOlx')
+  }
+
 
   const handleScroll = debounce({
     func: () => {
@@ -48,7 +56,7 @@ const FooterNav = () => {
   
       setPrevScrollPos(currentScrollPos);
     },
-    wait: 100,
+    wait: 50,
     immediate: false,
   });
 
@@ -78,24 +86,24 @@ const FooterNav = () => {
         whileInView="show"
         className={`flex fixed ${visible ? 'bottom-0 z-50' : '-bottom-96 -z-50'} bg-white shadow-black shadow-2xl w-full justify-around items-center py-2`}
       >
-        <Link href="/" className="flex flex-col justify-center items-center">
-          <HomeIcon className="w-5 h-5" />
+        <Link href="/" onClick={() => setActiveButton('Home')} className="flex flex-col justify-center items-center">
+          {activeButton === 'Home' ? <HomeSolid className="w-5 h-5 transition-all duration-300" /> : <HomeIcon className="w-5 h-5 transition-all duration-300" />}
           <p className="text-xs">Home</p>
         </Link>
-        <div className="flex flex-col justify-center items-center">
-          <ChatBubbleLeftIcon className="w-5 h-5" />
+        <div onClick={messageLink} className="flex flex-col justify-center items-center">
+          {activeButton === 'Messages' ? <ChatSolid className="w-5 h-5" /> : <ChatBubbleLeftIcon className="w-5 h-5" />}
           <p className="text-xs">Messages</p>
         </div>
         <div onClick={publishAdd} className="flex flex-col justify-center items-center">
-          <PlusCircleIcon className="w-5 h-5" />
+          {activeButton === 'Publish' ? <PlusSolid className="w-5 h-5" /> : <PlusCircleIcon className="w-5 h-5" />}
           <p className="text-xs">Publish</p>
         </div>
         <div onClick={profileLink} className="flex flex-col justify-center items-center">
-          <UserIcon className="w-5 h-5" />
+          {activeButton === 'Profile' ? <UserSolid className="w-5 h-5" /> : <UserIcon className="w-5 h-5" />}
           <p className="text-xs">Profile</p>
         </div>
         <div onClick={isLoggedIn} className="flex flex-col justify-center items-center">
-          <Bars3Icon className="w-5 h-5" />
+          {activeButton === 'MyOlx' ? <Bars3IconS className="w-5 h-5" /> : <Bars3Icon className="w-5 h-5" />}
           <p className="text-xs">My OLX</p>
         </div>
       </motion.div>
@@ -105,7 +113,7 @@ const FooterNav = () => {
            variants={slideIn({ direction: 'right', type: 'tween', delay: 0.2, duration: 0.5 })}
            initial="hidden"
            whileInView="show"
-           className="absolute top-0 w-full h-auto bg-white p-3 z-50 overflow-y-hidden"
+           className="absolute top-0 w-full h-auto bg-white p-3 z-40 overflow-y-hidden"
          >
            <MenuItemList logoutUser={logoutUser} setToggleMenu={setToggleMenu} />                  
          </motion.div>

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import MenuItem from "./MenuItem"
 import { CircleStackIcon, ArrowLeftOnRectangleIcon, BuildingStorefrontIcon, TrophyIcon, NewspaperIcon, ExclamationCircleIcon, EyeSlashIcon, MinusCircleIcon, ArrowPathIcon, TruckIcon, UserIcon, MagnifyingGlassIcon, LifebuoyIcon, MegaphoneIcon, KeyIcon, ArrowTrendingUpIcon, LockClosedIcon, Cog8ToothIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { auth } from "@/firebase/firebase"
+import { useAuthState } from "react-firebase-hooks/auth"
 
 interface MenuItemListProps {
   logoutUser: () => void
@@ -12,6 +13,8 @@ interface MenuItemListProps {
 
 const MenuItemList: React.FC<MenuItemListProps> = ({ logoutUser, setToggleMenu }) => {
   const router = useRouter()
+
+  const [ user ] = useAuthState(auth)  
 
   return (
     <>
