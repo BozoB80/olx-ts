@@ -28,7 +28,7 @@ const ProductCategoryCard = ({ data }: { data: ProductCardSmallData }) => {
 
   return (
     <div className='bg-white flex flex-col '>
-      <div className='p-2 sm:p-5 space-x-2'>
+      <motion.div {...slideAnimation({ direction: 'left' })} className='p-2 sm:p-5 space-x-2'>
         {category === 'Cars' && (
           <SortButton
             label='Fuel'
@@ -42,32 +42,35 @@ const ProductCategoryCard = ({ data }: { data: ProductCardSmallData }) => {
             resetSorting={resetFilters}
           />
         )}
-      <SortButton 
-        label='State'
-        buttons={[
-          { label: 'New', onClick: () => filterByStateType('New')},
-          { label: 'Used', onClick: () => filterByStateType('Used')}
-        ]}
-        resetSorting={resetFilters}
-        multiple={false}
-      />
-      </div>
+        <SortButton 
+          label='State'
+          buttons={[
+            { label: 'New', onClick: () => filterByStateType('New')},
+            { label: 'Used', onClick: () => filterByStateType('Used')}
+          ]}
+          resetSorting={resetFilters}
+          multiple={false}
+        />
+      </motion.div>
 
       <div className='bg-[#f1f4f5] p-2 sm:p-5'>
-        <div className='w-full flex justify-between items-center gap-8 bg-[#f1f4f5]'>
-          <p className='font-semibold'>{itemsToDisplay.length} RESULTS</p>
-          <SortButton
-            label='Sort by'
-            buttons={[
-              { label: 'Lowest price', onClick: () => sortDataByPrice('asc') },
-              { label: 'Highest price', onClick: () => sortDataByPrice('desc') },
-              { label: 'Oldest', onClick: () => sortDataByDate('asc') },
-              { label: 'Newest', onClick: () => sortDataByDate('desc') }
-            ]}
-            resetSorting={resetFilters}
-            multiple={false}
-          />
+        <div className='w-full flex justify-between items-center gap-8'>
+          <motion.p {...slideAnimation({ direction: 'left'})} className='font-semibold'>{itemsToDisplay.length} RESULTS</motion.p>
+          <motion.div {...slideAnimation({ direction: 'right'})}>
+            <SortButton
+              label='Sort by'
+              buttons={[
+                { label: 'Lowest price', onClick: () => sortDataByPrice('asc') },
+                { label: 'Highest price', onClick: () => sortDataByPrice('desc') },
+                { label: 'Oldest', onClick: () => sortDataByDate('asc') },
+                { label: 'Newest', onClick: () => sortDataByDate('desc') }
+              ]}
+              resetSorting={resetFilters}
+              multiple={false}
+            />
+          </motion.div>
         </div>
+
         <div className='grid gap-2 sm:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 py-2 sm:py-5'>
           {itemsToDisplay?.map((add: ProductCardSmallProps) => {
           

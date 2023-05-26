@@ -40,7 +40,7 @@ const MenuItemList: React.FC<MenuItemListProps> = ({ logoutUser, setToggleMenu }
   }, [user?.uid]);  
 
   const carsListings = listings.filter(listings => listings.category === 'Cars')
-  const estateListings = listings.filter(listings => listings.category === 'RealEstates')
+  const estateListings = listings.filter(listings => listings.category === 'Real Estate')
 
   return (
     <>

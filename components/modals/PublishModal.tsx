@@ -3,11 +3,14 @@
 import Image, { StaticImageData } from "next/image";
 import ostalo from "@/assets/ostalo.svg";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 import useFetchCollection from "@/firebase/useFetchCollection";
 import usePublishModal from "@/hooks/usePublishModal";
 import Modal from "./Modal";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "@/firebase/firebase";
+import { DocumentData, collection, doc, getDocs, query, where } from "firebase/firestore";
 
 type CategoryProps = {
   id: string;
@@ -21,6 +24,25 @@ const PublishModal = () => {
   const publishModal = usePublishModal();
   const [toggle, setToggle] = useState(false);
   const router = useRouter();
+
+  const [user] = useAuthState(auth);
+  const [listings, setListings] = useState<DocumentData[]>([]);
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      const q = query(collection(db, 'products'), where('userRef', '==', user?.uid));
+      const querySnapshot = await getDocs(q);
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      setListings(data);
+    };
+
+    if (user?.uid) {
+      fetchListings();
+    }
+  }, [user?.uid]);  
+
+  const carsListings = listings.filter(listings => listings.category === 'Cars')
+  const estateListings = listings.filter(listings => listings.category === 'Real Estate')
 
   const bodyContent = (
     <div className="flex flex-col w-full justify-center items-center">
@@ -102,15 +124,15 @@ const PublishModal = () => {
           </h1>
           <div className="flex justify-between items-center">
             <h1>Cars</h1>
-            <h1 className="font-semibold">0 of 3</h1>
+            <h1 className="font-semibold">{carsListings.length} of 3</h1>
           </div>
           <div className="flex justify-between items-center">
             <h1>Real estates</h1>
-            <h1 className="font-semibold">0 of 2</h1>
+            <h1 className="font-semibold">{estateListings.length} of 2</h1>
           </div>
           <div className="flex justify-between items-center">
             <h1>Other</h1>
-            <h1 className="font-semibold">1 of 85</h1>
+            <h1 className="font-semibold">{listings.length} of 90</h1>
           </div>
         </div>
       </div>
