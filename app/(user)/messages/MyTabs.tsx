@@ -22,8 +22,8 @@ const MyTabs = () => {
   
   return (
     <Container bground>
-      <div className="w-full flex bg-white">
-        <div className="w-1/3 flex flex-col">
+      <div className="w-full flex flex-col sm:flex-row bg-white">
+        <div className="w-full sm:w-1/3 flex flex-col">
           <form className="relative w-full p-5">
             <input 
               type="text"

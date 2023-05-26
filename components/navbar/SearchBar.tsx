@@ -75,7 +75,7 @@ const SearchBar = () => {
               const { category, title } = item.data()
               
               return (
-                <Link href={`/add/${item.id}`} onClick={() => {setSearchData([]), setSearchTerm('')}} key={item.id}>
+                <Link href={`/ad/${item.id}`} onClick={() => {setSearchData([]), setSearchTerm('')}} key={item.id}>
                   <div className="w-full flex items-center py-3">
                     <h1>{category}</h1>
                     <p className="ml-3"><ArrowRightIcon className="w-4 h-4" /></p>

@@ -12,7 +12,7 @@ const Categories = () => {
   
   return (
     <>
-      <div className="hidden px-3 sm:flex justify-between items-center w-full min-w-full sm:px-3 py-4">
+      <div className="hidden px-3 sm:flex justify-between items-center w-full min-w-full sm:px-3 pb-2">
         {data.map((category: DocumentData) => (
             <CategoryBox 
               key={category.name}
@@ -24,7 +24,7 @@ const Categories = () => {
           ))}
       </div>
 
-      <div className="sm:hidden grid grid-rows-2 grid-flow-col px-3 w-full min-w-full sm:px-3 py-4 overflow-x-scroll mask2">
+      <div className="sm:hidden grid grid-rows-2 grid-flow-col px-3 w-full min-w-full sm:px-3 py-2 overflow-x-scroll mask2">
         {data.slice(1, 13).map((category: DocumentData) => (
           <CategoryBox 
             key={category.name}

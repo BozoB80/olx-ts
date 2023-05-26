@@ -24,7 +24,7 @@ const ProductCategoryCard = ({ data }: { data: ProductCardSmallData }) => {
     resetFilters();
   }, [data, setData, resetFilters]);
 
-  const itemsToDisplay = sortedData.length > 0 ? sortedData : filteredData;
+  const itemsToDisplay = sortedData.length > 0 ? sortedData : filteredData;  
 
   return (
     <div className='bg-white flex flex-col '>

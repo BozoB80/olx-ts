@@ -25,7 +25,7 @@ const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, m
     if (!multiple) {
       if (selectedLabels.includes(buttonLabel)) {
         // Reset the sorting if the button is already selected
-        resetSorting();
+        resetSorting()
         setSelectedLabels([]);
       } else {
         setSelectedLabels([buttonLabel]);
@@ -40,9 +40,9 @@ const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, m
         // Add the label if not already selected
         setSelectedLabels([...selectedLabels, buttonLabel]);
       }
-      if (selectedLabels.length === 0) {
-        resetSorting();
-      }
+      // if (selectedLabels.length === 0) {
+      //   resetSorting();
+      // }
       if (onClick) onClick();
     }
   };
