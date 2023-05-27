@@ -46,7 +46,7 @@ const Profile = ({ id }: ProfileProps) => {
 
   return (
     <div className="flex flex-col lg:flex-row w-full p-1 sm:p-5">
-      <div className="flex flex-col w-full lg:w-1/5 lg:border-r border-gray-300 sm:pr-5 lg:h-[50vh]">
+      <div className="flex flex-col w-full lg:w-1/5 lg:border-r border-gray-300 pb-2 sm:pr-5 lg:h-[50vh]">
         <div className="flex gap-3">
           <Image
             src={olxMale}
@@ -56,7 +56,7 @@ const Profile = ({ id }: ProfileProps) => {
             className="rounded-full"
           />
           <div className="flex flex-col justify-center text-sm">
-            <p>{userData?.displayName}</p>
+            <p className="font-semibold">{userData?.displayName}</p>
             <div className="flex gap-2">
               <MapPinIcon className="w-5 h-5" />
               <p>{userData?.region}</p>

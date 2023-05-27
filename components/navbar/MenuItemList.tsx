@@ -23,7 +23,7 @@ const MenuItemList: React.FC<MenuItemListProps> = ({ logoutUser, setToggleMenu }
   const router = useRouter()
 
   const [user] = useAuthState(auth);
-  const [userData] = user?.uid ? useDocumentData(doc(db, 'users', user?.uid)) : [null];
+  const [userData] = useDocumentData(doc(db, 'users', user?.uid!));
   const [listings, setListings] = useState<DocumentData[]>([]);
 
   useEffect(() => {
