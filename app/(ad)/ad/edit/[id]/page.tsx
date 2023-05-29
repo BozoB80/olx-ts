@@ -1,7 +1,8 @@
 'use client'
 
+import CarsEdit from "@/components/ads/editForms/CarsEdit"
 import useFetchDocument from "@/firebase/useFetchDocument"
-import CarsEdit from "./CarsEdit"
+
 
 type EditProps = {
   params: {

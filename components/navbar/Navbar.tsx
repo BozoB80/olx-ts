@@ -12,7 +12,7 @@ import {
   Bars3Icon,
 } from "@heroicons/react/24/outline";
 import { auth } from "@/firebase/firebase";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { slideAnimation } from "@/utils/motion";
 import { signOut } from "firebase/auth";
@@ -33,7 +33,11 @@ const Navbar = () => {
   const toast = useToast()
   const [toggleMenu, setToggleMenu] = useState(false);
   const router = useRouter();
+  const pathname = usePathname()
   const [ user ] = useAuthState(auth)
+
+  const isPublishScreen = pathname.match('/publish')
+  const isEditScreen = pathname.match('/ad/edit')
 
   const logoutUser = () => {
     signOut(auth)
@@ -122,7 +126,9 @@ const Navbar = () => {
         </div>
 
         <div>
-          <SearchBar />
+          {!isPublishScreen && !isEditScreen && (
+            <SearchBar />
+          )}
         </div>
       </nav>
 

@@ -11,6 +11,7 @@ import Providers from '@/components/providers/Providers'
 import { Metadata } from 'next'
 import FooterNav from '@/components/FooterNav'
 import MessageModal from '@/components/modals/MessageModal'
+import OptionsModal from '@/components/modals/OptionsModal'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +34,7 @@ export default function RootLayout({
           <ResetPasswordModal />
           <PublishModal />
           <MessageModal />
+          <OptionsModal />
           <Navbar />
           {children}
           <FooterNav />

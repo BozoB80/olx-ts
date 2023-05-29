@@ -11,6 +11,7 @@ import Button from "../Button";
 import useMessageModal from '../../hooks/useMessageModal';
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { getTimeAgo } from "@/utils/dateUtils";
+import useOptionsModal from '@/hooks/useOptionsModal';
 
 interface UserDetailsProps {
   id: string
@@ -19,6 +20,7 @@ interface UserDetailsProps {
 
 const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
   const messageModal = useMessageModal()
+  const optionsModal = useOptionsModal()
   const userRef = details.userRef
   const router = useRouter()
 
@@ -59,7 +61,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
         {userRef === auth?.currentUser?.uid ? (
           <>
             <Button label="Statistics" dark icon={<ChartBarSquareIcon className="w-5 h-5" />} />
-            <Button label="Options" icon={<PencilSquareIcon className="w-5 h-5" />} onClick={() => router.push(`/ad/edit/${id}`)} />
+            <Button label="Options" icon={<PencilSquareIcon className="w-5 h-5" />} onClick={() => optionsModal.onOpen(id)} />
           </>
         ) : (
           <>

@@ -25,6 +25,7 @@ import HeartUserButton from "@/components/user/HeartUserButton";
 import useFetchUserAdds from "@/firebase/useFetchUserItems";
 import ProductCardSmall from "@/components/ads/ProductCardSmall";
 import { getTimeAgo } from "@/utils/dateUtils";
+import useOptionsModal from "@/hooks/useOptionsModal";
 
 type ProfileProps = {
   id: string
@@ -32,6 +33,7 @@ type ProfileProps = {
 
 const Profile = ({ id }: ProfileProps) => {
   const publishModal = usePublishModal()
+  const optionsModal = useOptionsModal()
   const router = useRouter()
   const { userItems } = useFetchUserAdds(id)
   const [toggleInfo, setToggleInfo] = useState(false);
@@ -77,7 +79,7 @@ const Profile = ({ id }: ProfileProps) => {
           ) : (
             <>
               <Button label="Phone" icon={<PhoneIcon className="w-5 h-5" />} />
-              <Button label="Message" icon={<ChatBubbleLeftIcon className="w-5 h-5" />} onClick={() => router.push(`/ad/edit/${id}`)} />
+              <Button label="Message" icon={<ChatBubbleLeftIcon className="w-5 h-5" />} onClick={() => optionsModal.onOpen(id)} />
             </>
           )}
         </div>

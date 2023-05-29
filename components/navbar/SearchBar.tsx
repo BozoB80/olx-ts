@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { ArrowRightIcon, FolderPlusIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline"
-import { useRouter } from "next/navigation"
 import { useCollection } from "react-firebase-hooks/firestore"
 import { collection } from "firebase/firestore"
 import { auth, db } from "@/firebase/firebase"

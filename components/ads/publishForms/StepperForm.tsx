@@ -36,8 +36,8 @@ const StepperForm: React.FC<StepperProps> = ({ onSubmit, title1, title2, title3,
 
   const steps = [
     { title: "GENERAL", description: "General Info", content: <Step1 title1={title1} body1={body1} /> },
-    { title: "MANDATORY", description: "And optional info", content: <Step2 title2={title2} body2={body2} /> },
-    { title: "IMAGE", description: "Insert image", content: <Step3 title3={title3} body3={body3} /> },
+    { title: "OPTIONAL", description: "Optional info", content: <Step2 title2={title2} body2={body2} /> },
+    { title: "IMAGES", description: "Insert images", content: <Step3 title3={title3} body3={body3} /> },
   ];
 
   const handleNext = () => {
@@ -59,7 +59,7 @@ const StepperForm: React.FC<StepperProps> = ({ onSubmit, title1, title2, title3,
   };
 
   return (
-    <Box px={4}>
+    <Box px={4} position="relative">
       <Stepper index={activeStep} pb={2}>
         {steps.map((step, index) => (
           <Step key={index}>
@@ -81,9 +81,9 @@ const StepperForm: React.FC<StepperProps> = ({ onSubmit, title1, title2, title3,
         ))}
       </Stepper>
 
-      <Box height={"container.sm"} bgColor={"gray.100"} py={{ base: '0', md: '4'}}>{steps[activeStep].content}</Box>
+      <Box height="container.md" bgColor={"gray.100"} py={{ base: '0', md: '4'}}>{steps[activeStep].content}</Box>
 
-      <Box mt={4} display="flex" justifyContent="space-between">
+      <Box my={4} position="sticky" bottom="0" left="8" right="8" p="4" borderTop='1px' backgroundColor="white" display="flex" justifyContent="space-between">
         <Button small label="Back" onClick={handleBack} isDisabled={activeStep === 0} />          
         <Button small label={activeStep === steps.length - 1 ? "Finish" : "Next"} onClick={handleNext} />          
       </Box>

@@ -2,7 +2,7 @@
 
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import { useCollectionData, useDocumentData } from "react-firebase-hooks/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import {
   doc,
   collection,
@@ -12,9 +12,8 @@ import {
   DocumentData,
   updateDoc,
 } from "firebase/firestore";
-import { auth, db, storage } from "@/firebase/firebase";
+import { db, storage } from "@/firebase/firebase";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import FormLocation from "@/components/ads/publishForms/inputs/FormLocation";
 import FormRadio from "@/components/ads/publishForms/inputs/FormRadio";
 import FormPrice from "@/components/ads/publishForms/inputs/FormPrice";
