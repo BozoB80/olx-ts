@@ -19,7 +19,6 @@ import Heading from "@/components/Heading";
 import { useRouter } from "next/navigation";
 
 
-
 interface StepperProps {
   onSubmit: () => void
   title1: string
@@ -60,8 +59,8 @@ const StepperForm: React.FC<StepperProps> = ({ onSubmit, title1, title2, title3,
   };
 
   return (
-    <Box p={1}>
-      <Stepper index={activeStep}>
+    <Box px={4}>
+      <Stepper index={activeStep} pb={2}>
         {steps.map((step, index) => (
           <Step key={index}>
             <StepIndicator>

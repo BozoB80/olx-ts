@@ -59,7 +59,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
         {userRef === auth?.currentUser?.uid ? (
           <>
             <Button label="Statistics" dark icon={<ChartBarSquareIcon className="w-5 h-5" />} />
-            <Button label="Options" icon={<PencilSquareIcon className="w-5 h-5" />} onClick={() => router.push(`/add/edit/${id}`)} />
+            <Button label="Options" icon={<PencilSquareIcon className="w-5 h-5" />} onClick={() => router.push(`/ad/edit/${id}`)} />
           </>
         ) : (
           <>
