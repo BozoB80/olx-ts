@@ -18,8 +18,7 @@ const OtherUserAddsCard = ({ ads }: { ads: ProductCardSmallData }) => {
         {ads?.map((add) => {
           const createdAt = add.createdAt.toDate();
           const timeAgo = getTimeAgo(createdAt);
-          const furnished =
-            add.furnished === true ? "Furnished" : "Not furnished";
+          const furnished = add.furnished === true ? "Furnished" : "Not furnished";
 
           return (
             <Link
@@ -27,13 +26,15 @@ const OtherUserAddsCard = ({ ads }: { ads: ProductCardSmallData }) => {
               key={add.id}
               className="flex flex-col w-48 h-[270px] rounded-md bg-white cursor-pointer shadow-2xl"
             >
-              <Image 
-                src={add.imageURL[0]}
-                alt={add.title}
-                width={300}
-                height={300}
-                className="object-cover w-[274px] h-[160px] rounded-t-md transition hover:scale-110"
-              />
+              <div className="overflow-hidden">
+                <Image 
+                  src={add.imageURL[0]}
+                  alt={add.title}
+                  width={300}
+                  height={300}
+                  className="object-cover w-[274px] h-[160px] rounded-t-md transition hover:scale-110"
+                />
+              </div>
               <div className="flex flex-col gap-2 p-2">
                 <h1 className="pb-2 truncate">{add.title}</h1>
                 <div className="flex gap-2">

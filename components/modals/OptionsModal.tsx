@@ -57,7 +57,7 @@ const OptionsModal = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-              Delete Customer
+              Delete Ad
             </AlertDialogHeader>
 
             <AlertDialogBody>
