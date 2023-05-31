@@ -15,6 +15,7 @@ interface ModalProps {
   disabled?: boolean;
   secondaryAction?: () => void;
   secondaryActionLabel?: string;
+  hideButton?: boolean
 }
 
 const Modal: React.FC<ModalProps> = ({ 
@@ -27,7 +28,8 @@ const Modal: React.FC<ModalProps> = ({
   footer, 
   disabled,
   secondaryAction,
-  secondaryActionLabel
+  secondaryActionLabel,
+  hideButton
 }) => {
 
   const [showModal, setShowModal] = useState(isOpen);
@@ -98,7 +100,7 @@ const Modal: React.FC<ModalProps> = ({
               </div>
               {/*footer*/}
               <div className="flex flex-col gap-2 p-6">
-                <div className="flex flex-row items-center gap-4 w-full">
+                <div className={`flex flex-row items-center gap-4 w-full ${hideButton ? 'hidden' : ''}`}>
                   {secondaryAction && secondaryActionLabel && (
                     <Button label={secondaryActionLabel} onClick={handleSecondaryAction} />  
                   )}

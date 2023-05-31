@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { Bars3Icon, ChatBubbleLeftIcon, HomeIcon, UserIcon, PlusCircleIcon } from "@heroicons/react/24/outline"
 import { Bars3Icon as Bars3IconS, ChatBubbleLeftIcon as ChatSolid, HomeIcon as HomeSolid, UserIcon as UserSolid, PlusCircleIcon as PlusSolid } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { debounce } from "@/utils/debounce"
 import { motion } from "framer-motion"
 import { slideIn } from "@/utils/motion"
@@ -24,6 +24,9 @@ const FooterNav = () => {
   const [toggleMenu, setToggleMenu] = useState(false)
   const [activeButton, setActiveButton] = useState('Home')
   const router = useRouter()
+  const pathname = usePathname()
+  const isPublishScreen = pathname.match('/publish')
+  const isEditScreen = pathname.match('/edit')
 
   const currentUser = auth.currentUser
 
@@ -79,46 +82,50 @@ const FooterNav = () => {
   }
 
   return (
-    <section className="flex sm:hidden">
-      <motion.div 
-        variants={slideIn({ direction: 'up', type: 'tween', delay: 0.1, duration: 0.3 })}
-        initial="hidden"
-        whileInView="show"
-        className={`flex fixed ${visible ? 'bottom-0 z-50' : '-bottom-96 -z-50'} bg-white shadow-black shadow-2xl w-full justify-around items-center py-2`}
-      >
-        <Link href="/" onClick={() => setActiveButton('Home')} className="flex flex-col justify-center items-center">
-          {activeButton === 'Home' ? <HomeSolid className="w-5 h-5 transition-all duration-300" /> : <HomeIcon className="w-5 h-5 transition-all duration-300" />}
-          <p className="text-xs">Home</p>
-        </Link>
-        <div onClick={messageLink} className="flex flex-col justify-center items-center">
-          {activeButton === 'Messages' ? <ChatSolid className="w-5 h-5" /> : <ChatBubbleLeftIcon className="w-5 h-5" />}
-          <p className="text-xs">Messages</p>
-        </div>
-        <div onClick={publishAdd} className="flex flex-col justify-center items-center">
-          {activeButton === 'Publish' ? <PlusSolid className="w-5 h-5" /> : <PlusCircleIcon className="w-5 h-5" />}
-          <p className="text-xs">Publish</p>
-        </div>
-        <div onClick={profileLink} className="flex flex-col justify-center items-center">
-          {activeButton === 'Profile' ? <UserSolid className="w-5 h-5" /> : <UserIcon className="w-5 h-5" />}
-          <p className="text-xs">Profile</p>
-        </div>
-        <div onClick={isLoggedIn} className="flex flex-col justify-center items-center">
-          {activeButton === 'MyOlx' ? <Bars3IconS className="w-5 h-5" /> : <Bars3Icon className="w-5 h-5" />}
-          <p className="text-xs">My OLX</p>
-        </div>
-      </motion.div>
+    <>
+      {!isPublishScreen && !isEditScreen && (
+        <section className="flex sm:hidden">
+          <motion.div 
+            variants={slideIn({ direction: 'up', type: 'tween', delay: 0.1, duration: 0.3 })}
+            initial="hidden"
+            whileInView="show"
+            className={`flex fixed ${visible ? 'bottom-0 z-50' : '-bottom-96 -z-50'} bg-white shadow-black shadow-2xl w-full justify-around items-center py-2`}
+          >
+            <Link href="/" onClick={() => setActiveButton('Home')} className="flex flex-col justify-center items-center">
+              {activeButton === 'Home' ? <HomeSolid className="w-5 h-5 transition-all duration-300" /> : <HomeIcon className="w-5 h-5 transition-all duration-300" />}
+              <p className="text-xs">Home</p>
+            </Link>
+            <div onClick={messageLink} className="flex flex-col justify-center items-center">
+              {activeButton === 'Messages' ? <ChatSolid className="w-5 h-5" /> : <ChatBubbleLeftIcon className="w-5 h-5" />}
+              <p className="text-xs">Messages</p>
+            </div>
+            <div onClick={publishAdd} className="flex flex-col justify-center items-center">
+              {activeButton === 'Publish' ? <PlusSolid className="w-5 h-5" /> : <PlusCircleIcon className="w-5 h-5" />}
+              <p className="text-xs">Publish</p>
+            </div>
+            <div onClick={profileLink} className="flex flex-col justify-center items-center">
+              {activeButton === 'Profile' ? <UserSolid className="w-5 h-5" /> : <UserIcon className="w-5 h-5" />}
+              <p className="text-xs">Profile</p>
+            </div>
+            <div onClick={isLoggedIn} className="flex flex-col justify-center items-center">
+              {activeButton === 'MyOlx' ? <Bars3IconS className="w-5 h-5" /> : <Bars3Icon className="w-5 h-5" />}
+              <p className="text-xs">My OLX</p>
+            </div>
+          </motion.div>
 
-      {toggleMenu && (
-        <motion.div 
-           variants={slideIn({ direction: 'right', type: 'tween', delay: 0.2, duration: 0.5 })}
-           initial="hidden"
-           whileInView="show"
-           className="absolute top-0 w-full h-auto bg-white p-3 z-40 overflow-y-hidden"
-         >
-           <MenuItemList logoutUser={logoutUser} setToggleMenu={setToggleMenu} />                  
-         </motion.div>
-       )}
-    </section>
+          {toggleMenu && (
+            <motion.div 
+              variants={slideIn({ direction: 'right', type: 'tween', delay: 0.2, duration: 0.5 })}
+              initial="hidden"
+              whileInView="show"
+              className="absolute top-0 w-full h-auto bg-white p-3 z-40 overflow-y-hidden"
+            >
+              <MenuItemList logoutUser={logoutUser} setToggleMenu={setToggleMenu} />                  
+            </motion.div>
+          )}
+        </section>
+      )}
+    </>
   )
 }
 

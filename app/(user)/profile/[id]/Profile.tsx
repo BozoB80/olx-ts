@@ -58,10 +58,10 @@ const Profile = ({ id }: ProfileProps) => {
             className="rounded-full"
           />
           <div className="flex flex-col justify-center text-sm">
-            <p className="font-semibold">{userData?.displayName}</p>
+            <p className="font-bold text-xl sm:text-base">{userData?.displayName}</p>
             <div className="flex gap-2">
               <MapPinIcon className="w-5 h-5" />
-              <p>{userData?.region}</p>
+              <p className="text-sm">{userData?.region}</p>
             </div>
           </div>
         </div>
@@ -72,61 +72,43 @@ const Profile = ({ id }: ProfileProps) => {
 
         <div className="flex justify-center w-full bg-white py-5 gap-3 rounded-[4px]">
           {id === auth?.currentUser?.uid ? (
-            <>
+            <div className="hidden sm:flex justify-between w-full items-center gap-3">
               <Button label="Settings" icon={<PencilSquareIcon className="w-5 h-5" />} />
               <Button label="Publish" dark icon={<FolderPlusIcon className="w-5 h-5" />} onClick={publishModal.onOpen} />
-            </>
+            </div>
           ) : (
             <>
-              <Button label="Phone" icon={<PhoneIcon className="w-5 h-5" />} />
-              <Button label="Message" icon={<ChatBubbleLeftIcon className="w-5 h-5" />} onClick={() => optionsModal.onOpen(id)} />
+              <Button label="Phone" icon={<PhoneIcon className="w-5 h-5" />} className="w-1/2 py-1.5 sm:py-3" />
+              <Button label="Message" dark icon={<ChatBubbleLeftIcon className="w-5 h-5" />} onClick={() => optionsModal.onOpen(id)} className="w-1/2 py-1.5 sm:py-3" />
             </>
           )}
         </div>
 
-        <div className="relative">
-          {!toggleInfo && (
-            <div
-              onClick={() => setToggleInfo(true)}
-              className="flex justify-between pb-5"
-            >
-              <h1>Information</h1>
-              <ChevronDownIcon className="w-5 h-5 cursor-pointer" />
-            </div>
-          )}
-
-          {toggleInfo && (
-            <>
-              <div
-                onClick={() => setToggleInfo(false)}
-                className="flex justify-between"
-              >
-                <h1>Information</h1>
-                <ChevronUpIcon className="w-5 h-5 cursor-pointer" />
-              </div>
-              <div className="block w-full py-5">
-                <div className="flex flex-col text-sm ">
+        <div className="relative">        
+            <div className="flex flex-col justify-between">
+              <h1 className="font-semibold">Information</h1>
+              <div className="w-full py-3">
+                <div className="flex flex-col text-sm">
                   <div className="flex justify-between items-center">
                     <p>Registered</p>
-                    <p>{date && date}</p>
+                    <p className="font-semibold">{date && date}</p>
                   </div>
                   <div className="flex justify-between items-center">
                     <p>OLX ID</p>
-                    <p>{user && user.id.slice(0, 6)}</p>
+                    <p className="font-semibold">{user && user.id.slice(0, 6)}</p>
                   </div>
                   <div className="flex justify-between items-center">
                     <p>Online</p>
-                    {lastSignedIn}
+                    <p className="font-semibold">{lastSignedIn}</p>
                   </div>
                 </div>
               </div>
-            </>
-          )}
+            </div>        
 
           {id !== auth?.currentUser?.uid && (
             <div className="flex flex-col justify-center items-start space-y-3 py-3">
               <HeartUserButton id={id} />
-              <Button label="Block User" icon={<NoSymbolIcon className="w-5 h-5" />} />
+              <Button label="Block User" icon={<NoSymbolIcon className="w-5 h-5" />} className="border-none text-red-600 text-sm" />
             </div>
           )}
         </div>

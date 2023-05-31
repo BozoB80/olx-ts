@@ -41,7 +41,7 @@ const Greetings = () => {
             <div className='flex flex-col justify-between items-start gap-8'>
               <h1 className='text-xl'>Verify Your account for increased safety</h1>
               <h1>For greater trust among members and greater security, verify your email and mobile number. After free verification, you will receive free SMS and email notifications.</h1>
-              <Button label='Settings' small />
+              <Button label='Settings' className='w-36' />
             </div>
           </div>
           <hr />
@@ -54,7 +54,7 @@ const Greetings = () => {
             <div className='flex flex-col justify-between items-start gap-8'>
               <h1 className='text-xl'>Change your OLX profile settings</h1>
               <h1>A way of showing ads, loading with or without pages, audio notification for new messages... you can adjust the new OLX to the smallest detail.</h1>
-              <Button label='Settings' small />
+              <Button label='Settings' className='w-36' />
             </div>
           </div>
           <hr />
@@ -67,7 +67,7 @@ const Greetings = () => {
             <div className='flex flex-col justify-between items-start gap-8'>
               <h1 className='text-xl'>Publish your first listing</h1>
               <h1>Have you set up your profile and added information? Start trading, publish your first ad!</h1>
-              <Button onClick={publishModal.onOpen} label='Publish' small />
+              <Button onClick={publishModal.onOpen} label='Publish' className='w-36' />
             </div>
           </div>
 

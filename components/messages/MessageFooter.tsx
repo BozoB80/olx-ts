@@ -121,7 +121,7 @@ const MessageFooter = () => {
           <CameraIcon className='w-6 h-6 cursor-pointer' />
           <InformationCircleIcon className='w-6 h-6 cursor-pointer' />
         </div>
-        <Button small dark label='Send message' />
+        <Button className='w-36' dark label='Send message' />
       </div>
     </div>
   );

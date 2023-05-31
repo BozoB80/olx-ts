@@ -28,7 +28,7 @@ const Footer = () => {
                   ))}
                 </ul>              
               ))}
-              <Button label="User Support" icon={<PhoneIcon className="w-5 h-5" />} />
+              <Button label="User Support" icon={<PhoneIcon className="w-5 h-5" />} className="w-1/2" />
               <div className="w-full flex flex-col justify-center items-start sm:items-center gap-5">
                 <Image src={appstore} alt="appstore" width={120} height={120} className="cursor-pointer" />
                 <Image src={googlestore} alt="googlestore" width={120} height={120} className="cursor-pointer" />

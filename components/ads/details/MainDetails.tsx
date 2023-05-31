@@ -158,7 +158,7 @@ const MainDetails: React.FC<MainDetailsProps> = ({
               placeholder="Ask a question to the user"
               className="p-3 w-full mt-2 bg-[#f1f4f5] border-2 rounded-md"
             />
-            <Button label="Ask a question" small />
+            <Button label="Ask a question" className="w-36" />
           </div>
           <OtherUserAdds id={id} details={details} />
         </div>

@@ -60,13 +60,19 @@ const HeartUserButton: React.FC<HeartUserButtonProps> = ({ id, small }) => {
   }, [userId, id])
 
   return (
-    <div onClick={toggleLike} className="flex justify-center items-center">
+    <button onClick={toggleLike} className="flex w-full justify-center items-center text-base font-normal gap-2 border-2 border-black transition hover:shadow-button rounded-[4px] p-1.5">
       {clicked ? (
-        <HeartIcon className="w-8 h-8 mx-1 cursor-pointer transition hover:scale-110 text-red-600" />
+        <>
+          <HeartIcon className="w-8 h-8 mx-1 cursor-pointer transition hover:scale-110 text-red-600" />
+          <p>Remove from saved</p>
+        </>
       ) : (
-        <Outline className={`w-8 h-8 mx-1 cursor-pointer transition hover:scale-110 ${small ? 'text-white' : ''}`} />
+        <>
+          <Outline className={`w-8 h-8 mx-1 cursor-pointer transition hover:scale-110 ${small ? 'text-white' : ''}`} />
+          <p>Save user</p>
+        </>
       )}
-    </div>
+    </button>
   )
 }
 

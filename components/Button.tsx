@@ -1,20 +1,21 @@
 "use client";
 
+import { twMerge } from "tailwind-merge";
+
 interface ButtonProps {
   label: string
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   icon?: React.ReactNode
   dark?: boolean
-  small?: boolean
   isDisabled?: boolean
+  className?: string
 }
 
-const Button: React.FC<ButtonProps> = ({ onClick, icon, label, dark, small, isDisabled }) => {
+const Button: React.FC<ButtonProps> = ({ onClick, icon, label, dark, isDisabled, className }) => {
   return (
     <button
       onClick={onClick}
-      className={`flex ${small ? 'w-36' : 'w-full'} ${isDisabled ? 'text-gray-200 cursor-not-allowed' : ''} justify-center items-center text-base font-semibold gap-2 border-2 border-black transition hover:shadow-button rounded-[4px] p-3 
-      ${dark ? 'bg-black text-white' : ''}`}
+      className={twMerge(`flex w-full justify-center items-center text-base font-semibold gap-2 border-2 border-black transition hover:shadow-button rounded-[4px] p-3 ${dark ? 'bg-black text-white' : ''} ${isDisabled ? 'text-gray-200 cursor-not-allowed' : ''}`, className)}
     >
       {icon}
       <p>{label}</p>

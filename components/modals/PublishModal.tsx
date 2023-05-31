@@ -131,7 +131,7 @@ const PublishModal = () => {
             <h1 className="font-semibold">{estateListings.length} of 2</h1>
           </div>
           <div className="flex justify-between items-center">
-            <h1>Other</h1>
+            <h1>All ads</h1>
             <h1 className="font-semibold">{listings.length} of 90</h1>
           </div>
         </div>

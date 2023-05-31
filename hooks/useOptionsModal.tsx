@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 interface OptionsModalStore {
-  id: string | null
+  id: string
   isOpen: boolean;
   onOpen: (id: string) => void;
   onClose: () => void;
@@ -9,9 +9,9 @@ interface OptionsModalStore {
 
 const useOptionsModal = create<OptionsModalStore>((set) => ({
   isOpen: false,
-  id: null,
+  id: '',
   onOpen: (id) => set({ isOpen: true, id }),
-  onClose: () => set({ isOpen: false, id: null })
+  onClose: () => set({ isOpen: false, id: '' })
 }));
 
 export default useOptionsModal;
