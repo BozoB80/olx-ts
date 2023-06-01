@@ -31,7 +31,7 @@ const OptionsModal = () => {
       onClose()
       optionsModal.onClose()
       router.push('/')
-      toast({ position: 'top', status: 'success', title: 'You successfully deleted your ad'})
+      toast({ position: 'top', status: 'success', title: 'Ad deleted'})
       console.log('successful');
       
     } catch (error) {

@@ -37,6 +37,7 @@ const FormLocation: React.FC<FormLocationProps> = ({ register }) => {
           const userDetailsData = userData.data() as UserDetails;
           setUserDetails(userDetailsData);
           setSelectedLocation(userDetailsData.region)
+          
         }
       }
       fetchUserDetails();
@@ -50,6 +51,7 @@ const FormLocation: React.FC<FormLocationProps> = ({ register }) => {
 
   const handleButtonClick = () => {
     setSwitchLocation(true);
+    setSelectedLocation('')
   };
 
   return (
@@ -63,6 +65,7 @@ const FormLocation: React.FC<FormLocationProps> = ({ register }) => {
               options={regions}
               placeholder="Choose location"
               register={register}
+              onChange={(e) => setSelectedLocation(e.target.value)}
             />
             <FormButton
               label="Back to the registered location"
@@ -73,11 +76,11 @@ const FormLocation: React.FC<FormLocationProps> = ({ register }) => {
         ) : (
           <>
             <Input
-              disabled
               fontSize={{ base: 'sm', md: 'initial' }}
               value={selectedLocation}
-              backgroundColor={'gray.300'}
+              backgroundColor={'gray.100'}
               {...register("region", { required: true })}
+              className="cursor-not-allowed"
             />
             <FormButton
               label="Change location"

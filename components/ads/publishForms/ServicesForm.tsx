@@ -12,8 +12,6 @@ import FormLocation from "./inputs/FormLocation";
 import FormAvailability from "./inputs/FormAvailability";
 import FormPrice from "./inputs/FormPrice";
 import FormTextarea from "./inputs/FormTextarea";
-import FormRadio from "./inputs/FormRadio";
-import FormSelect from "./inputs/FormSelect";
 import FormImage from "./inputs/FormImage";
 
 const ServicesForm = () => {

@@ -15,7 +15,7 @@ const FormAvailability: React.FC<FormAvailabilityProps> = ({ register, setValue,
       <FormRadio
         id="availability"
         label="Availability"
-        options={["Available", "Not yet available"]}
+        options={["Available", "Not available"]}
         register={register}
         setValue={setValue}
         fullWidth

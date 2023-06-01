@@ -15,7 +15,8 @@ const FormPrice: React.FC<FormPriceProps> = ({ register, required }) => {
   const [priceOnRequest, setPriceOnRequest] = useState(false);
 
   const handlePriceRequest = () => {
-    setPriceOnRequest((prevValue) => !prevValue);
+    setPriceOnRequest(true);
+    
   };
 
   return (
@@ -30,7 +31,7 @@ const FormPrice: React.FC<FormPriceProps> = ({ register, required }) => {
             backgroundColor='gray.100'
             disabled={priceOnRequest}
             inputMode="numeric"
-            {...register("price", { required: !priceOnRequest && required, valueAsNumber: !priceOnRequest })}
+            {...register("price", { valueAsNumber: true, required: !priceOnRequest && required })}
           />
           <InputRightAddon fontSize={{ base: "sm", md: "initial" }} p={2}>
             EUR
@@ -45,6 +46,7 @@ const FormPrice: React.FC<FormPriceProps> = ({ register, required }) => {
           label="Price on request"
           onClick={handlePriceRequest}
           isDisabled={!priceOnRequest && required}
+          {...register('price', { value: 'Price on request'})}
         />
       </div>
     </div>
