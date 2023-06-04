@@ -77,8 +77,8 @@ const FormLocation: React.FC<FormLocationProps> = ({ register }) => {
           <>
             <Input
               fontSize={{ base: 'sm', md: 'initial' }}
-              value={selectedLocation}
               backgroundColor={'gray.100'}
+              value={selectedLocation}
               {...register("region", { required: true })}
               className="cursor-not-allowed"
             />

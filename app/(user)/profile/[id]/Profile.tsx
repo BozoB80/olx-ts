@@ -36,7 +36,6 @@ const Profile = ({ id }: ProfileProps) => {
   const optionsModal = useOptionsModal()
   const router = useRouter()
   const { userItems } = useFetchUserAdds(id)
-  const [toggleInfo, setToggleInfo] = useState(false);
 
   const [user] = useDocument(doc(db, "users", id));
   const [userData] = useDocumentData(doc(db, "users", id));
@@ -73,7 +72,7 @@ const Profile = ({ id }: ProfileProps) => {
         <div className="flex justify-center w-full bg-white py-5 gap-3 rounded-[4px]">
           {id === auth?.currentUser?.uid ? (
             <div className="hidden sm:flex justify-between w-full items-center gap-3">
-              <Button label="Settings" icon={<PencilSquareIcon className="w-5 h-5" />} />
+              <Button label="Settings" icon={<PencilSquareIcon className="w-5 h-5" />} onClick={() => router.push(`/settings/${id}`)} />
               <Button label="Publish" dark icon={<FolderPlusIcon className="w-5 h-5" />} onClick={publishModal.onOpen} />
             </div>
           ) : (
