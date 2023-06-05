@@ -9,26 +9,41 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@chakra-ui/react";
 
 import Container from "@/components/Container";
+import Heading from "@/components/Heading";
+import { genders, regions } from "@/utils/selectData";
+import FormInput from "@/components/ads/publishForms/inputs/FormInput";
+import FormSelect from "@/components/ads/publishForms/inputs/FormSelect";
+import { useEffect } from "react";
+import FormButton from "@/components/ads/publishForms/inputs/FormButton";
 
 type SettingsProps = {
   id: string
 }
 
 const UserSettings = ({ id }: SettingsProps) => {
-  const [user]  = useDocumentData(doc(db, 'users', id)) 
   const currentUser = auth.currentUser 
+  const [user]  = useDocumentData(currentUser && doc(db, 'users', id)) 
   const router = useRouter()
   const toast = useToast()
   
-  const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<FieldValues>({
     defaultValues: {
-      displayName: user?.displayName,
-      email: user?.email,
-      password: user?.password,
-      gender: user?.gender,
-      region: user?.region
+      displayName: currentUser?.displayName,
+      email: currentUser?.email,      
     }
   })
+
+  useEffect(() => {
+    if (user) {
+      setValue('name', user?.name);
+      setValue('lastname', user?.lastname);
+      setValue('displayName', user?.displayName);
+      setValue('phone', user?.phone);
+      setValue('email', user?.email);
+      setValue('gender', user?.gender);
+      setValue('region', user?.region);
+    }
+  }, [user, setValue]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     try {
@@ -54,9 +69,73 @@ const UserSettings = ({ id }: SettingsProps) => {
   return (
     <Container bground>
       <div className="hidden sm:flex sm:flex-col xl:flex-row sm:w-full lg:w-[1180px] gap-6">
-        <div className=" flex flex-col w-full mx-auto space-y-4">
-          <div className="sm:w-full lg:w-[832px] bg-white px-4 pt-4 rounded-[4px]">
-
+        <div className=" flex flex-col justify-center items-center w-full mx-auto space-y-4">
+          <div className="sm:w-full lg:w-[832px] bg-white px-4 py-4 rounded-[4px]">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col gap-4"
+            >
+                <Heading 
+                  title="User information"
+                />
+                <hr />
+                <FormInput 
+                  id="name"
+                  label="Name"
+                  register={register}
+                  errors={errors}
+                  required
+                />
+                <FormInput 
+                  id="lastname"
+                  label="Last Name"
+                  register={register}
+                  errors={errors}
+                  required
+                />
+                <FormInput 
+                  id="displayName"
+                  label="Your OLX Name"
+                  register={register}
+                  errors={errors}
+                  required
+                />
+                <FormInput 
+                  id="phone"
+                  label="Phone number"
+                  register={register}
+                  errors={errors}
+                  required
+                />
+                <FormInput 
+                  id="email"
+                  label="Email"
+                  register={register}
+                  errors={errors}
+                  required
+                />
+                <FormSelect
+                  id="gender"
+                  label="Gender"
+                  options={genders}
+                  placeholder="Choose gender"
+                  register={register}
+                  required
+                />      
+                <FormSelect
+                  id="region"
+                  label="Region"
+                  options={regions}
+                  placeholder="Choose region"
+                  register={register}
+                  required
+                />
+                <FormButton 
+                  label="Save changes"
+                  type="submit"
+                  dark
+                />      
+            </form>
           </div>
         </div>
       </div>

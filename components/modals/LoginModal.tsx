@@ -23,7 +23,7 @@ const LoginModal = () => {
   const resetModal = useResetModal()
   const [isLoading, setIsLoading] = useState(false)
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FieldValues>({
     defaultValues: {
       displayName: '',
       email: '',
@@ -46,10 +46,11 @@ const LoginModal = () => {
         }, { merge: true })
         
         .then (() => {
-          router.push('/')
-          loginModal.onClose()
           toast({ position: 'top', status: 'success', title: `Welcome ${user.displayName}`})
           setIsLoading(false)
+          router.push('/')
+          loginModal.onClose()
+          reset()
         })
         .catch((error) => {
           // Error updating Firestore document

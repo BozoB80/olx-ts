@@ -39,10 +39,7 @@ interface Model {
 const CarsEdit = ({ id, details }: CarsProps) => {  
   const [manufacturer] = useCollectionData(
     collection(db, "categories", "PE2j37QZeo1UwY4TKZPJ", "manufacturer")
-  );
-
-  console.log(details.state);
-  
+  );  
 
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<FieldValues>({
     defaultValues: {
