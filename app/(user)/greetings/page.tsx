@@ -11,10 +11,12 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '@/firebase/firebase'
 import Button from '@/components/Button'
 import usePublishModal from '@/hooks/usePublishModal'
+import { useRouter } from 'next/navigation'
 
 const Greetings = () => {
   const [ user ] = useAuthState(auth)
   const publishModal = usePublishModal()
+  const router = useRouter()
 
   return (
     <div className='relative flex justify-center items-start w-full h-screen mx-auto bg-white'>
@@ -54,7 +56,7 @@ const Greetings = () => {
             <div className='flex flex-col justify-between items-start gap-8'>
               <h1 className='text-xl'>Change your OLX profile settings</h1>
               <h1>A way of showing ads, loading with or without pages, audio notification for new messages... you can adjust the new OLX to the smallest detail.</h1>
-              <Button label='Settings' className='w-36' />
+              <Button onClick={() => router.push(`/settings/${user?.uid}`)} label='Settings' className='w-36' />
             </div>
           </div>
           <hr />

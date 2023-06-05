@@ -32,11 +32,9 @@ const OptionsModal = () => {
       optionsModal.onClose()
       router.push('/')
       toast({ position: 'top', status: 'success', title: 'Ad deleted'})
-      console.log('successful');
       
     } catch (error) {
-      console.log(error);
-      
+      console.log(error);      
     }
   }
   
