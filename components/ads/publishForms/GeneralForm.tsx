@@ -3,7 +3,7 @@
 import { auth, db, storage } from "@/firebase/firebase";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import StepperForm from "./StepperForm";
@@ -14,14 +14,18 @@ import FormPrice from "./inputs/FormPrice";
 import FormTextarea from "./inputs/FormTextarea";
 import FormImage from "./inputs/FormImage";
 
-const ServicesForm = () => {
-  const [user] = useAuthState(auth)
+type GeneralFormProps = {
+  category: string
+}
 
+const GeneralForm = ({ category }: GeneralFormProps) => {
+  const [user] = useAuthState(auth)
+  const upperCaseCategory = category.charAt(0).toUpperCase() + category.slice(1)  
+  
   const {
     register,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
@@ -53,7 +57,7 @@ const ServicesForm = () => {
       await addDoc(collection(db, "products"), {
         ...data,
         createdAt: Timestamp.now().toDate(),
-        category: "Services",
+        category: upperCaseCategory,
         createdBy: user?.displayName,
         userRef: user?.uid,
         imageURL: imageUrls
@@ -115,4 +119,4 @@ const ServicesForm = () => {
   );
 }
 
-export default ServicesForm;
+export default GeneralForm;

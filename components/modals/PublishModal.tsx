@@ -50,7 +50,8 @@ const PublishModal = () => {
         {data.slice(1, 5).map((category: CategoryProps) => {
           const handlePublish = () => {
             publishModal.onClose();
-            router.push(`/publish/${category.name}`);
+            const categoryName = category.name.toLowerCase()
+            router.push(`/publish/${categoryName}`);
           };
           return (
             <div
@@ -100,7 +101,8 @@ const PublishModal = () => {
                 const handlePublish = () => {
                   setToggle(false)
                   publishModal.onClose();
-                  router.push(`/publish/${category.name}`);
+                  const categoryName = category.name.toLowerCase()
+                  router.push(`/publish/${categoryName}`);
                 };
                 return (
                   <div
