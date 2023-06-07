@@ -21,6 +21,9 @@ const AddPage = ({ params: { id }}: AddProps) => {
       : document?.category === "Mobile Phones" ? <MobileDetails id={id} details={document} />
       : document?.category === "Real Estate" ? <RealEstateDetails id={id} details={document} />
       : document?.category === "Services" ? <ServicesDetails id={id} details={document} />
+      : document?.category === "Jobs" ? <ServicesDetails id={id} details={document} />
+      : document?.category === "Art" ? <ServicesDetails id={id} details={document} />
+      : document?.category === "Pets" ? <ServicesDetails id={id} details={document} />
       : "Not constructed yet" }      
     </div>
   );

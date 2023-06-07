@@ -17,5 +17,5 @@ export type ProductCardSmallProps = {
   imageURL: string
   furnished?: boolean
   createdAt: Timestamp
-
+  category?: string
 }

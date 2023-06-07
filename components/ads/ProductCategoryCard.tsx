@@ -93,8 +93,12 @@ const ProductCategoryCard = ({ data }: { data: ProductCardSmallData }) => {
               <div className="flex flex-col gap-2 p-2 overflow-hidden">
                 <h1 className="pb-2 truncate">{add.title}</h1>
                 <div className="flex gap-2">
-                  <p className="text-[10px] px-0.5 font-semibold border border-black rounded-sm capitalize">{add.fuel || add.type || add.state}</p>
-                  <p className="text-[10px] px-0.5 font-semibold border border-black rounded-sm">{add.mileage || add.ram || furnished}</p>
+                  <p className="text-[10px] px-0.5 font-semibold border border-black rounded-sm capitalize">{add.fuel || add.type || add.state || add.availability}</p>
+                  {add?.category === "Real Estate" ? (
+                    <p className="text-[10px] px-0.5 font-semibold border border-black rounded-sm">{furnished}</p>
+                  ) : (
+                    <p className="text-[10px] px-0.5 font-semibold border border-black rounded-sm">{add.mileage || add.ram || add.availability }</p>
+                  )}
                 </div>
                 <div className="flex justify-between items-center">
                   <h1 className="text-xs">

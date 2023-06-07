@@ -104,7 +104,7 @@ const Modal: React.FC<ModalProps> = ({
                   {secondaryAction && secondaryActionLabel && (
                     <Button label={secondaryActionLabel} onClick={handleSecondaryAction} />  
                   )}
-                  <Button label={actionLabel} dark onClick={handleSubmit} />
+                  <Button label={actionLabel} type="submit" dark onClick={handleSubmit} />
                 </div>
                 {footer}
               </div>

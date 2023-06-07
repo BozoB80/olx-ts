@@ -79,7 +79,7 @@ const GeneralForm = ({ category }: GeneralFormProps) => {
         />
       </div>
       <FormLocation register={register} />
-      <FormAvailability register={register} setValue={setValue} noState />
+      <FormAvailability register={register} setValue={setValue} />
       
     </div>
   )
