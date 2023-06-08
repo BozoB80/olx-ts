@@ -129,11 +129,11 @@ const MainDetails: React.FC<MainDetailsProps> = ({
                 </h1>
                 <h1 className="flex items-center text-xs gap-1 border border-black p-1 rounded-[4px]">
                   <ClockIcon className="w-5 h-5" />
-                  {timeAgo}
+                  Created: {timeAgo}
                 </h1>
                 <h1 className="flex items-center text-xs gap-1 border border-black p-1 rounded-[4px]">
                   <InformationCircleIcon className="w-5 h-5" />
-                  {id.slice(0, 8)}
+                    ID: {id.slice(0, 8)}
                 </h1>
                 <h1 className="flex items-center text-xs gap-1 border border-black p-1 rounded-[4px]">
                   <EyeIcon className="w-5 h-5" />

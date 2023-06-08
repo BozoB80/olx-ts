@@ -12,6 +12,7 @@ import { Metadata } from 'next'
 import FooterNav from '@/components/FooterNav'
 import MessageModal from '@/components/modals/MessageModal'
 import OptionsModal from '@/components/modals/OptionsModal'
+import PhoneModal from '@/components/modals/PhoneModal'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -35,6 +36,7 @@ export default function RootLayout({
           <PublishModal />
           <MessageModal />
           <OptionsModal />
+          <PhoneModal />
           <Navbar />
           {children}
           <FooterNav />

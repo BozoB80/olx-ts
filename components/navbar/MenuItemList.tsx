@@ -107,7 +107,7 @@ const MenuItemList: React.FC<MenuItemListProps> = ({ logoutUser, setToggleMenu }
       <MenuItem label="Activate OLX Pro" onClick={() => {}} hover icon={<KeyIcon className="w-6 h-6" />} />
       <MenuItem label="Marketing" onClick={() => {}} hover icon={<ArrowTrendingUpIcon className="w-6 h-6" />} />
       <MenuItem label="Blocked Users" onClick={() => {}} hover icon={<LockClosedIcon className="w-6 h-6" />} />
-      <MenuItem label="Settings" onClick={() => {}} hover icon={<Cog8ToothIcon className="w-6 h-6" />} />
+      <MenuItem label="Settings" onClick={() => {router.push(`/settings/${user?.uid}`), setToggleMenu(false)}} hover icon={<Cog8ToothIcon className="w-6 h-6" />} />
       <MenuItem label="Logout" onClick={() => logoutUser()} hover icon={<ArrowLeftOnRectangleIcon className="w-6 h-6" />} />
     </>
   )

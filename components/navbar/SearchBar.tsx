@@ -26,7 +26,7 @@ const SearchBar = () => {
   const loginModal = useLoginModal()
   const publishModal = usePublishModal()
 
-  const publishAdd = () => {
+  const publishAd = () => {
     auth.currentUser ? publishModal.onOpen() : loginModal.onOpen()
   }
 
@@ -90,7 +90,7 @@ const SearchBar = () => {
       
       <button 
         type="button"
-        onClick={publishAdd}
+        onClick={publishAd}
         className="hidden sm:flex justify-center items-center gap-2 h-14 w-60 bg-black text-white py-2.5 px-8 rounded-md"
       >
         <FolderPlusIcon className="h-6 w-6" />

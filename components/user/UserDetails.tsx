@@ -6,12 +6,12 @@ import { ChartBarSquareIcon, ChatBubbleLeftIcon, PencilSquareIcon, PhoneIcon } f
 import { DocumentData, doc } from 'firebase/firestore';
 import { auth, db } from "@/firebase/firebase";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Button from "../Button";
 import useMessageModal from '../../hooks/useMessageModal';
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { getTimeAgo } from "@/utils/dateUtils";
 import useOptionsModal from '@/hooks/useOptionsModal';
+import usePhoneModal from '@/hooks/usePhoneModal';
 
 interface UserDetailsProps {
   id: string
@@ -21,12 +21,14 @@ interface UserDetailsProps {
 const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
   const messageModal = useMessageModal()
   const optionsModal = useOptionsModal()
+  const phoneModal = usePhoneModal()
   const userRef = details.userRef
-  const router = useRouter()
 
   const [ selectedUser ] = useDocumentData(doc(db, 'users', userRef))
   const signedIn = selectedUser && selectedUser?.lastSignInTime?.toDate()
   const lastSignedIn = signedIn && getTimeAgo(signedIn)  
+
+  const phoneNumber = selectedUser?.phone  
     
   return (
     <>
@@ -65,7 +67,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ id, details }) => {
           </>
         ) : (
           <>
-            <Button label="Phone" icon={<PhoneIcon className="w-5 h-5" />} />
+            <Button label="Phone" icon={<PhoneIcon className="w-5 h-5" />} onClick={() => phoneModal.onOpen(phoneNumber)} />
             <Button label="Message" icon={<ChatBubbleLeftIcon className="w-5 h-5" />} onClick={() => messageModal.onOpen(id, details)} />        
           </>
         )}
