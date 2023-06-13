@@ -101,14 +101,14 @@ const MainDetails: React.FC<MainDetailsProps> = ({
                 infiniteLoop
                 autoPlay
                 stopOnHover
-                dynamicHeight
+                width="full"
+                             
               >
                 {imageURL.map((url, index) => (
                   <div key={index} className="max-h-[600px]">
                     <img
                       src={url}
                       alt={`Image ${index}`}                      
-                      className='w-full object-cover'
                     />
                   </div>
                 ))}

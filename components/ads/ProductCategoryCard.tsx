@@ -49,7 +49,7 @@ const ProductCategoryCard = ({ data }: { data: ProductCardSmallData }) => {
             { label: 'Used', onClick: () => filterByStateType('Used')}
           ]}
           resetSorting={resetFilters}
-          multiple={false}
+          
         />
       </motion.div>
 

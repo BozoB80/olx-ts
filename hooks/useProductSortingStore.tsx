@@ -96,30 +96,61 @@ const useProductSortingStore = create<ProductSortingStore>((set) => ({
     });
   },
 
-  filterByStateType: (stateType?: StateType) => {
-    set((state) => {
-      const selectedStateTypes = [...state.selectedStateTypes];
-      let filteredData;
-      
-      if (stateType) {
-        // Remove any previously selected state types
-        selectedStateTypes.length = 0;
-        selectedStateTypes.push(stateType);
-        
-        // Filter data based on the selected state type
-        filteredData = state.data.filter((item) =>
-          item.state === stateType
-        );
-      } else {
-        // Clear all selected state types and display all items
-        if (selectedStateTypes.length = 0) {
-          filteredData = state.data;
+    filterByStateType: (stateType?: StateType) => {
+      set((state) => {
+        const selectedStateTypes = [...state.selectedStateTypes];
+        if (stateType) {
+          if (selectedStateTypes.includes(stateType)) {
+            // Remove fuelType if already selected
+            const index = selectedStateTypes.indexOf(stateType);
+            selectedStateTypes.splice(index, 1);
+          } else {
+            // Add fuelType if not already selected
+            selectedStateTypes.push(stateType);
+          }
+        } else {
+          // Clear all selected fuel types if fuelType is undefined
+          selectedStateTypes.length = 0;
         }
-      }
+    
+        let filteredData;
+        if (selectedStateTypes.length === 0) {
+          // Display all items if no fuel types are selected
+          filteredData = state.data;
+        } else {
+          filteredData = state.data.filter((item) =>
+          selectedStateTypes.includes(item.state as StateType)
+          );
+        }
+    
+        return { selectedStateTypes, filteredData };
+      });
+     },  
+
+  // filterByStateType: (stateType?: StateType) => {
+  //   set((state) => {
+  //     const selectedStateTypes = [...state.selectedStateTypes];
+  //     let filteredData;
+      
+  //     if (stateType) {
+  //       // Remove any previously selected state types
+  //       selectedStateTypes.length = 0;
+  //       selectedStateTypes.push(stateType);
+        
+  //       // Filter data based on the selected state type
+  //       filteredData = state.data.filter((item) =>
+  //         item.state === stateType
+  //       );
+  //     } else {
+  //       // Clear all selected state types and display all items
+  //       if (selectedStateTypes.length === 0) {
+  //         filteredData = state.data;
+  //       }
+  //     }
   
-      return { selectedStateTypes, filteredData };
-    });
-  },  
+  //     return { selectedStateTypes, filteredData };
+  //   });
+  // },  
 
   resetFilters: () => {
     set((state) => ({

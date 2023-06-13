@@ -40,9 +40,9 @@ const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, m
         // Add the label if not already selected
         setSelectedLabels([...selectedLabels, buttonLabel]);
       }
-      // if (selectedLabels.length === 0) {
-      //   resetSorting();
-      // }
+      if (selectedLabels.length === 0) {
+        resetSorting();
+      }
       if (onClick) onClick();
     }
   };
