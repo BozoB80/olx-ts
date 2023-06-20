@@ -15,7 +15,6 @@ import Textarea from '../inputs/Textarea';
 const MessageModal = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [receiver, setReceiver] = useState<DocumentData | null>(null)
-  const [conversationNumber, setConversationNumber] = useState(1)
   const messageModal = useMessageModal()
   const loginModal = useLoginModal()
   const toast = useToast()
@@ -25,6 +24,7 @@ const MessageModal = () => {
   const receiverName = receiver?.displayName  
   const title = messageModal?.details?.title
   const price = messageModal?.details?.price
+  const productId = messageModal?.details?.id
   const imageURL = messageModal?.details?.imageURL
 
   useEffect(() => {
@@ -56,41 +56,38 @@ const MessageModal = () => {
     }
     setIsLoading(true)
 
-    setConversationNumber(conversationNumber + 1);
+    const senderListingData = doc(db, 'users', senderRef, 'conversations', productId)
+    const receiverListingData = doc(db, 'users', receiverRef, 'conversations', productId)
 
-    const senderListingData = doc(db, 'users', senderRef, 'conversations', `conversation${conversationNumber}`)
-    const receiverListingData = doc(db, 'users', receiverRef, 'conversations', `conversation${conversationNumber}`)
-
-    const senderConversationRef = collection(senderListingData, 'sentMessages');
-    const receiverConversationRef = collection(receiverListingData, 'receivedMessages');
+    const senderConversationRef = collection(senderListingData, 'messages');
+    const receiverConversationRef = collection(receiverListingData, 'messages');
 
     const listingData = {
       createdAt: Timestamp.now(),
       senderName,
-      receiverName,
-      title,
-    }
-
-    const messageData = {
-      ...data,
       senderRef,
-      receiverRef,
-      createdAt: Timestamp.now(),
-      senderName,
       receiverName,
+      receiverRef,
       title,
       price,
-      imageURL
-    };
+      imageURL,
+      productId
+    }
 
     try {
       // Store the message in the sender's conversation
       await setDoc(senderListingData, listingData);
-      await addDoc(senderConversationRef, messageData);
+      await addDoc(senderConversationRef, {
+        ["sentMessage"]: data.text,
+        createdAt: Timestamp.now()
+      });
   
       // Store the message in the receiver's conversation
       await setDoc(receiverListingData, listingData);
-      await addDoc(receiverConversationRef, messageData);
+      await addDoc(receiverConversationRef, {
+        ["receivedMessage"]: data.text,
+        createdAt: Timestamp.now()
+      });
   
       setIsLoading(false);
       toast({ position: 'top', status: 'success', title: 'Message sent' });

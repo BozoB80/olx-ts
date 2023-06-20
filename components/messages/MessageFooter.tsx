@@ -12,22 +12,32 @@ import Textarea from '../inputs/Textarea';
 import logo from '@/assets/logo.svg'
 import Image from 'next/image';
 import Button from '../Button';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useCollection, useCollectionData } from 'react-firebase-hooks/firestore';
 
-const MessageFooter = () => {
+interface FooterProps {
+  senderRef: string
+  receiverRef: string
+}
+
+const MessageFooter: React.FC<FooterProps> = ({ senderRef, receiverRef }) => {
+  const [user] = useAuthState(auth)
+  const userId = user?.uid
 
   const [isLoading, setIsLoading] = useState(false)
   const [receiver, setReceiver] = useState<DocumentData | null>(null)
-  const [conversationNumber, setConversationNumber] = useState(1)
   const messageModal = useMessageModal()
   const loginModal = useLoginModal()
   const toast = useToast()
-  const senderRef = auth?.currentUser?.uid 
-  const receiverRef = messageModal?.details?.userRef
+  
   const senderName = auth?.currentUser?.displayName  
   const receiverName = receiver?.displayName  
   const title = messageModal?.details?.title
   const price = messageModal?.details?.price
+  const productId = messageModal?.details?.id
   const imageURL = messageModal?.details?.imageURL
+
+   
 
   useEffect(() => {
     async function getContact() {
@@ -51,47 +61,25 @@ const MessageFooter = () => {
   })
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    if (!senderRef) {
+    if (!receiverRef) {
       loginModal.onOpen()
       return;
     }
     setIsLoading(true)
 
-    setConversationNumber(conversationNumber + 1);
-
-    const senderListingData = doc(db, 'users', senderRef, 'conversations', `conversation${conversationNumber}`)
-    const receiverListingData = doc(db, 'users', receiverRef, 'conversations', `conversation${conversationNumber}`)
-
-    const senderConversationRef = collection(senderListingData, 'sentMessages');
-    const receiverConversationRef = collection(receiverListingData, 'receivedMessages');
-
-    const listingData = {
-      createdAt: Timestamp.now(),
-      senderName,
-      receiverName,
-      title,
-    }
-
-    const messageData = {
-      ...data,
-      senderRef,
-      receiverRef,
-      createdAt: Timestamp.now(),
-      senderName,
-      receiverName,
-      title,
-      price,
-      imageURL
-    };
+    const replyInitialReceiverRef = receiverRef === userId ? collection(db, 'users', receiverRef, 'conversations', productId, 'messages') : null;
+    const replyInitialSenderRef = senderRef === userId ? collection(db, 'users', senderRef, 'conversations', productId, 'messages') : null;
 
     try {
-      // Store the message in the sender's conversation
-      await setDoc(senderListingData, listingData);
-      await addDoc(senderConversationRef, messageData);
+      // await addDoc(replyInitialReceiverRef, {
+      //   ["sentMessage"]: data.text,
+      //   createdAt: Timestamp.now()
+      // });
   
-      // Store the message in the receiver's conversation
-      await setDoc(receiverListingData, listingData);
-      await addDoc(receiverConversationRef, messageData);
+      // await addDoc(replyInitialSenderRef, {
+      //   ["receivedMessage"]: data.text,
+      //   createdAt: Timestamp.now()
+      // });
   
       setIsLoading(false);
       toast({ position: 'top', status: 'success', title: 'Message sent' });
@@ -103,26 +91,26 @@ const MessageFooter = () => {
       toast({ position: 'top', status: 'error', title: 'Failed to send message' });
     }
   }
+
   return (
     <div className='flex flex-col w-full p-4'>
-      <form>
-        
-      </form>
-      <Textarea
-        id='text'
-        placeholder='Write a message...'
-        register={register}
-        required
-      />
-      <div className='w-full flex justify-between items-center bg-white py-4'>
-        <div className='flex gap-4'>
-          <FaceSmileIcon className='w-6 h-6 cursor-pointer' />
-          <Image src={logo} alt='logo' width={40} height={40} className='cursor-pointer' />
-          <CameraIcon className='w-6 h-6 cursor-pointer' />
-          <InformationCircleIcon className='w-6 h-6 cursor-pointer' />
+      <form onSubmit={handleSubmit(onSubmit)}>        
+        <Textarea
+          id='text'
+          placeholder='Write a message...'
+          register={register}
+          required
+          />
+        <div className='w-full flex justify-between items-center bg-white pt-4'>
+          <div className='flex gap-4'>
+            <FaceSmileIcon className='w-6 h-6 cursor-pointer' />
+            <Image src={logo} alt='logo' width={40} height={40} className='cursor-pointer' />
+            <CameraIcon className='w-6 h-6 cursor-pointer' />
+            <InformationCircleIcon className='w-6 h-6 cursor-pointer' />
+          </div>
+          <Button type='submit' className='w-36' dark label='Send message' />
         </div>
-        <Button className='w-36' dark label='Send message' />
-      </div>
+      </form>
     </div>
   );
 }

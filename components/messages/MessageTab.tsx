@@ -1,41 +1,39 @@
-'use client'
+"use client";
 
-import { auth, db } from "@/firebase/firebase"
-import { collection } from "firebase/firestore"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { useCollection } from "react-firebase-hooks/firestore"
-import MessageHeader from "./MessageHeader"
-import MessageTable from "./MessageTable"
-import MessageFooter from "./MessageFooter"
+import { auth, db } from "@/firebase/firebase";
+import { doc } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import {useDocumentData} from "react-firebase-hooks/firestore";
+import MessageHeader from "./MessageHeader";
+import MessageTable from "./MessageTable";
+import MessageFooter from "./MessageFooter";
 
 type IProps = {
-  id: string
-}
+  id: string;
+};
 
 const MessageTab = ({ id }: IProps) => {
-  const [ user ] = useAuthState(auth)
-  const userId = user?.uid 
+  const [user] = useAuthState(auth);
+  const userId = user?.uid;
 
-  const [ messages ] = useCollection(userId ? collection(db, 'users', userId, 'conversations', id, 'sentMessages' ) : null)
-
+  const [conversation] = useDocumentData(userId ? doc(db, "users", userId, "conversations", id) : null);
   
 
   return (
     <div className="bg-white">
-      {messages?.docs?.map((message) => {
-        const { price, receiverName, senderName, text, title, imageURL, createdAt } = message.data()
-        
-        
-        return (
-          <div key={title} className="flex flex-col justify-center items-center">
-            <MessageHeader senderName={senderName} receiverName={receiverName} imageURL={imageURL} title={title} price={price} />
-            <MessageTable sentMessage={text} createdAt={createdAt} />
-            <MessageFooter  />
-          </div>
-        )
-      })}
+      <div className="flex flex-col justify-center items-center h-[80vh]">
+        <MessageHeader
+          senderName={conversation?.senderName}
+          receiverName={conversation?.receiverName}
+          imageURL={conversation?.imageURL}
+          title={conversation?.title}
+          price={conversation?.price}
+        />
+        <MessageTable conversationId={id} />
+        <MessageFooter senderRef={conversation?.senderRef} receiverRef={conversation?.receiverRef} />
+      </div>
     </div>
   );
-}
+};
 
 export default MessageTab;

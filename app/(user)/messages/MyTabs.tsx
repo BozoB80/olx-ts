@@ -35,7 +35,7 @@ const MyTabs = () => {
             <MagnifyingGlassIcon className="absolute top-7 left-7 w-6 h-6" />           
           </form>
 
-          <Tabs defaultIndex={1} variant='line' isFitted>
+          <Tabs defaultIndex={0} variant='line' isFitted>
             <TabList>
               <Tab _selected={{ color: 'white', bg: 'black' }}>Inbox</Tab>
               <Tab _selected={{ color: 'white', bg: 'black' }}>Saved</Tab>
@@ -77,7 +77,7 @@ const MyTabs = () => {
           </Tabs>
         </div>
 
-        <div className="w-full bg-[#f1f4f5]">
+        <div className="w-full bg-[#f1f4f5] h-[80vh]">
           {selectedConversationId ? (
             <MessageTab id={selectedConversationId} />
           ) : (

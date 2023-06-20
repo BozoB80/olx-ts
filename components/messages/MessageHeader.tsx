@@ -5,7 +5,7 @@ import { auth } from '@/firebase/firebase'
 import { EyeSlashIcon, TrashIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { Tooltip } from '@chakra-ui/react'
+import { Divider, Tooltip } from '@chakra-ui/react'
 
 interface MessageHeaderProps {
   senderName?: string
@@ -20,15 +20,16 @@ const MessageHeader: React.FC<MessageHeaderProps> = ({senderName, receiverName, 
 
   return (
     <div className="w-full h-16 p-2 flex justify-between items-center shadow-lg">
-      <div className="flex justify-center items-center gap-2">
+      <div className="flex justify-center items-center gap-2 h-full">
         <Image
           src={avatar}
           alt='avatar'
           className='w-10'
         />
         <p className='font-semibold'>{user?.displayName === senderName ? receiverName : senderName}</p>
+        <Divider orientation='vertical' className='mx-2 h-full' />
         <Image 
-          src={imageURL}
+          src={imageURL?.[0]}
           alt={title}
           width={60}
           height={60}
