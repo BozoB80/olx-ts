@@ -66,6 +66,13 @@ const MainDetails: React.FC<MainDetailsProps> = ({
   const createdAt = top3.toDate();
   const timeAgo = getTimeAgo(createdAt);
 
+  const formatMessageText = (text: string) => {
+    const lines = text.split("\n");
+    return lines.map((line, index) => (
+      <p key={index}>{line}</p>
+    ));
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -101,14 +108,14 @@ const MainDetails: React.FC<MainDetailsProps> = ({
                 infiniteLoop
                 autoPlay
                 stopOnHover
-                width="full"
-                             
+                width="full"                             
               >
                 {imageURL.map((url, index) => (
-                  <div key={index} className="max-h-[600px]">
+                  <div key={index} className="max-h-[600px] flex justify-center items-center">
                     <img
                       src={url}
-                      alt={`Image ${index}`}                      
+                      alt={`Image ${index}`}
+                      style={{ maxWidth: "100%", maxHeight: "100%" }}                      
                     />
                   </div>
                 ))}
@@ -146,7 +153,7 @@ const MainDetails: React.FC<MainDetailsProps> = ({
 
               <div>
                 <h1 className="text-2xl">Detailed description:</h1>
-                <h1 className="py-2">{description}</h1>
+                <div className="py-2">{formatMessageText(description)}</div>
               </div>
             </div>
           </div>
