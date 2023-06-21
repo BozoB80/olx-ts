@@ -18,41 +18,18 @@ import { useCollection, useCollectionData } from 'react-firebase-hooks/firestore
 interface FooterProps {
   senderRef: string
   receiverRef: string
+  conversationId: string
 }
 
-const MessageFooter: React.FC<FooterProps> = ({ senderRef, receiverRef }) => {
+const MessageFooter: React.FC<FooterProps> = ({ senderRef, receiverRef, conversationId }) => {
   const [user] = useAuthState(auth)
-  const userId = user?.uid
+  const userId = user?.uid  
+
+  console.log(conversationId);
+  
 
   const [isLoading, setIsLoading] = useState(false)
-  const [receiver, setReceiver] = useState<DocumentData | null>(null)
-  const messageModal = useMessageModal()
-  const loginModal = useLoginModal()
   const toast = useToast()
-  
-  const senderName = auth?.currentUser?.displayName  
-  const receiverName = receiver?.displayName  
-  const title = messageModal?.details?.title
-  const price = messageModal?.details?.price
-  const productId = messageModal?.details?.id
-  const imageURL = messageModal?.details?.imageURL
-
-   
-
-  useEffect(() => {
-    async function getContact() {
-      if (receiverRef) {
-        const docRef = doc(db, "users", receiverRef);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setReceiver(docSnap.data());
-        } else {
-          console.error("Could not get receiver data");
-        }
-      }
-    }
-    getContact();
-  }, [receiverRef])
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<FieldValues>({
     defaultValues: {
@@ -61,29 +38,31 @@ const MessageFooter: React.FC<FooterProps> = ({ senderRef, receiverRef }) => {
   })
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    if (!receiverRef) {
-      loginModal.onOpen()
+    if (!userId) {
       return;
     }
     setIsLoading(true)
 
-    const replyInitialReceiverRef = receiverRef === userId ? collection(db, 'users', receiverRef, 'conversations', productId, 'messages') : null;
-    const replyInitialSenderRef = senderRef === userId ? collection(db, 'users', senderRef, 'conversations', productId, 'messages') : null;
+    const newSender = senderRef === userId ? senderRef : receiverRef
+    const newReceiver = senderRef === userId ? receiverRef : senderRef
+
+
+    const senderReplyRef = collection(db, 'users', newSender, 'conversations', conversationId, 'messages')
+    const receiverReplyRef = collection(db, 'users', newReceiver, 'conversations', conversationId, 'messages')
 
     try {
-      // await addDoc(replyInitialReceiverRef, {
-      //   ["sentMessage"]: data.text,
-      //   createdAt: Timestamp.now()
-      // });
+      await addDoc(senderReplyRef, {
+        ["sentMessage"]: data.text,
+        createdAt: Timestamp.now()
+      });
   
-      // await addDoc(replyInitialSenderRef, {
-      //   ["receivedMessage"]: data.text,
-      //   createdAt: Timestamp.now()
-      // });
+      await addDoc(receiverReplyRef, {
+        ["receivedMessage"]: data.text,
+        createdAt: Timestamp.now()
+      });
   
       setIsLoading(false);
       toast({ position: 'top', status: 'success', title: 'Message sent' });
-      messageModal.onClose()
       setValue('text', '')
     } catch (error) {
       console.error('Error sending message:', error);
