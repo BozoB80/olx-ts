@@ -13,10 +13,11 @@ const Footer = () => {
   const pathname = usePathname()
   const isPublishScreen = pathname.match('/publish')
   const isEditScreen = pathname.match('/edit')
+  const isMessagesScreen = pathname.match('/messages')
 
   return (
     <>
-      {!isPublishScreen && !isEditScreen && (
+      {!isPublishScreen && !isEditScreen && !isMessagesScreen && (
         <Container>
           <div className="flex flex-col justify-center items-center z-10">
             <div className="w-full flex flex-col sm:flex-row justify-between items-start p-2 sm:p-0 gap-5 sm:gap-16">

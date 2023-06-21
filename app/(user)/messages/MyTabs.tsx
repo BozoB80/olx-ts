@@ -21,9 +21,9 @@ const MyTabs = () => {
   const [ conversationData ] = useCollection(userId ? collection(db, 'users', userId, 'conversations') : null)      
   
   return (
-    <Container bground>
+    <Container bground className="p-0 sm:p-4">
       <div className="w-full flex flex-col sm:flex-row bg-white">
-        <div className="w-full sm:w-1/3 flex flex-col">
+        <div className={`w-full sm:w-1/3 flex flex-col ${selectedConversationId && 'hidden sm:flex'}`}>
           <form className="relative w-full p-5">
             <input 
               type="text"
@@ -79,9 +79,9 @@ const MyTabs = () => {
 
         <div className="w-full bg-[#f1f4f5] h-[80vh]">
           {selectedConversationId ? (
-            <MessageTab id={selectedConversationId} />
+            <MessageTab id={selectedConversationId} setSelectedConversationId={setSelectedConversationId} />
           ) : (
-            <p className="h-full flex justify-center items-center text-2xl font-light">Select a conversation to view messages.</p>
+            <p className="h-full hidden sm:flex justify-center items-center text-2xl font-light">Select a conversation to view messages.</p>
           )}
         </div>
       </div>

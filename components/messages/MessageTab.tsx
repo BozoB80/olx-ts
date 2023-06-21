@@ -1,18 +1,19 @@
 "use client";
 
 import { auth, db } from "@/firebase/firebase";
-import { collection, doc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import {useCollectionData, useDocumentData} from "react-firebase-hooks/firestore";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 import MessageHeader from "./MessageHeader";
 import MessageTable from "./MessageTable";
 import MessageFooter from "./MessageFooter";
 
 type IProps = {
   id: string;
+  setSelectedConversationId: (selectedConversationId: string) => void
 };
 
-const MessageTab = ({ id }: IProps) => {
+const MessageTab = ({ id, setSelectedConversationId }: IProps) => {
   const [user] = useAuthState(auth);
   const userId = user?.uid;
 
@@ -20,8 +21,9 @@ const MessageTab = ({ id }: IProps) => {
 
   return (
     <div className="bg-white">
-      <div className="flex flex-col justify-center items-center h-[80vh]">
+      <div className="relative h-[90vh] sm:h-[80vh] flex flex-col justify-center items-center">
         <MessageHeader
+          setSelectedConversationId={setSelectedConversationId}
           senderName={conversation?.senderName}
           receiverName={conversation?.receiverName}
           imageURL={conversation?.imageURL}
