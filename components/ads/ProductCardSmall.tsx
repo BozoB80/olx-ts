@@ -39,6 +39,10 @@ const ProductCardSmall = ({ data, bground }: { data: ProductCardSmallData, bgrou
               ) : (
                 <p className="text-[10px] px-0.5 font-semibold border border-black rounded-sm">{add.mileage || add.ram || add.availability }</p>
               )}
+
+              {add?.category === "Cars" && (
+                <p className="text-[10px] px-0.5 font-semibold border border-black rounded-sm capitalize">{add.year}</p>
+              )}
             </div>
             <div className="flex justify-between items-center">
               <h1 className="text-xs">

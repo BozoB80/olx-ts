@@ -21,7 +21,7 @@ const MessageTab = ({ id, setSelectedConversationId }: IProps) => {
 
   return (
     <div className="bg-white">
-      <div className="relative h-[90vh] sm:h-[80vh] flex flex-col justify-center items-center">
+      <div className="relative h-[85vh] sm:h-[80vh] flex flex-col justify-center items-center">
         <MessageHeader
           setSelectedConversationId={setSelectedConversationId}
           senderName={conversation?.senderName}

@@ -11,6 +11,7 @@ export type ProductCardSmallProps = {
   type?: string
   state?: string
   mileage?: string
+  year?: string
   ram?: string
   availability?: string
   price: number
