@@ -277,7 +277,7 @@ const MainDetails: React.FC<MainDetailsProps> = ({
 
             <div className="p-2 my-2 bg-white shadow-md rounded-[4px] w-full">
               <h4 className="uppercase text-sm">Detailed description</h4>
-              <h1 className="text-xs">{description}</h1>
+              <h1 className="text-xs">{formatMessageText(description)}</h1>
             </div>
 
             <button className="flex w-full py-1 gap-3 justify-center items-center border border-black rounded-[4px]">

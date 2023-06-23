@@ -4,7 +4,7 @@ import useFetchCollection from "@/firebase/useFetchCollection";
 import ProductCardSmall from "./ProductCardSmall";
 import { useSearchParams } from "next/navigation";
 import { DocumentData } from 'firebase/firestore';
-import ProductCategoryCard from "./ProductCategoryCard";
+import ProductCategoryCard from "../../app/search/SearchResults";
 
 const AllProducts = () => {
   const { data } = useFetchCollection('products', 'desc')

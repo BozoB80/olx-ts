@@ -31,7 +31,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
     const updatedQuery: any = {
       ...currentQuery,
       category: name,
-    };
+    }
 
     if (params?.get("category") === name) {
       delete updatedQuery.category;
@@ -39,14 +39,14 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
 
     const url = queryString.stringifyUrl(
       {
-        url: "/",
+        url: "/search",
         query: updatedQuery,
       },
       { skipNull: true }
-    );
+    )
 
     router.push(url);
-  }, [name, params, router]);
+  }, [name, params, router])
 
   return (
     <div

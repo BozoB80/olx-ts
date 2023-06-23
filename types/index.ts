@@ -19,4 +19,5 @@ export type ProductCardSmallProps = {
   furnished?: boolean
   createdAt: Timestamp
   category?: string
+  description: string
 }

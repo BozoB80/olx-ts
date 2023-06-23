@@ -8,23 +8,34 @@ import { ProductCardSmallProps } from '@/types';
 import { getTimeAgo } from '@/utils/dateUtils';
 import { slideAnimation } from '@/utils/motion';
 import { useEffect } from 'react';
-import useProductSortingStore from '../../hooks/useProductSortingStore';
-import SortButton from '../inputs/SortButton';
+import useProductSortingStore from '@/hooks/useProductSortingStore';
+import SortButton from '@/components/inputs/SortButton';
 import { useSearchParams } from 'next/navigation';
+import useFetchCollection from '@/firebase/useFetchCollection';
 
 type ProductCardSmallData = ProductCardSmallProps[]
 
-const ProductCategoryCard = ({ data }: { data: ProductCardSmallData }) => {
+const SearchResults = () => {
+  const { data } = useFetchCollection('products', 'desc')
   const { sortedData, filteredData, setData, sortDataByPrice, sortDataByDate, filterByFuelType, filterByStateType, resetFilters } = useProductSortingStore();
   const searchParams = useSearchParams()
-  const category = searchParams?.get('category')  
+  const category = searchParams?.get('category')
+  const query = searchParams?.get('q')  
 
   useEffect(() => {
     setData(data);
     resetFilters();
   }, [data, setData, resetFilters]);
 
-  const itemsToDisplay = sortedData.length > 0 ? sortedData : filteredData;  
+  const itemsToDisplay = sortedData.length > 0 ? sortedData : filteredData;
+  
+  const filteredItems = query
+    ? itemsToDisplay.filter(
+        (item) =>
+          item.title.toLowerCase().includes(query.toLowerCase()) ||
+          item.description.toLowerCase().includes(query.toLowerCase())
+      )
+    : itemsToDisplay;
 
   return (
     <div className='bg-white flex flex-col '>
@@ -55,7 +66,7 @@ const ProductCategoryCard = ({ data }: { data: ProductCardSmallData }) => {
 
       <div className='bg-[#f1f4f5] p-2 sm:p-5'>
         <div className='w-full flex justify-between items-center gap-8'>
-          <motion.p {...slideAnimation({ direction: 'left'})} className='font-semibold'>{itemsToDisplay.length} RESULTS</motion.p>
+          <motion.p {...slideAnimation({ direction: 'left'})} className='font-semibold'>{filteredItems.length} RESULTS</motion.p>
           <motion.div {...slideAnimation({ direction: 'right'})}>
             <SortButton
               label='Sort by'
@@ -72,7 +83,7 @@ const ProductCategoryCard = ({ data }: { data: ProductCardSmallData }) => {
         </div>
 
         <div className='grid gap-2 sm:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 py-2 sm:py-5'>
-          {itemsToDisplay?.map((add: ProductCardSmallProps) => {
+          {filteredItems?.map((add: ProductCardSmallProps) => {
           
             const createdAt = add.createdAt.toDate();
             const timeAgo = getTimeAgo(createdAt);
@@ -116,4 +127,4 @@ const ProductCategoryCard = ({ data }: { data: ProductCardSmallData }) => {
   );
 }
 
-export default ProductCategoryCard;
+export default SearchResults;

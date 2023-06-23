@@ -45,15 +45,16 @@ const SearchBar = () => {
 
       const updatedQuery: any = {
         ...currentQuery,
-        search: searchTerm
+        q: searchTerm
       };
 
       const url = queryString.stringifyUrl({
-        url: '/',
+        url: '/search',
         query: updatedQuery,
       }, { skipNull: true });
 
       router.push(url)
+      setSearchData([])
       },
     [searchTerm, params, router],
   )
@@ -61,10 +62,7 @@ const SearchBar = () => {
 
   const handleSearchChange = (e: any) => {
     const term = e.target.value
-    setSearchTerm(term)
-
-    
-    
+    setSearchTerm(term) 
     
     const filteredAdds = allAdds?.docs.filter((add) => {
       const {title, description} = add.data()
@@ -94,7 +92,7 @@ const SearchBar = () => {
           placeholder='Search'
           className="w-full outline-none focus:outline-none bg-gray-100 sm:bg-white"
         />
-        {searchTerm ? <button><XMarkIcon onClick={() => {setSearchData([]), setSearchTerm('')}} className="h-6 w-6" /></button> : ''}
+        {searchTerm && <button><XMarkIcon onClick={() => {setSearchData([]), setSearchTerm('')}} className="h-6 w-6" /></button>}
 
         {searchData && searchData.length > 0 ? (
           <motion.div
@@ -126,8 +124,7 @@ const SearchBar = () => {
               )
             })}
           </motion.div>
-        ) : null}
-        
+        ) : null}        
       </form> 
 
       <Button 
