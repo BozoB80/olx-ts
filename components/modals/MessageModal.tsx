@@ -29,10 +29,10 @@ const MessageModal = () => {
   const imageURL = messageModal?.details?.imageURL
 
   const [conversation] = useCollection(senderRef ? collection(db, 'users', senderRef, 'conversations') : null)
-
+  const conversationExists = conversation?.docs.some((item) => productId === item.id)
   
-  useEffect(() => {
-    
+  
+  useEffect(() => {    
     async function getContact() {
       if (receiverRef) {
         const docRef = doc(db, "users", receiverRef);
@@ -120,6 +120,12 @@ const MessageModal = () => {
         register={register}
         required
       />
+      {conversationExists && (
+        <Alert status='warning'>
+          <AlertIcon />
+          You already inquired about this ad!
+        </Alert>
+      )}
     </div>
   )
 

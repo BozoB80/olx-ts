@@ -62,6 +62,8 @@ const LoginModal = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
+        toast({ position: 'top', status: 'error', title: 'Wrong username or password' });
+        setIsLoading(false)
       });
   }
 

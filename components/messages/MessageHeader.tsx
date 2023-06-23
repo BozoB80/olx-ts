@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { Divider, Tooltip } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 interface MessageHeaderProps {
   setSelectedConversationId: (selectedConversationId: string) => void
@@ -15,9 +16,10 @@ interface MessageHeaderProps {
   imageURL: string
   title: string
   price: string
+  id: string
 }
 
-const MessageHeader: React.FC<MessageHeaderProps> = ({setSelectedConversationId, senderName, receiverName, imageURL, title, price}) => {
+const MessageHeader: React.FC<MessageHeaderProps> = ({setSelectedConversationId, senderName, receiverName, imageURL, title, price, id}) => {
   const [ user ] = useAuthState(auth)
   const router = useRouter()
 
@@ -35,17 +37,19 @@ const MessageHeader: React.FC<MessageHeaderProps> = ({setSelectedConversationId,
           <p className='text-sm sm:text-base sm:hidden'>{title}</p>
         </div>
         <Divider orientation='vertical' className='mx-2 h-full hidden sm:block' />
-        <Image 
-          src={imageURL?.[0]}
-          alt={title}
-          width={60}
-          height={60}
-          className='hidden sm:block'
-        />
-        <div className='flex-col text-sm hidden sm:flex'>
-          <p>{title}</p>
-          <p className='font-bold'>{typeof price === 'number' ? `${price} EUR` : price}</p>
-        </div>
+        <Link href={`/ad/${id}`} className='flex justify-center items-center gap-4 h-full'>
+          <Image 
+            src={imageURL?.[0]}
+            alt={title}
+            width={60}
+            height={60}
+            className='hidden sm:block'
+          />
+          <div className='flex-col text-sm hidden sm:flex'>
+            <p>{title}</p>
+            <p className='font-bold'>{typeof price === 'number' ? `${price} EUR` : price}</p>
+          </div>        
+        </Link>
       </div>
 
       <div className='flex gap-4'>

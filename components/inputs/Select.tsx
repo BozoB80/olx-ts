@@ -16,7 +16,7 @@ interface SelectProps {
   options: SelectOption[]
   register: UseFormRegister<FieldValues>
   required?: boolean
-  errors?: FieldErrors
+  errors: FieldErrors
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   form?: boolean
 }
@@ -35,7 +35,7 @@ const Select: React.FC<SelectProps> = ({ id, placeholder, options, register, req
        <select
         id={id}
         {...register(id, { required })}
-        className={`w-full ${form ? 'py-2 bg-[#f2f4f5]' : 'py-5'} px-2 font-light border-2 border-neutral-300 focus:border-black rounded-md transition outline-none disabled:opacity-70 disabled:cursor-not-allowed`}
+        className={`w-full ${form ? 'py-2 bg-[#f2f4f5]' : 'py-5'} px-2 font-light border-2 border-neutral-300 focus:border-black rounded-md transition outline-none disabled:opacity-70 disabled:cursor-not-allowed ${errors[id] ? 'border-rose-500' : 'border-neutral-300'} ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}`}
        >
         <option value="" disabled>{placeholder}</option>
         {options.map((option) => (

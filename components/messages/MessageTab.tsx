@@ -29,6 +29,7 @@ const MessageTab = ({ id, setSelectedConversationId }: IProps) => {
           imageURL={conversation?.imageURL}
           title={conversation?.title}
           price={conversation?.price}
+          id={id}
         />
         <MessageTable conversationId={id} />
         <MessageFooter conversationId={id} senderRef={conversation?.senderRef} receiverRef={conversation?.receiverRef} />

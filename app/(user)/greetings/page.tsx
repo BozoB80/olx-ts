@@ -67,8 +67,8 @@ const Greetings = () => {
               className='w-28 mr-10'
             />
             <div className='flex flex-col justify-between items-start gap-8'>
-              <h1 className='text-xl'>Publish your first listing</h1>
-              <h1>Have you set up your profile and added information? Start trading, publish your first ad!</h1>
+              <h1 className='text-xl'>Publish your first ad</h1>
+              <h1>Have you set up your profile and added information? Start trading, let everyone know about you!</h1>
               <Button onClick={publishModal.onOpen} label='Publish' className='w-36' />
             </div>
           </div>

@@ -25,9 +25,6 @@ const MessageFooter: React.FC<FooterProps> = ({ senderRef, receiverRef, conversa
   const [user] = useAuthState(auth)
   const userId = user?.uid  
 
-  console.log(conversationId);
-  
-
   const [isLoading, setIsLoading] = useState(false)
   const toast = useToast()
 
@@ -45,7 +42,6 @@ const MessageFooter: React.FC<FooterProps> = ({ senderRef, receiverRef, conversa
 
     const newSender = senderRef === userId ? senderRef : receiverRef
     const newReceiver = senderRef === userId ? receiverRef : senderRef
-
 
     const senderReplyRef = collection(db, 'users', newSender, 'conversations', conversationId, 'messages')
     const receiverReplyRef = collection(db, 'users', newReceiver, 'conversations', conversationId, 'messages')
