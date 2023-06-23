@@ -6,11 +6,12 @@ import { auth, db } from '@/firebase/firebase';
 import { DocumentData, Timestamp, addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import useLoginModal from '../../hooks/useLoginModal';
-import { useToast } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, useToast } from '@chakra-ui/react';
 import Heading from '../Heading';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import Modal from './Modal';
 import Textarea from '../inputs/Textarea';
+import { useCollection, useCollectionData } from 'react-firebase-hooks/firestore';
 
 const MessageModal = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -27,7 +28,11 @@ const MessageModal = () => {
   const productId = messageModal?.details?.id
   const imageURL = messageModal?.details?.imageURL
 
+  const [conversation] = useCollection(senderRef ? collection(db, 'users', senderRef, 'conversations') : null)
+
+  
   useEffect(() => {
+    
     async function getContact() {
       if (receiverRef) {
         const docRef = doc(db, "users", receiverRef);
@@ -100,6 +105,8 @@ const MessageModal = () => {
     }
   }
 
+
+
   const bodyContent = (
     <div className="flex flex-col gap-2">
       <Heading title={`Message for ${receiver?.displayName}`} />
@@ -120,7 +127,7 @@ const MessageModal = () => {
     <Modal 
       disabled={isLoading}
       isOpen={messageModal.isOpen}
-      title='Message this user'
+      title='Inquire about this ad'
       actionLabel='Send Message'
       onClose={messageModal.onClose}
       onSubmit={handleSubmit(onSubmit)}

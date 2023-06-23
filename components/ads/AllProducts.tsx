@@ -1,33 +1,16 @@
-'use client'
+"use client";
 
 import useFetchCollection from "@/firebase/useFetchCollection";
 import ProductCardSmall from "./ProductCardSmall";
-import { useSearchParams } from "next/navigation";
-import { DocumentData } from 'firebase/firestore';
-import ProductCategoryCard from "../../app/search/SearchResults";
 
 const AllProducts = () => {
-  const { data } = useFetchCollection('products', 'desc')
-  const searchParams = useSearchParams()
-  const selectedCategory = searchParams.get('category')
-
-  const filteredData = data.filter((item: DocumentData) => item.category === selectedCategory)
+  const { data } = useFetchCollection("products", "desc");
 
   return (
     <>
-      {!selectedCategory ? (
-        <ProductCardSmall 
-          data={data}
-          bground
-        />
-      ) : (
-        <ProductCategoryCard 
-          data={filteredData}
-        />
-      )}
-    
+      <ProductCardSmall data={data} bground />
     </>
   );
-}
+};
 
 export default AllProducts;

@@ -32,8 +32,9 @@ const SearchResults = () => {
   const filteredItems = query
     ? itemsToDisplay.filter(
         (item) =>
-          item.title.toLowerCase().includes(query.toLowerCase()) ||
-          item.description.toLowerCase().includes(query.toLowerCase())
+          (item.title.toLowerCase().includes(query.toLowerCase()) ||
+          item.description.toLowerCase().includes(query.toLowerCase())) &&
+          (!category || item.category === category)
       )
     : itemsToDisplay;
 
