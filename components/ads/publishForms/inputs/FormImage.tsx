@@ -6,24 +6,34 @@ import { FieldValues, UseFormRegister } from "react-hook-form";
 import article from '@/assets/olx-articles-no.svg'
 import check from '@/assets/checked-new.svg'
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { DocumentData } from 'firebase/firestore';
 
 interface FormImageProps {
   register: UseFormRegister<FieldValues>
   onImageUpload: any //not the best solution but it solved the error temporary
+  details?: DocumentData
 }
 
-const FormImage: React.FC<FormImageProps> = ({ register, onImageUpload }) => {
-  const [imageURLs, setImageURLs] = useState<string[]>([]);
+const FormImage: React.FC<FormImageProps> = ({ register, onImageUpload, details }) => {
+  const [imageURLs, setImageURLs] = useState<string[]>(details?.imageURL ?? [])
   const [isDragging, setIsDragging] = useState(false);
 
-  const handleImageUpload = (files: FileList) => {
-  const fileList = Array.from(files) as File[];
-  const imageURLs = fileList.map((file) => URL.createObjectURL(file));
-  setImageURLs(imageURLs);
-  if (onImageUpload) {
-    onImageUpload(fileList);
-  }
-};
+  const handleImageUpload = (files: FileList | null) => {
+    if (files) {
+      const fileList = Array.from(files) as File[];
+      const uploadedImageURLs = fileList.map((file) => URL.createObjectURL(file));
+  
+      if (imageURLs.length > 0) {
+        setImageURLs([...imageURLs, ...uploadedImageURLs]);
+      } else {
+        setImageURLs(uploadedImageURLs);
+      }
+  
+      if (onImageUpload) {
+        onImageUpload(fileList);
+      }
+    }
+  };
 
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -43,9 +53,15 @@ const FormImage: React.FC<FormImageProps> = ({ register, onImageUpload }) => {
   };
 
   const removeImage = (index: number) => {
-    const updatedImageURLs = [...imageURLs];
-    updatedImageURLs.splice(index, 1);
-    setImageURLs(updatedImageURLs);
+    if (imageURLs.length > 0) {
+      const updatedImageURLs = [...imageURLs];
+      updatedImageURLs.splice(index, 1);
+      setImageURLs(updatedImageURLs);
+    } else {
+      const updatedDetailsImageURLs = [...(details?.imageURL ?? [])];
+      updatedDetailsImageURLs.splice(index, 1);
+      setImageURLs(updatedDetailsImageURLs);
+    }
   };
 
   return (

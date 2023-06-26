@@ -1,6 +1,7 @@
 'use client'
 
 import CarsEdit from "@/components/ads/editForms/CarsEdit"
+import GeneralEdit from "@/components/ads/editForms/GeneralEdit"
 import useFetchDocument from "@/firebase/useFetchDocument"
 
 
@@ -12,13 +13,13 @@ type EditProps = {
 
 const EditPage = ({ params: { id }}: EditProps) => {
   const { document } = useFetchDocument('products', id) 
-  console.log(document);
   
 
   return (
     <div>
       {document?.category === "Cars" ? <CarsEdit id={id} details={document} /> 
-      : 'No editing' }
+      : document?.category === "Clothes & Footwear" ? <GeneralEdit id={id} details={document} /> 
+      : 'Page for edit does not exist yet' }
     </div>
   );
 }

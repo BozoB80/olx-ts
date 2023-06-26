@@ -30,13 +30,17 @@ const SearchResults = () => {
   const itemsToDisplay = sortedData.length > 0 ? sortedData : filteredData;
   
   const filteredItems = query
-    ? itemsToDisplay.filter(
-        (item) =>
-          (item.title.toLowerCase().includes(query.toLowerCase()) ||
-          item.description.toLowerCase().includes(query.toLowerCase())) &&
-          (!category || item.category === category)
-      )
-    : itemsToDisplay;
+  ? itemsToDisplay.filter(
+      (item) =>
+        (item.title.toLowerCase().includes(query.toLowerCase()) ||
+        item.description.toLowerCase().includes(query.toLowerCase())) &&
+        (!category || item.category === category)
+    )
+  : itemsToDisplay;
+
+const filteredByCategory = category
+  ? filteredItems.filter((item) => item.category === category)
+  : filteredItems;
 
   return (
     <div className='bg-white flex flex-col '>
@@ -67,7 +71,7 @@ const SearchResults = () => {
 
       <div className='bg-[#f1f4f5] p-2 sm:p-5'>
         <div className='w-full flex justify-between items-center gap-8'>
-          <motion.p {...slideAnimation({ direction: 'left'})} className='font-semibold'>{filteredItems.length} RESULTS</motion.p>
+          <motion.p {...slideAnimation({ direction: 'left'})} className='font-semibold'>{filteredByCategory.length} RESULTS</motion.p>
           <motion.div {...slideAnimation({ direction: 'right'})}>
             <SortButton
               label='Sort by'
@@ -84,7 +88,7 @@ const SearchResults = () => {
         </div>
 
         <div className='grid gap-2 sm:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 py-2 sm:py-5'>
-          {filteredItems?.map((add: ProductCardSmallProps) => {
+          {filteredByCategory?.map((add: ProductCardSmallProps) => {
           
             const createdAt = add.createdAt.toDate();
             const timeAgo = getTimeAgo(createdAt);

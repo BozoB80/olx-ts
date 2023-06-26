@@ -20,7 +20,11 @@ type GeneralFormProps = {
 
 const GeneralForm = ({ category }: GeneralFormProps) => {
   const [user] = useAuthState(auth)
-  const upperCaseCategory = category.charAt(0).toUpperCase() + category.slice(1)  
+  const upperCaseCategory = category
+    .split("%20")
+    .map((word) => decodeURIComponent(word))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
   
   const {
     register,

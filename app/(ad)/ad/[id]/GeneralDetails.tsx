@@ -3,12 +3,12 @@ import MainDetails from "@/components/ads/details/MainDetails"
 import { DocumentData } from "firebase/firestore"
 import { generalDetails } from "@/utils/tableDetails"
 
-type ServiceProps = {
+type GeneralProps = {
   id: string
   details: DocumentData
 }
 
-const ServicesDetails = ({ id, details }: ServiceProps) => {
+const GeneralDetails = ({ id, details }: GeneralProps) => {
   return (
     <Container bground>
       <MainDetails 
@@ -29,4 +29,4 @@ const ServicesDetails = ({ id, details }: ServiceProps) => {
   );
 }
 
-export default ServicesDetails;
+export default GeneralDetails;

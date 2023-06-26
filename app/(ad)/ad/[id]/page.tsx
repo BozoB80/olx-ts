@@ -4,7 +4,7 @@ import useFetchDocument from "@/firebase/useFetchDocument"
 import CarsDetails from "./CarsDetails"
 import MobileDetails from "./MobileDetails"
 import RealEstateDetails from "./RealEstateDetails"
-import ServicesDetails from './ServicesDetails';
+import GeneralDetails from './GeneralDetails';
 
 type AddProps = {
   params: {
@@ -16,16 +16,19 @@ const AddPage = ({ params: { id }}: AddProps) => {
   const { document } = useFetchDocument('products', id) 
   
   return (
-    <div>
+    <>
       {document?.category === "Cars" ? <CarsDetails id={id} details={document} />
       : document?.category === "Mobile Phones" ? <MobileDetails id={id} details={document} />
       : document?.category === "Real Estate" ? <RealEstateDetails id={id} details={document} />
-      : document?.category === "Services" ? <ServicesDetails id={id} details={document} />
-      : document?.category === "Jobs" ? <ServicesDetails id={id} details={document} />
-      : document?.category === "Art" ? <ServicesDetails id={id} details={document} />
-      : document?.category === "Pets" ? <ServicesDetails id={id} details={document} />
+      : document?.category === "Services" ? <GeneralDetails id={id} details={document} />
+      : document?.category === "Jobs" ? <GeneralDetails id={id} details={document} />
+      : document?.category === "Art" ? <GeneralDetails id={id} details={document} />
+      : document?.category === "Pets" ? <GeneralDetails id={id} details={document} />
+      : document?.category === "Business & Industry" ? <GeneralDetails id={id} details={document} />
+      : document?.category === "Clothes & Footwear" ? <GeneralDetails id={id} details={document} />
+      : document?.category === "Literature" ? <GeneralDetails id={id} details={document} />
       : "Not constructed yet" }      
-    </div>
+    </>
   );
 }
 
