@@ -76,7 +76,7 @@ const SavedAds = () => {
                   <Link
                     href={`/ad/${product.id}`}
                     key={add.title}
-                    className="relative flex flex-col h-[270px] shadow-xl rounded-md bg-white cursor-pointer"
+                    className="relative group flex flex-col h-[270px] shadow-xl rounded-md bg-white cursor-pointer"
                   >
                     <div className='overflow-hidden rounded-t-md'>
                         <Image 
@@ -87,8 +87,8 @@ const SavedAds = () => {
                           className="object-cover w-[274px] h-[160px] rounded-t-md transition hover:scale-110"
                         />
                     </div>
-                    <button onClick={handleDelete} className="absolute top-0 right-0 z-10 bg-[#002f34] rounded-tr-md">
-                      <XMarkIcon className="w-6 h-6 cursor-pointer text-white m-1" />
+                    <button onClick={handleDelete} className="absolute top-0 right-0 z-10 group-hover:bg-slate-300 bg-[#002f34] rounded-tr-md">
+                      <XMarkIcon className="w-6 h-6 cursor-pointer text-white m-1 " />
                     </button>
                     <div className="flex flex-col gap-2 p-2">
                       <h1 className="pb-2 truncate">{add.title}</h1>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Popover,
   PopoverTrigger,
@@ -9,6 +9,8 @@ import {
   PopoverArrow,
   Button,
 } from "@chakra-ui/react";
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import { ref } from 'firebase/storage';
 
 interface SortButtonProps {
   label: string;
@@ -18,8 +20,25 @@ interface SortButtonProps {
 }
 
 const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, multiple = true }) => {
+  const [toggled, setToggled] = useState(false)
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const initialLabel = label;
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
+        setToggled(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleClick = (buttonLabel: string, onClick?: () => void) => {
     if (!multiple) {
@@ -57,12 +76,16 @@ const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, m
         <>
           <PopoverTrigger>
             <Button
+              ref={buttonRef}
               colorScheme={selectedLabels.length > 0 ? "red" : "gray.500"}
               _hover={{ backgroundColor: "black", textColor: "white" }}
               variant="outline"
               size="sm"
+              gap="4px"
+              onClick={() => setToggled(prev => !prev)}
             >
               {selectedLabels.length > 0 ? selectedLabels.join(", ") : initialLabel}
+              {toggled ? <ChevronUpIcon className='w-4 h-4 transition-all' /> : <ChevronDownIcon className='w-4 h-4 transition-all' />}
             </Button>
           </PopoverTrigger>
           <PopoverContent w={{ base: "100vw", md: "initial" }}>
