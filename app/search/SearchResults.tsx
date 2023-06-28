@@ -65,7 +65,6 @@ const filteredByCategory = category
             { label: 'Used', onClick: () => filterByStateType('Used')}
           ]}
           resetSorting={resetFilters}
-          
         />
       </motion.div>
 

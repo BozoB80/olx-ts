@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Popover,
   PopoverTrigger,
@@ -10,7 +10,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
-import { ref } from 'firebase/storage';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface SortButtonProps {
   label: string;
@@ -20,11 +20,16 @@ interface SortButtonProps {
 }
 
 const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, multiple = true }) => {
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
   const [toggled, setToggled] = useState(false)
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const initialLabel = label;
 
   const buttonRef = useRef<HTMLButtonElement>(null);
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -32,7 +37,6 @@ const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, m
         setToggled(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
@@ -40,14 +44,30 @@ const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, m
     };
   }, []);
 
+
+  const createQueryString = useCallback((name: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(name.toLowerCase(), value.toLowerCase());
+  
+    return params.toString();
+  }, [searchParams]);
+
+
+
   const handleClick = (buttonLabel: string, onClick?: () => void) => {
     if (!multiple) {
       if (selectedLabels.includes(buttonLabel)) {
         // Reset the sorting if the button is already selected
         resetSorting()
         setSelectedLabels([]);
+        const params = new URLSearchParams(searchParams.toString());
+      params.delete(label.toLowerCase());
+      router.push(pathname + '?' + params.toString());
       } else {
         setSelectedLabels([buttonLabel]);
+      }
+      if (selectedLabels.length === 0) {
+        resetSorting();
       }
       if (onClick) onClick();
     } else {
@@ -107,7 +127,8 @@ const SortButton: React.FC<SortButtonProps> = ({ label, buttons, resetSorting, m
                       {...(isActive && { textColor: "red.600", fontWeight: 'bold', border: '2px' })}
                       onClick={() => {
                         handleClick(button.label, button.onClick);
-                        !multiple ? onClose() : ''
+                        !multiple ? onClose() : '';
+                        router.push(pathname + '?' + createQueryString(label.toLowerCase(), button.label.toLowerCase()))
                       }}
                     >
                       {button.label}
