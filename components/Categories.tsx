@@ -12,7 +12,7 @@ const Categories = () => {
   
   return (
     <>
-      <div className="hidden px-3 sm:flex justify-between items-center w-full min-w-full sm:px-3 pb-2">
+      <div className="hidden px-3 sm:flex justify-between items-center w-full min-w-full sm:px-3 pb-2 overflow-x-scroll">
         {data.map((category: DocumentData) => (
             <CategoryBox 
               key={category.name}

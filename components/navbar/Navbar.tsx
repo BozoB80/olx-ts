@@ -113,7 +113,7 @@ const Navbar = () => {
                     {toggleMenu && (
                       <motion.div
                         {...slideAnimation({ direction: "right" })}
-                        className="absolute right-0 top-0 h-screen border-l bg-white p-3 z-50 w-[350px]"
+                        className="fixed right-0 top-0 bottom-0 overflow-y-auto border-l bg-white p-3 z-50 w-[350px]"
                       >
                         <MenuItemList
                           logoutUser={logoutUser}

@@ -118,7 +118,7 @@ const FooterNav = () => {
               variants={slideIn({ direction: 'right', type: 'tween', delay: 0.2, duration: 0.5 })}
               initial="hidden"
               whileInView="show"
-              className="absolute top-0 w-full h-auto bg-white p-3 z-40 overflow-y-hidden"
+              className="fixed top-0 bottom-0 w-full h-auto bg-white p-3 z-50 overflow-y-auto"
             >
               <MenuItemList logoutUser={logoutUser} setToggleMenu={setToggleMenu} />                  
             </motion.div>
